@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FinanceMAUI.Views.UserDetailPage"
+             xmlns:vm="clr-namespace:FinanceMAUI.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="UserDetailPage">
+    <ContentPage.Resources>
+        <toolkit:ListToStringConverter x:Key="ListToStringConverter" Separator=", " />
+    </ContentPage.Resources>
+    <Grid>
+        <ScrollView>
+            <Grid>
+                <VerticalStackLayout Padding="10">
+                    <!-- Name -->
+                    <Label
+                        Text="{Binding FullName, Mode=OneWay}"
+                        Style="{StaticResource TitleLabelStyle}" />
+
+                    <Grid RowDefinitions="Auto,*">
+                        <Grid
+                            ColumnDefinitions=".3*,.7*"
+                            ColumnSpacing="5"
+                            RowDefinitions="*,*,*,*,*,*"
+                            RowSpacing="10">
+
+                            <!-- Row 1 Date -->
+                            <Label
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                Text="Date" />
+                            <Label
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                Style="{StaticResource ValueLabelStyle}"
+                                Text="{Binding Date, StringFormat='{0:D}'}" />
+
+                            <!-- Row 2 Balance -->
+                            <Label
+                                Grid.Row="4"
+                                Grid.Column="0"
+                                Text="Balance"/>
+                            <Label
+                                Grid.Row="4"
+                                Grid.Column="1"
+                                Style="{StaticResource ValueLabelStyle}"
+                                Text="{Binding Balance, Mode=OneWay, StringFormat='{0:C}', TargetNullValue='No balance provided',
+                                    FallbackValue='No balance available'}" />
+                        </Grid>
+                    </Grid>
+                    <VerticalStackLayout Grid.Row="1">
+                        <Button
+                            Margin="0,10,0,0"
+                            Text="Hide balance"
+                            Command="{Binding HideBalanceCommand}" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+    </Grid>
+</ContentPage>
