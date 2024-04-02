@@ -53,5 +53,34 @@ namespace FinanceMAUI.Repositories
             //    return null;
             //}
         }
+
+        public async Task<List<IncomeModel>> GetIncomes(int id)
+        {
+            using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+
+            try
+            {
+                List<IncomeModel>? incomes = await client.GetFromJsonAsync<List<IncomeModel>>(
+                    $"api/User/{id}/GetIncomes",
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web));
+
+                return incomes ?? new List<IncomeModel>();
+            }
+            catch (Exception)
+            {
+                return new List<IncomeModel>();
+            }
+        }
+
+        public async Task<bool> CheckFinancialSummary(int id)
+        {
+            using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+
+            bool checkIfExist = await client.GetFromJsonAsync<bool>(
+                    $"api/User/{id}/CheckFinancialSummary",
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web));
+
+            return checkIfExist;
+        }
     }
 }

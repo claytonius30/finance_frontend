@@ -22,5 +22,11 @@ namespace FinanceMAUI.Services
 
         public Task<double> GetCurrentBalance(int id)
             => _userRepository.GetCurrentBalance(id);
+
+        public Task<List<IncomeModel>> GetIncomes(int id)
+            => _userRepository.GetIncomes(id);
+
+        public Task<bool> CheckFinancialSummary(int id)
+            => _userRepository.CheckFinancialSummary(id);
     }
 }

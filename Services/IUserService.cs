@@ -12,5 +12,9 @@ namespace FinanceMAUI.Services
         Task<UserModel?> GetUser(int id);
 
         Task<double> GetCurrentBalance(int id);
+
+        Task<List<IncomeModel>> GetIncomes(int id);
+
+        Task<bool> CheckFinancialSummary(int id);
     }
 }

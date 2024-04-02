@@ -52,6 +52,7 @@ namespace FinanceMAUI
         private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
         {
             builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddSingleton<INavigationService, NavigationService>();
 
             return builder;
         }
@@ -59,6 +60,7 @@ namespace FinanceMAUI
         private static MauiAppBuilder RegisterViewModels(this MauiAppBuilder builder)
         {
             builder.Services.AddSingleton<UserDetailViewModel>();
+            builder.Services.AddTransient<UserIncomesListOverviewViewModel>();
 
             return builder;
         }
@@ -66,6 +68,7 @@ namespace FinanceMAUI
         private static MauiAppBuilder RegisterViews(this MauiAppBuilder builder)
         {
             builder.Services.AddSingleton<UserDetailPage>();
+            builder.Services.AddTransient<UserIncomesOverviewPage>();
 
             return builder;
         }
