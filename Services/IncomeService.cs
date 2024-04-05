@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace FinanceMAUI.Services
 {
-    public class UserService : IUserService
+    class IncomeService : IIncomeService
     {
         private readonly IUserRepository _userRepository;
 
-        public UserService(IUserRepository userRepository)
+        public IncomeService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
@@ -23,13 +23,20 @@ namespace FinanceMAUI.Services
         public Task<double> GetCurrentBalance(int id)
             => _userRepository.GetCurrentBalance(id);
 
-        public Task<IncomeModel?> GetIncome(int userId, int incomeId)
-            => _userRepository.GetIncome(userId, incomeId);
-
         public Task<List<IncomeModel>> GetIncomes(int id)
             => _userRepository.GetIncomes(id);
 
         public Task<bool> CheckFinancialSummary(int id)
             => _userRepository.CheckFinancialSummary(id);
+
+        public Task<IncomeModel?> GetIncome(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<IncomeModel>> IIncomeService.GetIncomes(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

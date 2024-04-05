@@ -36,6 +36,24 @@ namespace FinanceMAUI.Repositories
             }
         }
 
+        public async Task<IncomeModel?> GetIncome(int userId, int incomeId)
+        {
+            using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+
+            try
+            {
+                IncomeModel? @income = await client.GetFromJsonAsync<IncomeModel>(
+                    $"api/User/{userId}/GetIncome/{incomeId}",
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web));
+
+                return @income;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public async Task<double> GetCurrentBalance(int id)
         {
             using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");

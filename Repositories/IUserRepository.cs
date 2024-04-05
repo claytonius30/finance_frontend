@@ -13,6 +13,8 @@ namespace FinanceMAUI.Repositories
 
         Task<double> GetCurrentBalance(int id);
 
+        Task<IncomeModel?> GetIncome(int userId, int incomeId);
+
         Task<List<IncomeModel>> GetIncomes(int id);
 
         Task<bool> CheckFinancialSummary(int id);

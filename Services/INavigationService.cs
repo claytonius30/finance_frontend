@@ -9,5 +9,6 @@ namespace FinanceMAUI.Services
     public interface INavigationService
     {
         Task GoToUserIncomes(int userId);
+        Task GoToIncomeDetail(int userId, int incomeId);
     }
 }

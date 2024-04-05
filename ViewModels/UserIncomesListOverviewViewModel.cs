@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FinanceMAUI.Models;
 using FinanceMAUI.Services;
 using FinanceMAUI.ViewModels.Base;
@@ -14,18 +15,30 @@ namespace FinanceMAUI.ViewModels
 {
     public partial class UserIncomesListOverviewViewModel : ViewModelBase, IQueryAttributable
     {
+        private readonly IUserService _userService;
+        private readonly INavigationService _navigationService;
+        public int Id { get; set; }
+
+        
         [ObservableProperty]
         private ObservableCollection<UserIncomesListItemViewModel> _incomes = new();
         [ObservableProperty]
-        private UserIncomesListItemViewModel _singleIncome;
+        private UserIncomesListItemViewModel _selectedIncome;
 
-        public int Id { get; set; }
+        [RelayCommand]
+        private async Task NavigateToSelectedDetail()
+        {
+            if (SelectedIncome is not null)
+            {
+                await _navigationService.GoToIncomeDetail(Id, SelectedIncome.IncomeId);
+                SelectedIncome = null;
+            }
+        }
 
-        private readonly IUserService _userService;
-
-        public UserIncomesListOverviewViewModel(IUserService userService)
+        public UserIncomesListOverviewViewModel(IUserService userService, INavigationService navigationService)
         {
             _userService = userService;
+            _navigationService = navigationService;
 
             //Id = 1;
             //GetIncomes(Id);

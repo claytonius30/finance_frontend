@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Android.Provider.CalendarContract;
+//using static Android.Provider.CalendarContract;
 
 namespace FinanceMAUI.ViewModels
 {
@@ -59,7 +59,7 @@ namespace FinanceMAUI.ViewModels
             _userService = userService;
             _navigationService = navigationService;
 
-            Id = 3;
+            Id = 1;
             //GetUser(Id);
             //GetCurrentBalance(Id);
             //Id = 0;

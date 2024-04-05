@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using FinanceMAUI.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FinanceMAUI.ViewModels
 {
-    public partial class UserIncomesListItemViewModel : ObservableObject
+    public partial class UserIncomesListItemViewModel : ObservableObject, IRecipient<StatusChangedMessage>
     {
         [ObservableProperty]
         private int _incomeId;
@@ -24,6 +26,16 @@ namespace FinanceMAUI.ViewModels
             Source = source;
             Amount = amount;
             DateReceived = dateReceived;
+
+            WeakReferenceMessenger.Default.Register(this);
+        }
+
+        public void Receive(StatusChangedMessage message)
+        {
+            if (message.Id == IncomeId)
+            {
+
+            }
         }
     }
 }

@@ -9,6 +9,9 @@ namespace FinanceMAUI
             InitializeComponent();
 
             Routing.RegisterRoute("incomes", typeof(UserIncomesOverviewPage));
+            Routing.RegisterRoute("income", typeof(IncomeDetailPage));
+            Routing.RegisterRoute("income/add", typeof(IncomeAddEditPage));
+            Routing.RegisterRoute("income/edit", typeof(IncomeAddEditPage));
         }
     }
 }

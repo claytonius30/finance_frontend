@@ -9,7 +9,10 @@
     <Grid>
         <ScrollView>
             <CollectionView
-                ItemsSource="{Binding Incomes}">
+                ItemsSource="{Binding Incomes}"
+                SelectedItem="{Binding SelectedIncome, Mode=TwoWay}"
+                SelectionMode="Single"
+                SelectionChangedCommand="{Binding NavigateToSelectedDetailCommand}">
                 <CollectionView.EmptyView>
                     <Label Text="No incomes available" />
                 </CollectionView.EmptyView>

@@ -61,6 +61,8 @@ namespace FinanceMAUI
         {
             builder.Services.AddSingleton<UserDetailViewModel>();
             builder.Services.AddTransient<UserIncomesListOverviewViewModel>();
+            builder.Services.AddTransient<IncomeAddEditViewModel>();
+            builder.Services.AddTransient<IncomeDetailViewModel>();
 
             return builder;
         }
@@ -69,6 +71,8 @@ namespace FinanceMAUI
         {
             builder.Services.AddSingleton<UserDetailPage>();
             builder.Services.AddTransient<UserIncomesOverviewPage>();
+            builder.Services.AddTransient<IncomeAddEditPage>();
+            builder.Services.AddTransient<IncomeDetailPage>();
 
             return builder;
         }

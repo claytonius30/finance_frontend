@@ -7,16 +7,11 @@ using System.Threading.Tasks;
 
 namespace FinanceMAUI.Services
 {
-    public interface IUserService
+    public interface IIncomeService
     {
-        Task<UserModel?> GetUser(int id);
-
-        Task<double> GetCurrentBalance(int id);
-
-        Task<IncomeModel?> GetIncome(int userid, int incomeId);
+        Task<IncomeModel?> GetIncome(int id);
 
         Task<List<IncomeModel>> GetIncomes(int id);
-
-        Task<bool> CheckFinancialSummary(int id);
+        
     }
 }

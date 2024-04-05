@@ -55,6 +55,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Masseges\**" />
+	  <Compile Remove="Masseges\**" />
+	  <EmbeddedResource Remove="Masseges\**" />
+	  <MauiCss Remove="Masseges\**" />
+	  <MauiXaml Remove="Masseges\**" />
+	  <None Remove="Masseges\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Platforms\Android\Resources\xml\network_security_config.xml" />
 	</ItemGroup>
 	
@@ -68,6 +77,12 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+	  <MauiXaml Update="Views\IncomeAddEditPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\IncomeDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\UserDetailPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
