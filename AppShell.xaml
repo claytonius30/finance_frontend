@@ -8,6 +8,10 @@
     Shell.FlyoutBehavior="Disabled"
     Title="FinanceMAUI">
 
+    <Shell.TitleView>
+        <views:LogoView />
+    </Shell.TitleView>
+    
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate views:UserDetailPage}"

@@ -19,13 +19,16 @@ namespace FinanceMAUI.ViewModels
         private decimal _amount;
         [ObservableProperty]
         private DateTime _dateReceived;
+        [ObservableProperty]
+        private int _userId;
 
-        public UserIncomesListItemViewModel(int incomeId, string source, decimal amount, DateTime dateReceived)
+        public UserIncomesListItemViewModel(int incomeId, string source, decimal amount, DateTime dateReceived, int userId)
         {
             IncomeId = incomeId;
             Source = source;
             Amount = amount;
             DateReceived = dateReceived;
+            UserId = userId;
 
             WeakReferenceMessenger.Default.Register(this);
         }

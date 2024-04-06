@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Xml.Linq;
 using FinanceMAUI.Models;
+using CommunityToolkit.Mvvm.Input;
+using Android.Mtp;
 
 namespace FinanceMAUI.ViewModels
 {
@@ -29,6 +31,12 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private int _userId;
 
+        [RelayCommand]
+        private async Task NavigateToEditIncome()
+        {
+            var detailModel = MapToIncomeModel(this);
+            await _navigationService.GoToEditIncome(detailModel);
+        }
 
         public IncomeDetailViewModel(IUserService userService, INavigationService navigationService)
         {
@@ -71,12 +79,25 @@ namespace FinanceMAUI.ViewModels
             Source = @income.Source;
             Amount = @income.Amount;
             DateReceived = @income.DateReceived;
+            UserId = @income.UserId;
+        }
+
+        private IncomeModel MapToIncomeModel(IncomeDetailViewModel incomeViewModel)
+        {
+            return new IncomeModel
+            {
+                IncomeId = incomeViewModel.IncomeId,
+                Source = incomeViewModel.Source,
+                Amount = incomeViewModel.Amount,
+                DateReceived = incomeViewModel.DateReceived,
+                UserId = incomeViewModel.UserId
+            };
         }
 
         public  void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            int userId = (int)query["UserId"];
-            int incomeId = (int)query["IncomeId"];
+            int userId = (int) query["UserId"];
+            int incomeId = (int) query["IncomeId"];
 
             UserId = userId;
             IncomeId = incomeId;

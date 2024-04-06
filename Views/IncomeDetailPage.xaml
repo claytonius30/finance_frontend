@@ -10,11 +10,20 @@
         <ScrollView>
             <Grid>
                 <VerticalStackLayout Padding="10">
+                    <!-- Type -->
                     <Grid ColumnDefinitions="*, Auto">
-                        <!-- Type -->
                         <Label
                             Text="Income"
                             Style="{StaticResource TitleLabelStyle}" />
+                        <Button
+                            Grid.Column="1"
+                            Margin="5"
+                            Command="{Binding NavigateToEditIncomeCommand}"
+                            FontFamily="MaterialIconsRegular"
+                            FontSize="20"
+                            HorizontalOptions="End"
+                            Text="&#xe3c9;"
+                            WidthRequest="50" />
                     </Grid>
                     
                     <Grid RowDefinitions="Auto,*">

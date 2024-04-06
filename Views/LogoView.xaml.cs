@@ -1,6 +1,6 @@
 namespace FinanceMAUI.Views;
 
-public partial class LogoView : ContentPage
+public partial class LogoView : ContentView
 {
 	public LogoView()
 	{

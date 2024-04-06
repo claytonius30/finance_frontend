@@ -18,20 +18,20 @@ namespace FinanceMAUI.ViewModels
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
         [ObservableProperty]
-        private int _id;
+        private int _userId;
 
-        
+
         [ObservableProperty]
         private ObservableCollection<UserIncomesListItemViewModel> _incomes = new();
         [ObservableProperty]
-        private UserIncomesListItemViewModel _selectedIncome;
+        private UserIncomesListItemViewModel? _selectedIncome;
 
         [RelayCommand]
         private async Task NavigateToSelectedDetail()
         {
             if (SelectedIncome is not null)
             {
-                await _navigationService.GoToIncomeDetail(Id, SelectedIncome.IncomeId);
+                await _navigationService.GoToIncomeDetail(UserId, SelectedIncome.IncomeId);
                 SelectedIncome = null;
             }
         }
@@ -62,7 +62,7 @@ namespace FinanceMAUI.ViewModels
             await Loading(
                 async () =>
                 {
-                    await GetIncomes(Id);
+                    await GetIncomes(UserId);
                 });
         }
 
@@ -85,14 +85,15 @@ namespace FinanceMAUI.ViewModels
                 @income.IncomeId,
                 @income.Source,
                 @income.Amount,
-                @income.DateReceived);
+                @income.DateReceived,
+                @income.UserId);
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             int userId = (int) query["UserId"];
 
-            Id = userId;
+            UserId = userId;
             //await GetIncomes(Id);
         }
     }

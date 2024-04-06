@@ -15,7 +15,7 @@ namespace FinanceMAUI.Repositories
 
         Task<IncomeModel?> GetIncome(int userId, int incomeId);
 
-        Task<List<IncomeModel>> GetIncomes(int id);
+        Task<List<IncomeModel>> GetIncomes(int userId);
 
         Task<bool> CheckFinancialSummary(int id);
     }

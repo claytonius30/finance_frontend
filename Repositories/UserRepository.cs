@@ -72,14 +72,14 @@ namespace FinanceMAUI.Repositories
             //}
         }
 
-        public async Task<List<IncomeModel>> GetIncomes(int id)
+        public async Task<List<IncomeModel>> GetIncomes(int userId)
         {
             using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
 
             try
             {
                 List<IncomeModel>? incomes = await client.GetFromJsonAsync<List<IncomeModel>>(
-                    $"api/User/{id}/GetIncomes",
+                    $"api/User/{userId}/GetIncomes",
                     new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
                 return incomes ?? new List<IncomeModel>();

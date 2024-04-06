@@ -12,5 +12,6 @@ namespace FinanceMAUI.Models
         public string Source { get; set; } = default!;
         public decimal Amount { get; set; }
         public DateTime DateReceived { get; set; }
+        public int UserId { get; set; }
     }
 }

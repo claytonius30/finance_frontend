@@ -11,12 +11,14 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Xml.Linq;
 using FinanceMAUI.Services;
 using FinanceMAUI.Models;
+using Android.Mtp;
 
 namespace FinanceMAUI.ViewModels
 {
-    public partial class IncomeAddEditViewModel : ViewModelBase
+    public partial class IncomeAddEditViewModel : ViewModelBase, IQueryAttributable
     {
         private readonly IUserService _userService;
+        private readonly INavigationService _navigationService;
 
         public IncomeModel? incomeDetail;
 
@@ -30,7 +32,7 @@ namespace FinanceMAUI.ViewModels
         private string? _source;
 
         [ObservableProperty]
-        private double _amount;
+        private decimal _amount;
 
         [ObservableProperty]
         private DateTime _dateReceived = DateTime.Now;
@@ -38,7 +40,8 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private DateTime _minDate = DateTime.Now.AddYears(-4);
 
-        public ObservableCollection<string> Incomes { get; set; } = new();
+        [ObservableProperty]
+        private int _userId;
 
         //[ObservableProperty]
         //[NotifyCanExecuteChangedFor(nameof(AddIncomeCommand))]
@@ -60,41 +63,45 @@ namespace FinanceMAUI.ViewModels
 
         private bool CanSubmitEvent() => true;
 
-        public IncomeAddEditViewModel(IUserService userService)
+        public IncomeAddEditViewModel(IUserService userService, INavigationService navigationService)
         {
             _userService = userService;
+            _navigationService = navigationService;
         }
 
-        //public override async Task LoadAsync()
-        //{
-        //    await Loading(
-        //        async () =>
-        //        {
-        //            if (IncomeDetail is null && IncomeId != int.Empty)
-        //            {
-        //                incomeDetail = await _incomeService.GetIncome(IncomeId);
-        //            }
-        //            MapEvent(incomeDetail);
-        //        });
-        //}
+        public override async Task LoadAsync()
+        {
+            await Loading(
+                async () =>
+                {
+                    if (incomeDetail is null && IncomeId > 0)
+                    {
+                        incomeDetail = await _userService.GetIncome(UserId, IncomeId);
+                    }
+                    MapIncome(incomeDetail);
+                });
+        }
 
-        //private void MapEvent(IncomeModel? model)
-        //{
-        //    if (model is not null)
-        //    {
-        //        IncomeId = model.IncomeId;
-        //        Source = model.Source;
-        //        (decimal) Amount = model.Amount;
-        //        Date = model.Date;
-        //        Description = model.Description;
-        //        Category = Categories.FirstOrDefault(c => c.Id == model.Category.Id && c.Name == model.Category.Name);
-        //        foreach (string artist in model.Artists)
-        //        {
-        //            Artists.Add(artist);
-        //        }
-        //    }
+        private void MapIncome(IncomeModel? model)
+        {
+            if (model is not null)
+            {
+                IncomeId = model.IncomeId;
+                Source = model.Source;
+                Amount = model.Amount;
+                DateReceived = model.DateReceived;
+                UserId = model.UserId;
+            }
 
-        //    PageTitle = Id != Guid.Empty ? "Edit event" : "Add event";
-        //}
+            PageTitle = IncomeId > 0 ? "Edit Income" : "Add Income";
+        }
+
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (query.Count > 0)
+            {
+                incomeDetail = query["Income"] as IncomeModel;
+            }
+        }
     }
 }
