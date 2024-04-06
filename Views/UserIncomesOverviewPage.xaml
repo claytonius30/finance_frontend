@@ -13,9 +13,9 @@
                 SelectedItem="{Binding SelectedIncome, Mode=TwoWay}"
                 SelectionMode="Single"
                 SelectionChangedCommand="{Binding NavigateToSelectedDetailCommand}">
-                <CollectionView.EmptyView>
+                <!--<CollectionView.EmptyView>
                     <Label Text="No incomes available" />
-                </CollectionView.EmptyView>
+                </CollectionView.EmptyView>-->
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid

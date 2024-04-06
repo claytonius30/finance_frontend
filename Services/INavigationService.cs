@@ -10,5 +10,6 @@ namespace FinanceMAUI.Services
     {
         Task GoToUserIncomes(int userId);
         Task GoToIncomeDetail(int userId, int incomeId);
+        Task GoToAddIncome();
     }
 }

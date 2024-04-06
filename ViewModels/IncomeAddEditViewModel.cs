@@ -16,7 +16,7 @@ namespace FinanceMAUI.ViewModels
 {
     public partial class IncomeAddEditViewModel : ViewModelBase
     {
-        private readonly IIncomeService _incomeService;
+        private readonly IUserService _userService;
 
         public IncomeModel? incomeDetail;
 
@@ -33,7 +33,10 @@ namespace FinanceMAUI.ViewModels
         private double _amount;
 
         [ObservableProperty]
-        private DateTime _dateReceived;
+        private DateTime _dateReceived = DateTime.Now;
+
+        [ObservableProperty]
+        private DateTime _minDate = DateTime.Now.AddYears(-4);
 
         public ObservableCollection<string> Incomes { get; set; } = new();
 
@@ -57,9 +60,9 @@ namespace FinanceMAUI.ViewModels
 
         private bool CanSubmitEvent() => true;
 
-        public IncomeAddEditViewModel(IIncomeService eventService)
+        public IncomeAddEditViewModel(IUserService userService)
         {
-            _incomeService = eventService;
+            _userService = userService;
         }
 
         //public override async Task LoadAsync()

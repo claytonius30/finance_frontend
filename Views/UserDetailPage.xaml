@@ -61,6 +61,13 @@
                             Text="View Incomes"
                             Command="{Binding ViewIncomesCommand}" />
                     </VerticalStackLayout>
+                    <StackLayout>
+                        <Button
+                            Margin="5"
+                            Command="{Binding NavigateToAddIncomeCommand}"
+                            HorizontalOptions="Fill"
+                            Text="Add Income" />
+                    </StackLayout>
                 </VerticalStackLayout>
             </Grid>
         </ScrollView>

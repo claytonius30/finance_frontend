@@ -13,7 +13,7 @@ using FinanceMAUI.Models;
 
 namespace FinanceMAUI.ViewModels
 {
-    public partial class IncomeDetailViewModel : ViewModelBase
+    public partial class IncomeDetailViewModel : ViewModelBase, IQueryAttributable
     {
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
@@ -73,7 +73,7 @@ namespace FinanceMAUI.ViewModels
             DateReceived = @income.DateReceived;
         }
 
-        public async void ApplyQueryAttributes(IDictionary<string, object> query)
+        public  void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             int userId = (int)query["UserId"];
             int incomeId = (int)query["IncomeId"];

@@ -17,7 +17,8 @@ namespace FinanceMAUI.ViewModels
     {
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
-        public int Id { get; set; }
+        [ObservableProperty]
+        private int _id;
 
         
         [ObservableProperty]

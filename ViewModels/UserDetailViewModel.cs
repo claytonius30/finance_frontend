@@ -54,6 +54,10 @@ namespace FinanceMAUI.ViewModels
             await _navigationService.GoToUserIncomes(Id);
         }
 
+        [RelayCommand]
+        private async Task NavigateToAddIncome()
+            => await _navigationService.GoToAddIncome();
+
         public UserDetailViewModel(IUserService userService, INavigationService navigationService) 
         {
             _userService = userService;
