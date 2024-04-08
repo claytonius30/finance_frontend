@@ -11,7 +11,9 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Xml.Linq;
 using FinanceMAUI.Models;
 using CommunityToolkit.Mvvm.Input;
-using Android.Mtp;
+using CommunityToolkit.Mvvm.Messaging;
+using FinanceMAUI.Messages;
+
 
 namespace FinanceMAUI.ViewModels
 {
@@ -19,6 +21,7 @@ namespace FinanceMAUI.ViewModels
     {
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
+        private readonly IDialogService _dialogService;
 
         [ObservableProperty]
         private int _incomeId;
@@ -38,10 +41,26 @@ namespace FinanceMAUI.ViewModels
             await _navigationService.GoToEditIncome(detailModel);
         }
 
-        public IncomeDetailViewModel(IUserService userService, INavigationService navigationService)
+        [RelayCommand]
+        public async Task DeleteIncome()
+        {
+            if (await _dialogService.Ask(
+                    "Delete income",
+                    "Are you sure you want to delete this income?"))
+            {
+                if (await _userService.DeleteIncome(UserId, IncomeId))
+                {
+                    WeakReferenceMessenger.Default.Send(new IncomeDeletedMessage(UserId, IncomeId));
+                    await _navigationService.GoToOverview();
+                }
+            }
+        }
+
+        public IncomeDetailViewModel(IUserService userService, INavigationService navigationService, IDialogService dialogService)
         {
             _userService = userService;
             _navigationService = navigationService;
+            _dialogService = dialogService; 
 
             //UserId = 1;
             //IncomeId = 1;
@@ -79,7 +98,7 @@ namespace FinanceMAUI.ViewModels
             Source = @income.Source;
             Amount = @income.Amount;
             DateReceived = @income.DateReceived;
-            UserId = @income.UserId;
+            UserId = @income.Id;
         }
 
         private IncomeModel MapToIncomeModel(IncomeDetailViewModel incomeViewModel)
@@ -90,7 +109,7 @@ namespace FinanceMAUI.ViewModels
                 Source = incomeViewModel.Source,
                 Amount = incomeViewModel.Amount,
                 DateReceived = incomeViewModel.DateReceived,
-                UserId = incomeViewModel.UserId
+                Id = incomeViewModel.UserId
             };
         }
 

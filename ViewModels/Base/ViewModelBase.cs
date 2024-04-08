@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FinanceMAUI.ViewModels.Base
 {
-    public partial class ViewModelBase : ObservableObject, IViewModelBase
+    public partial class ViewModelBase : ObservableValidator, IViewModelBase
     {
         [ObservableProperty]
         private bool _isLoading;

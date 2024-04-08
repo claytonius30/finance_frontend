@@ -6,6 +6,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+//using Windows.System;
 
 namespace FinanceMAUI.Repositories
 {
@@ -54,13 +55,13 @@ namespace FinanceMAUI.Repositories
             }
         }
 
-        public async Task<double> GetCurrentBalance(int id)
+        public async Task<decimal> GetCurrentBalance(int id)
         {
             using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
 
             //try
             //{
-                double balance = await client.GetFromJsonAsync<double>(
+                decimal balance = await client.GetFromJsonAsync<decimal>(
                     $"api/User/{id}/GetCurrentBalance",
                     new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
@@ -99,6 +100,68 @@ namespace FinanceMAUI.Repositories
                     new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
             return checkIfExist;
+        }
+
+        public async Task<bool> CreateIncome(IncomeModel model)
+        {
+            using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+
+            try
+            {
+                var content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+                var response = await client.PostAsync($"api/User/{model.Id}/AddIncome", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> EditIncome(IncomeModel model)
+        {
+            using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+
+            try
+            {
+                var content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+                var response = await client.PutAsync($"api/User/{model.Id}/UpdateIncome/{model.IncomeId}", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> DeleteIncome(int userId, int incomeId)
+        {
+            using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+
+            try
+            {
+                var response = await client.DeleteAsync($"api/User/{userId}/DeleteIncome/{incomeId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return false;
         }
     }
 }

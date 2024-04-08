@@ -12,6 +12,8 @@ namespace FinanceMAUI.Services
         Task GoToUserIncomes(int userId);
         Task GoToEditIncome(IncomeModel detailModel);
         Task GoToIncomeDetail(int userId, int incomeId);
-        Task GoToAddIncome();
+        Task GoToAddIncome(int userId);
+        Task GoToOverview();
+        Task GoBack();
     }
 }

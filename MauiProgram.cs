@@ -54,6 +54,7 @@ namespace FinanceMAUI
         {
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
+            builder.Services.AddSingleton <IDialogService, DialogService>();
 
             return builder;
         }

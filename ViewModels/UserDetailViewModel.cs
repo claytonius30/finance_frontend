@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using FinanceMAUI.Messages;
 using FinanceMAUI.Models;
 using FinanceMAUI.Services;
 using FinanceMAUI.ViewModels.Base;
@@ -12,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace FinanceMAUI.ViewModels
 {
-    public partial class UserDetailViewModel : ViewModelBase
+    public partial class UserDetailViewModel : ViewModelBase, IRecipient<IncomeAddedOrChangedMessage>, IRecipient<IncomeDeletedMessage>
     {
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
@@ -32,7 +34,7 @@ namespace FinanceMAUI.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(HideBalanceCommand))]
-        public double? _balance;
+        public decimal? _balance;
 
         [ObservableProperty]
         public bool _checkSummary;
@@ -56,14 +58,14 @@ namespace FinanceMAUI.ViewModels
 
         [RelayCommand]
         private async Task NavigateToAddIncome()
-            => await _navigationService.GoToAddIncome();
+            => await _navigationService.GoToAddIncome(Id);
 
         public UserDetailViewModel(IUserService userService, INavigationService navigationService) 
         {
             _userService = userService;
             _navigationService = navigationService;
 
-            Id = 1;
+            Id = 3;
             //GetUser(Id);
             //GetCurrentBalance(Id);
             //Id = 0;
@@ -71,6 +73,9 @@ namespace FinanceMAUI.ViewModels
             //LastName = "Smith";
             //Balance = 0;
             //Date = DateTime.Now;
+
+            WeakReferenceMessenger.Default.Register<IncomeAddedOrChangedMessage>(this);
+            WeakReferenceMessenger.Default.Register<IncomeDeletedMessage>(this);
         }
 
         public override async Task LoadAsync()
@@ -122,7 +127,7 @@ namespace FinanceMAUI.ViewModels
             FullName = FirstName + " " + LastName;
         }
 
-        private void MapUserBalance(double balance)
+        private void MapUserBalance(decimal balance)
         {
             Balance = balance;
         }
@@ -130,6 +135,16 @@ namespace FinanceMAUI.ViewModels
         private void MapUserSummary(bool checkSummary)
         {
             CheckSummary = checkSummary;
+        }
+
+        public void Receive(IncomeAddedOrChangedMessage message)
+        {
+            
+        }
+
+        public void Receive(IncomeDeletedMessage message)
+        {
+            
         }
     }
 }

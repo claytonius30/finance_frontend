@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using FinanceMAUI.Messages;
 using FinanceMAUI.Models;
 using FinanceMAUI.Services;
 using FinanceMAUI.ViewModels.Base;
@@ -13,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace FinanceMAUI.ViewModels
 {
-    public partial class UserIncomesListOverviewViewModel : ViewModelBase, IQueryAttributable
+    public partial class UserIncomesListOverviewViewModel : ViewModelBase, IQueryAttributable, IRecipient<IncomeAddedOrChangedMessage>
     {
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
@@ -40,6 +42,8 @@ namespace FinanceMAUI.ViewModels
         {
             _userService = userService;
             _navigationService = navigationService;
+
+            WeakReferenceMessenger.Default.Register(this);
 
             //Id = 1;
             //GetIncomes(Id);
@@ -86,7 +90,7 @@ namespace FinanceMAUI.ViewModels
                 @income.Source,
                 @income.Amount,
                 @income.DateReceived,
-                @income.UserId);
+                @income.Id);
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -95,6 +99,12 @@ namespace FinanceMAUI.ViewModels
 
             UserId = userId;
             //await GetIncomes(Id);
+        }
+
+        public async void Receive(IncomeAddedOrChangedMessage message)
+        {
+            Incomes.Clear();
+            await GetIncomes(UserId);
         }
     }
 }

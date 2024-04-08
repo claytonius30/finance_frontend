@@ -31,7 +31,16 @@ namespace FinanceMAUI.Services
             await Shell.Current.GoToAsync("income", parameters);
         }
 
-        public Task GoToAddIncome()
-            => Shell.Current.GoToAsync("income/add");
+        public async Task GoToAddIncome(int userId)
+        {
+            var parameters = new Dictionary<string, object> { { "UserId", userId } };
+            await Shell.Current.GoToAsync("income/add", parameters);
+        }
+
+        public Task GoToOverview()
+            => Shell.Current.GoToAsync("//userview");
+
+        public Task GoBack()
+            => Shell.Current.GoToAsync("..");
     }
 }

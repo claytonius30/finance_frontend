@@ -11,7 +11,11 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Xml.Linq;
 using FinanceMAUI.Services;
 using FinanceMAUI.Models;
-using Android.Mtp;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using FinanceMAUI.Messages;
+using CommunityToolkit.Mvvm.Input;
 
 namespace FinanceMAUI.ViewModels
 {
@@ -19,6 +23,7 @@ namespace FinanceMAUI.ViewModels
     {
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
+        private readonly IDialogService _dialogService;
 
         public IncomeModel? incomeDetail;
 
@@ -28,12 +33,32 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private int _incomeId;
 
+        [Required]
+        [MinLength(2)]
+        [MaxLength(50)]
+        [NotifyDataErrorInfo]
         [ObservableProperty]
         private string? _source;
-
+        
+        [Required]
+        //[Range(0, 1000000000)]
+        [CustomValidation(typeof(IncomeAddEditViewModel), nameof(ValidateAmount))]
+        [NotifyDataErrorInfo]
         [ObservableProperty]
         private decimal _amount;
 
+        public static ValidationResult? ValidateAmount(decimal amount, ValidationContext context)
+        {
+            if (amount < (decimal) 0.01 || amount > 999999999)
+            {
+                return new("Amount must be above 0 and below 1 billion.");
+            }
+
+            return ValidationResult.Success;
+        }
+
+        [Required]
+        [NotifyDataErrorInfo]
         [ObservableProperty]
         private DateTime _dateReceived = DateTime.Now;
 
@@ -42,6 +67,8 @@ namespace FinanceMAUI.ViewModels
 
         [ObservableProperty]
         private int _userId;
+
+        public ObservableCollection<ValidationResult> Errors { get; } = new();
 
         //[ObservableProperty]
         //[NotifyCanExecuteChangedFor(nameof(AddIncomeCommand))]
@@ -56,17 +83,56 @@ namespace FinanceMAUI.ViewModels
 
         //private bool CanAddIncome() => !string.IsNullOrWhiteSpace(AddedIncome);
 
-        //[RelayCommand(CanExecute = nameof(CanSubmitIncome))]
-        //private async Task Submit()
-        //{
-        //}
+        [RelayCommand(CanExecute = nameof(CanSubmitIncome))]
+        private async Task Submit()
+        {
+            ValidateAllProperties();
+            if (Errors.Any())
+            {
+                return;
+            }
 
-        private bool CanSubmitEvent() => true;
+            IncomeModel model = MapDataToIncomeModel();
 
-        public IncomeAddEditViewModel(IUserService userService, INavigationService navigationService)
+            if (incomeDetail == null)
+            {
+                if (await _userService.CreateIncome(model))
+                {
+                    WeakReferenceMessenger.Default.Send(new IncomeAddedOrChangedMessage());
+                    await _dialogService.Notify("Success", "The income is added.");
+                    await _navigationService.GoToOverview();
+                }
+                else
+                {
+                    await _dialogService.Notify("Failed", "Adding the income failed.");
+                }
+            }
+            else
+            {
+                if (await _userService.EditIncome(model))
+                {
+                    WeakReferenceMessenger.Default.Send(new IncomeAddedOrChangedMessage());
+                    await _dialogService.Notify("Success", "The income is updated.");
+                    await _navigationService.GoBack();
+                }
+                else
+                {
+                    await _dialogService.Notify("Failed", "Editing the income failed.");
+                }
+            }
+        }
+
+        private bool CanSubmitIncome() => !HasErrors;
+
+
+
+        public IncomeAddEditViewModel(IUserService userService, INavigationService navigationService, IDialogService dialogService)
         {
             _userService = userService;
             _navigationService = navigationService;
+            _dialogService = dialogService;
+
+            ErrorsChanged += AddIncomeViewModel_ErrorsChanged;
         }
 
         public override async Task LoadAsync()
@@ -79,7 +145,16 @@ namespace FinanceMAUI.ViewModels
                         incomeDetail = await _userService.GetIncome(UserId, IncomeId);
                     }
                     MapIncome(incomeDetail);
+
+                    ValidateAllProperties();
                 });
+        }
+
+        private void AddIncomeViewModel_ErrorsChanged(object? sender, DataErrorsChangedEventArgs e)
+        {
+            Errors.Clear();
+            GetErrors().ToList().ForEach(Errors.Add);
+            SubmitCommand.NotifyCanExecuteChanged();
         }
 
         private void MapIncome(IncomeModel? model)
@@ -90,17 +165,38 @@ namespace FinanceMAUI.ViewModels
                 Source = model.Source;
                 Amount = model.Amount;
                 DateReceived = model.DateReceived;
-                UserId = model.UserId;
+                UserId = model.Id;
             }
 
             PageTitle = IncomeId > 0 ? "Edit Income" : "Add Income";
+        }
+
+        private IncomeModel MapDataToIncomeModel()
+        {
+            return new IncomeModel
+            {
+                IncomeId = IncomeId,
+                Source = Source ?? string.Empty,
+                Amount = Amount,
+                DateReceived = DateReceived,
+                Id = UserId
+            };
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             if (query.Count > 0)
             {
-                incomeDetail = query["Income"] as IncomeModel;
+                if (query.ContainsKey("UserId"))
+                {
+                    int userId = (int)query["UserId"];
+
+                    UserId = userId;
+                }
+                else
+                {
+                    incomeDetail = query["Income"] as IncomeModel;
+                }
             }
         }
     }
