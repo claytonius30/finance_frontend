@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FinanceMAUI.Views.WeatherForecastPage"
+             xmlns:model="clr-namespace:FinanceMAUI.Models"
+             xmlns:vm="clr-namespace:FinanceMAUI.ViewModels"
+             x:DataType="vm:WeatherForecastViewModel"
+             Title="WeatherForecastPage">
+
+    <VerticalStackLayout Spacing="10" HorizontalOptions="CenterAndExpand">
+        <CollectionView ItemsSource="{Binding WeatherForecasts}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:WeatherForecast">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="{Binding Date}" />
+                        <Label Text="{Binding TemperatureC}" />
+                        <Label Text="{Binding TemperatureF}" />
+                        <Label Text="{Binding Summary}" />
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

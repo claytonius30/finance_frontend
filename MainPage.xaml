@@ -1,36 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FinanceMAUI.MainPage">
+             x:Class="FinanceMAUI.MainPage"
+             xmlns:vm="clr-namespace:FinanceMAUI.ViewModels"
+             xmlns:DataType="vm.MainPageViewModel">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number eight" />
+    <VerticalStackLayout Margin="20">
+        <HorizontalStackLayout Spacing="20">
+            <Button Text="Weather" IsVisible="{Binding IsAuthenticated}" Command="{Binding GoToWeatherForecast}" />
+            <Button Text="Logout" IsVisible="{Binding IsAuthenticated}" Command="{Binding LogoutCommand}" Background="IndianRed" />
+            <Label TextColor="CadetBlue" FontAttributes="Bold" Text="{Binding UserName, StringFormat='Hello {0}'}" Margin="0,0,0,0" />
+        </HorizontalStackLayout>
+        <Image Source="dotnet_bot.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" />
+        <Label Text="Please Create an Account" Margin="0,0,0,10" />
+        <Label Text="Email Address" />
+        <Entry Text="{Binding RegisterModel.Email}" Margin="0,0,0,5" />
+        <Label Text="Password" />
+        <Entry Text="{Binding RegisterModel.Password}" IsPassword="True" Margin="0,0,0,5" />
+        <Button Text="Register" Command="{Binding RegisterCommand}" TextColor="White" Background="Black" CornerRadius="0" Margin="0,0,0,5" />
 
-            <Label
-                Text="Hello, World!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
 
-            <Label
-                Text="Welcome to &#10;.NET Multi-platform App UI"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me" 
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Fill" />
-        </VerticalStackLayout>
-    </ScrollView>
+        <Label Text="Please Login an Account" Margin="0,0,0,10" />
+        <Label Text="Email Address" />
+        <Entry Text="{Binding LoginModel.Email}" Margin="0,0,0,5" />
+        <Label Text="Password" />
+        <Entry Text="{Binding LoginModel.Password}" Margin="0,0,0,5" />
+        <Button Text="Login" Command="{Binding LoginCommand}" CornerRadius="0" />
+        
+    </VerticalStackLayout>
 
 </ContentPage>
