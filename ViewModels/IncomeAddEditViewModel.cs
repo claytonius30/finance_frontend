@@ -66,7 +66,7 @@ namespace FinanceMAUI.ViewModels
         private DateTime _minDate = DateTime.Now.AddYears(-4);
 
         [ObservableProperty]
-        private int _userId;
+        private Guid _userId;
 
         public ObservableCollection<ValidationResult> Errors { get; } = new();
 
@@ -189,7 +189,7 @@ namespace FinanceMAUI.ViewModels
             {
                 if (query.ContainsKey("UserId"))
                 {
-                    int userId = (int)query["UserId"];
+                    Guid userId = (Guid)query["UserId"];
 
                     UserId = userId;
                 }

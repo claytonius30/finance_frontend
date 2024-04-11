@@ -9,20 +9,20 @@ namespace FinanceMAUI.Repositories
 {
     public interface IUserRepository
     {
-        Task<UserModel?> GetUser(int id);
+        Task<UserModel?> GetUser(Guid id);
 
-        Task<decimal> GetCurrentBalance(int id);
+        Task<decimal> GetCurrentBalance(Guid id);
 
-        Task<IncomeModel?> GetIncome(int userId, int incomeId);
+        Task<IncomeModel?> GetIncome(Guid userId, int incomeId);
 
-        Task<List<IncomeModel>> GetIncomes(int userId);
+        Task<List<IncomeModel>> GetIncomes(Guid userId);
 
-        Task<bool> CheckFinancialSummary(int id);
+        Task<bool> CheckFinancialSummary(Guid id);
 
         Task<bool> CreateIncome(IncomeModel model);
 
         Task<bool> EditIncome(IncomeModel model);
 
-        Task<bool> DeleteIncome(int userId, int incomeId);
+        Task<bool> DeleteIncome(Guid userId, int incomeId);
     }
 }

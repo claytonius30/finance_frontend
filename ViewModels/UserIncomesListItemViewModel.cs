@@ -20,9 +20,9 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private DateTime _dateReceived;
         [ObservableProperty]
-        private int _userId;
+        private Guid _userId;
 
-        public UserIncomesListItemViewModel(int incomeId, string source, decimal amount, DateTime dateReceived, int userId)
+        public UserIncomesListItemViewModel(int incomeId, string source, decimal amount, DateTime dateReceived, Guid userId)
         {
             IncomeId = incomeId;
             Source = source;

@@ -32,7 +32,7 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private DateTime _dateReceived;
         [ObservableProperty]
-        private int _userId;
+        private Guid _userId;
 
         [RelayCommand]
         private async Task NavigateToEditIncome()
@@ -82,7 +82,7 @@ namespace FinanceMAUI.ViewModels
                 });
         }
 
-        private async Task GetIncome(int userId, int incomeId)
+        private async Task GetIncome(Guid userId, int incomeId)
         {
             var @income = await _userService.GetIncome(userId, incomeId);
 
@@ -115,7 +115,7 @@ namespace FinanceMAUI.ViewModels
 
         public  void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            int userId = (int) query["UserId"];
+            Guid userId = (Guid) query["UserId"];
             int incomeId = (int) query["IncomeId"];
 
             UserId = userId;

@@ -19,7 +19,7 @@ namespace FinanceMAUI.Repositories
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<UserModel?> GetUser(int id)
+        public async Task<UserModel?> GetUser(Guid id)
         {
             using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
 
@@ -37,7 +37,7 @@ namespace FinanceMAUI.Repositories
             }
         }
 
-        public async Task<IncomeModel?> GetIncome(int userId, int incomeId)
+        public async Task<IncomeModel?> GetIncome(Guid userId, int incomeId)
         {
             using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
 
@@ -55,7 +55,7 @@ namespace FinanceMAUI.Repositories
             }
         }
 
-        public async Task<decimal> GetCurrentBalance(int id)
+        public async Task<decimal> GetCurrentBalance(Guid id)
         {
             using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
 
@@ -73,7 +73,7 @@ namespace FinanceMAUI.Repositories
             //}
         }
 
-        public async Task<List<IncomeModel>> GetIncomes(int userId)
+        public async Task<List<IncomeModel>> GetIncomes(Guid userId)
         {
             using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
 
@@ -91,7 +91,7 @@ namespace FinanceMAUI.Repositories
             }
         }
 
-        public async Task<bool> CheckFinancialSummary(int id)
+        public async Task<bool> CheckFinancialSummary(Guid id)
         {
             using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
 
@@ -144,7 +144,7 @@ namespace FinanceMAUI.Repositories
             return false;
         }
 
-        public async Task<bool> DeleteIncome(int userId, int incomeId)
+        public async Task<bool> DeleteIncome(Guid userId, int incomeId)
         {
             using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
 

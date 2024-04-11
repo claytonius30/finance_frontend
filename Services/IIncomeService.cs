@@ -9,9 +9,9 @@ namespace FinanceMAUI.Services
 {
     public interface IIncomeService
     {
-        Task<IncomeModel?> GetIncome(int id);
+        Task<IncomeModel?> GetIncome(Guid id);
 
-        Task<List<IncomeModel>> GetIncomes(int id);
+        Task<List<IncomeModel>> GetIncomes(Guid id);
         
     }
 }

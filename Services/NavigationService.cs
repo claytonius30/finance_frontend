@@ -9,7 +9,7 @@ namespace FinanceMAUI.Services
 {
     public class NavigationService : INavigationService
     {
-        public async Task GoToUserIncomes(int userId)
+        public async Task GoToUserIncomes(Guid userId)
         {
             var parameters = new Dictionary<string, object> { { "UserId", userId} };
             await Shell.Current.GoToAsync("incomes", parameters);
@@ -25,13 +25,13 @@ namespace FinanceMAUI.Services
             await Shell.Current.GoToAsync("income/edit", navigationParameter);
         }
 
-        public async Task GoToIncomeDetail(int userId, int incomeId)
+        public async Task GoToIncomeDetail(Guid userId, int incomeId)
         {
             var parameters = new Dictionary<string, object> { { "UserId", userId }, { "IncomeId", incomeId } };
             await Shell.Current.GoToAsync("income", parameters);
         }
 
-        public async Task GoToAddIncome(int userId)
+        public async Task GoToAddIncome(Guid userId)
         {
             var parameters = new Dictionary<string, object> { { "UserId", userId } };
             await Shell.Current.GoToAsync("income/add", parameters);

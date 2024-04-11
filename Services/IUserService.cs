@@ -9,20 +9,20 @@ namespace FinanceMAUI.Services
 {
     public interface IUserService
     {
-        Task<UserModel?> GetUser(int id);
+        Task<UserModel?> GetUser(Guid id);
 
-        Task<decimal> GetCurrentBalance(int id);
+        Task<decimal> GetCurrentBalance(Guid id);
 
-        Task<IncomeModel?> GetIncome(int userid, int incomeId);
+        Task<IncomeModel?> GetIncome(Guid userid, int incomeId);
 
-        Task<List<IncomeModel>> GetIncomes(int id);
+        Task<List<IncomeModel>> GetIncomes(Guid id);
 
-        Task<bool> CheckFinancialSummary(int id);
+        Task<bool> CheckFinancialSummary(Guid id);
 
         Task<bool> CreateIncome(IncomeModel model);
 
         Task<bool> EditIncome(IncomeModel model);
 
-        Task<bool> DeleteIncome(int userId, int incomeId);
+        Task<bool> DeleteIncome(Guid userId, int incomeId);
     }
 }

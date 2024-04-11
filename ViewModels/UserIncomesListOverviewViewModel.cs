@@ -20,7 +20,7 @@ namespace FinanceMAUI.ViewModels
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
         [ObservableProperty]
-        private int _userId;
+        private Guid _userId;
 
 
         [ObservableProperty]
@@ -70,7 +70,7 @@ namespace FinanceMAUI.ViewModels
                 });
         }
 
-        private async Task GetIncomes(int id)
+        private async Task GetIncomes(Guid id)
         {
             List<IncomeModel> incomes = await _userService.GetIncomes(id);
             List<UserIncomesListItemViewModel> listItems = new();
@@ -95,7 +95,7 @@ namespace FinanceMAUI.ViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            int userId = (int) query["UserId"];
+            Guid userId = (Guid) query["UserId"];
 
             UserId = userId;
             //await GetIncomes(Id);

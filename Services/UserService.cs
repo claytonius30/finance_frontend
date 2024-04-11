@@ -17,19 +17,19 @@ namespace FinanceMAUI.Services
             _userRepository = userRepository;
         }
 
-        public Task<UserModel?> GetUser(int id)
+        public Task<UserModel?> GetUser(Guid id)
             => _userRepository.GetUser(id);
 
-        public Task<decimal> GetCurrentBalance(int id)
+        public Task<decimal> GetCurrentBalance(Guid id)
             => _userRepository.GetCurrentBalance(id);
 
-        public Task<IncomeModel?> GetIncome(int userId, int incomeId)
+        public Task<IncomeModel?> GetIncome(Guid userId, int incomeId)
             => _userRepository.GetIncome(userId, incomeId);
 
-        public Task<List<IncomeModel>> GetIncomes(int id)
+        public Task<List<IncomeModel>> GetIncomes(Guid id)
             => _userRepository.GetIncomes(id);
 
-        public Task<bool> CheckFinancialSummary(int id)
+        public Task<bool> CheckFinancialSummary(Guid id)
             => _userRepository.CheckFinancialSummary(id);
 
         public Task<bool> CreateIncome(IncomeModel model)
@@ -38,7 +38,7 @@ namespace FinanceMAUI.Services
         public Task<bool> EditIncome(IncomeModel model)
             => _userRepository.EditIncome(model);
 
-        public Task<bool> DeleteIncome(int userId, int incomeId)
+        public Task<bool> DeleteIncome(Guid userId, int incomeId)
         => _userRepository.DeleteIncome(userId, incomeId);
     }
 }

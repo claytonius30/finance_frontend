@@ -20,7 +20,7 @@ namespace FinanceMAUI.ViewModels
         private readonly INavigationService _navigationService;
 
         [ObservableProperty]
-        private int _id;
+        private Guid _id;
         [ObservableProperty]
         private string _firstName;
         [ObservableProperty]
@@ -65,7 +65,7 @@ namespace FinanceMAUI.ViewModels
             _userService = userService;
             _navigationService = navigationService;
 
-            Id = 3;
+            //Id = (Guid) 64cfed22-96ed-45a4-3524-08dc5a68942a;
             //GetUser(Id);
             //GetCurrentBalance(Id);
             //Id = 0;
@@ -92,7 +92,7 @@ namespace FinanceMAUI.ViewModels
                 });
         }
 
-        private async Task GetUser(int id)
+        private async Task GetUser(Guid id)
         {
             var @user = await _userService.GetUser(id);
 
@@ -102,14 +102,14 @@ namespace FinanceMAUI.ViewModels
             }
         }
 
-        private async Task CheckFinancialSummary(int id)
+        private async Task CheckFinancialSummary(Guid id)
         {
             bool checkSummary = await _userService.CheckFinancialSummary(id);
 
             MapUserSummary(checkSummary);
         }
 
-        private async Task GetCurrentBalance(int id)
+        private async Task GetCurrentBalance(Guid id)
         {
             var balance = await _userService.GetCurrentBalance(id);
 

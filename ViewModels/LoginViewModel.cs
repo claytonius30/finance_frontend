@@ -20,7 +20,6 @@ namespace FinanceMAUI.ViewModels
         [RelayCommand]
         public async void Login()
         {
-
         }
     }
 }
