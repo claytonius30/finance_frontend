@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FinanceMAUI.ViewModels
 {
-    public class WeatherForecastViewModel : ViewModelBase
+    public partial class WeatherForecastViewModel : ViewModelBase
     {
         private readonly ClientService _clientService;
 

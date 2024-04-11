@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FinanceMAUI.MainPage"
              xmlns:vm="clr-namespace:FinanceMAUI.ViewModels"
-             xmlns:DataType="vm.MainPageViewModel">
+             x:DataType="vm:MainPageViewModel">
 
     <VerticalStackLayout Margin="20">
         <HorizontalStackLayout Spacing="20">
-            <Button Text="Weather" IsVisible="{Binding IsAuthenticated}" Command="{Binding GoToWeatherForecast}" />
+            <Button Text="Weather" IsVisible="{Binding IsAuthenticated}" Command="{Binding GoToWeatherForecastCommand}" />
             <Button Text="Logout" IsVisible="{Binding IsAuthenticated}" Command="{Binding LogoutCommand}" Background="IndianRed" />
-            <Label TextColor="CadetBlue" FontAttributes="Bold" Text="{Binding UserName, StringFormat='Hello {0}'}" Margin="0,0,0,0" />
+            <Label TextColor="CadetBlue" FontAttributes="Bold" Text="{Binding UserName, StringFormat='Hello {0}'}" Margin="0,0,0,0" HorizontalOptions="CenterAndExpand" />
         </HorizontalStackLayout>
         <Image Source="dotnet_bot.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" />
         <Label Text="Please Create an Account" Margin="0,0,0,10" />

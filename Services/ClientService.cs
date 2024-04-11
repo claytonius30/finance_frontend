@@ -13,6 +13,7 @@ namespace FinanceMAUI.Services
     public class ClientService
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        //private AndroidHttpMessageHandler = private new AndroidHttpMessageHandler();
 
         public ClientService(IHttpClientFactory httpClientFactory)
         {
@@ -22,7 +23,7 @@ namespace FinanceMAUI.Services
         public async Task Register(RegisterModel model)
         {
             // model.Email = "maui@gmail.com"; model.Password = "Maui@123";
-            var httpClient = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+            var httpClient = _httpClientFactory.CreateClient("custom-httpclient");
             var result = await httpClient.PostAsJsonAsync("/register", model);
             if (result.IsSuccessStatusCode)
             {
@@ -34,7 +35,7 @@ namespace FinanceMAUI.Services
         public async Task Login(LoginModel model)
         {
             // model.Email = "maui@gmail.com"; model.Password = "Maui@123";
-            var httpClient = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+            var httpClient = _httpClientFactory.CreateClient("custom-httpclient");
             var result = await httpClient.PostAsJsonAsync("/login", model);
             var response = await result.Content.ReadFromJsonAsync<LoginResponseModel>();
             if (result is not null)
@@ -56,9 +57,9 @@ namespace FinanceMAUI.Services
             if (serializedLoginResponseInStorage is null) return null;
 
             string token = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.AccessToken!;
-            var httpClient = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+            var httpClient = _httpClientFactory.CreateClient("custom-httpclient");
             httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            var result = await httpClient.GetFromJsonAsync<WeatherForecast[]>("/weatherForecast");
+            var result = await httpClient.GetFromJsonAsync<WeatherForecast[]>("/WeatherForecast");
             return result!;
         }
     }

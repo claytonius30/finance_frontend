@@ -67,7 +67,7 @@ namespace FinanceMAUI.ViewModels
         }
         private async void GetUserNameFromSecuredStorage()
         {
-            if (!string.IsNullOrEmpty(UserName) && _userName! != "Guest")
+            if (!string.IsNullOrEmpty(UserName) && UserName! != "Guest")
             {
                 IsAuthenticated = true;
                 return;
