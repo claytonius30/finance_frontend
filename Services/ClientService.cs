@@ -51,6 +51,9 @@ namespace FinanceMAUI.Services
             }
         }
 
+
+
+
         public async Task<WeatherForecast[]> GetWeatherForeCastData()
         {
             var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");

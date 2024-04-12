@@ -65,8 +65,8 @@ namespace FinanceMAUI.ViewModels
             _userService = userService;
             _navigationService = navigationService;
 
-            //Id = (Guid) 64cfed22-96ed-45a4-3524-08dc5a68942a;
-            //GetUser(Id);
+            Id = Guid.Parse("64cfed22-96ed-45a4-3524-08dc5a68942a");
+            ////GetUser(Id);
             //GetCurrentBalance(Id);
             //Id = 0;
             //FirstName = "John";
@@ -119,11 +119,11 @@ namespace FinanceMAUI.ViewModels
             //}
         }
 
-        private void MapUserData(UserModel @user)
+        private void MapUserData(UserModel user)
         {
-            Id = @user.Id;
-            FirstName = @user.FirstName;
-            LastName = @user.LastName;
+            Id = user.Id;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
             FullName = FirstName + " " + LastName;
         }
 

@@ -8,10 +8,10 @@ namespace FinanceMAUI.Messages
 {
     public class StatusChangedMessage
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Status { get; set; }
 
-        public StatusChangedMessage(int id, string status)
+        public StatusChangedMessage(Guid id, string status)
         {
             Id = id;
             Status = status;

@@ -83,6 +83,19 @@ namespace FinanceMAUI.ViewModels
 
         //private bool CanAddIncome() => !string.IsNullOrWhiteSpace(AddedIncome);
 
+        [RelayCommand]
+        private async Task Back()
+        {
+            if (IncomeId > 0)
+            {
+                await _navigationService.GoToUserIncomes(UserId);
+            }
+            else
+            {
+                await _navigationService.GoToOverview();
+            }
+        }
+
         [RelayCommand(CanExecute = nameof(CanSubmitIncome))]
         private async Task Submit()
         {
@@ -113,7 +126,9 @@ namespace FinanceMAUI.ViewModels
                 {
                     WeakReferenceMessenger.Default.Send(new IncomeAddedOrChangedMessage());
                     await _dialogService.Notify("Success", "The income is updated.");
-                    await _navigationService.GoBack();
+                    //await _navigationService.GoBack();
+                    //await _navigationService.GoToUserIncomes(UserId)
+                    await _navigationService.GoToOverview();;
                 }
                 else
                 {

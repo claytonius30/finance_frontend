@@ -56,6 +56,12 @@ namespace FinanceMAUI.ViewModels
             }
         }
 
+        [RelayCommand]
+        private async Task Back()
+        {
+            await _navigationService.GoToUserIncomes(UserId);
+        }
+
         public IncomeDetailViewModel(IUserService userService, INavigationService navigationService, IDialogService dialogService)
         {
             _userService = userService;
@@ -84,21 +90,21 @@ namespace FinanceMAUI.ViewModels
 
         private async Task GetIncome(Guid userId, int incomeId)
         {
-            var @income = await _userService.GetIncome(userId, incomeId);
+            var income = await _userService.GetIncome(userId, incomeId);
 
-            if (@income != null)
+            if (income != null)
             {
-                MapIncomeData(@income);
+                MapIncomeData(income);
             }
         }
 
-        private void MapIncomeData(IncomeModel @income)
+        private void MapIncomeData(IncomeModel income)
         {
-            IncomeId = @income.IncomeId;
-            Source = @income.Source;
-            Amount = @income.Amount;
-            DateReceived = @income.DateReceived;
-            UserId = @income.Id;
+            IncomeId = income.IncomeId;
+            Source = income.Source;
+            Amount = income.Amount;
+            DateReceived = income.DateReceived;
+            UserId = income.Id;
         }
 
         private IncomeModel MapToIncomeModel(IncomeDetailViewModel incomeViewModel)

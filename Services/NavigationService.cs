@@ -1,4 +1,5 @@
 ﻿using FinanceMAUI.Models;
+using FinanceMAUI.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace FinanceMAUI.Services
         }
 
         public Task GoToOverview()
-            => Shell.Current.GoToAsync("//userview");
+            => Shell.Current.GoToAsync("//user");
 
         public Task GoBack()
             => Shell.Current.GoToAsync("..");

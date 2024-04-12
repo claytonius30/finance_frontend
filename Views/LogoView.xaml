@@ -7,6 +7,7 @@
             HeightRequest="40"
             HorizontalOptions="Start"
             Source="globoticket_logo.png"
-            VerticalOptions="Center" />
+            VerticalOptions="Center"
+            />
     </ContentView.Content>
 </ContentView>

@@ -21,7 +21,7 @@ namespace FinanceMAUI.Repositories
 
         public async Task<UserModel?> GetUser(Guid id)
         {
-            using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+            using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
 
             try
             {
@@ -39,15 +39,15 @@ namespace FinanceMAUI.Repositories
 
         public async Task<IncomeModel?> GetIncome(Guid userId, int incomeId)
         {
-            using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+            using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
 
             try
             {
-                IncomeModel? @income = await client.GetFromJsonAsync<IncomeModel>(
+                IncomeModel? income = await client.GetFromJsonAsync<IncomeModel>(
                     $"api/User/{userId}/GetIncome/{incomeId}",
                     new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
-                return @income;
+                return income;
             }
             catch (Exception)
             {
@@ -57,7 +57,7 @@ namespace FinanceMAUI.Repositories
 
         public async Task<decimal> GetCurrentBalance(Guid id)
         {
-            using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+            using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
 
             //try
             //{
@@ -75,7 +75,7 @@ namespace FinanceMAUI.Repositories
 
         public async Task<List<IncomeModel>> GetIncomes(Guid userId)
         {
-            using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+            using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
 
             try
             {
@@ -93,7 +93,7 @@ namespace FinanceMAUI.Repositories
 
         public async Task<bool> CheckFinancialSummary(Guid id)
         {
-            using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+            using HttpClient client = _httpClientFactory.CreateClient   ("custom-httpclient");
 
             bool checkIfExist = await client.GetFromJsonAsync<bool>(
                     $"api/User/{id}/CheckFinancialSummary",
@@ -104,7 +104,7 @@ namespace FinanceMAUI.Repositories
 
         public async Task<bool> CreateIncome(IncomeModel model)
         {
-            using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+            using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
 
             try
             {
@@ -125,7 +125,7 @@ namespace FinanceMAUI.Repositories
 
         public async Task<bool> EditIncome(IncomeModel model)
         {
-            using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+            using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
 
             try
             {
@@ -146,7 +146,7 @@ namespace FinanceMAUI.Repositories
 
         public async Task<bool> DeleteIncome(Guid userId, int incomeId)
         {
-            using HttpClient client = _httpClientFactory.CreateClient("FinanceTrackerApiClient");
+            using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
 
             try
             {

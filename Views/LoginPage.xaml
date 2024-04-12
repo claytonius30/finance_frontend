@@ -25,10 +25,17 @@
                             <Label
                                 Grid.Row="3"
                                 Grid.Column="0"
-                                Text="Username" />
-                            <Entry Grid.Row="3"
-                                   Grid.Column="1"
-                                   Text="{Binding UserName}" Placeholder="Username" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" />
+                                Text="Email" />
+                            <Entry
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                Text="{Binding RegisterModel.Email}"
+                                Placeholder="Username"
+                                TextColor="Black"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center"
+                                HorizontalOptions="FillAndExpand"
+                                Margin="0,0,20,0" />
 
                             <!-- Row 1 Username -->
                             <Label
@@ -36,8 +43,14 @@
                                 Grid.Column="0"
                                 Text="Password" />
                             <Entry Grid.Row="4"
-                               Grid.Column="1"
-                               Text="{Binding Password}" Placeholder="Password" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" />
+                                Grid.Column="1"
+                                Text="{Binding RegisterModel.Password}"
+                                Placeholder="Password"
+                                TextColor="Black"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center"
+                                HorizontalOptions="FillAndExpand"
+                                Margin="0,0,20,0" />
 
                             <StackLayout Grid.Row="5" Grid.Column="0" Orientation="Horizontal" Margin="0,10,0,0" Padding="0">
                                 <CheckBox IsChecked="False" />

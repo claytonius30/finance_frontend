@@ -9,6 +9,10 @@
     <ContentPage.Resources>
         <toolkit:ListToStringConverter x:Key="ListToStringConverter" Separator=", " />
     </ContentPage.Resources>
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackCommand}" />
+    </Shell.BackButtonBehavior>
+
     <Grid>
         <ScrollView>
             <Grid>

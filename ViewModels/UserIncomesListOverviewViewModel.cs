@@ -38,6 +38,12 @@ namespace FinanceMAUI.ViewModels
             }
         }
 
+        [RelayCommand]
+        private async Task Back()
+        {
+            await _navigationService.GoToOverview();
+        }
+
         public UserIncomesListOverviewViewModel(IUserService userService, INavigationService navigationService)
         {
             _userService = userService;
@@ -83,22 +89,25 @@ namespace FinanceMAUI.ViewModels
             Incomes = listItems.ToObservableCollection();
         }
 
-        private UserIncomesListItemViewModel MapIncomeModelToUserIncomesListItemViewModel(IncomeModel @income)
+        private UserIncomesListItemViewModel MapIncomeModelToUserIncomesListItemViewModel(IncomeModel income)
         {
             return new UserIncomesListItemViewModel(
-                @income.IncomeId,
-                @income.Source,
-                @income.Amount,
-                @income.DateReceived,
-                @income.Id);
+                income.IncomeId,
+                income.Source,
+                income.Amount,
+                income.DateReceived,
+                income.Id);
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            Guid userId = (Guid) query["UserId"];
+            if (query.Count > 0)
+            {
+                Guid userId = (Guid)query["UserId"];
 
-            UserId = userId;
-            //await GetIncomes(Id);
+                UserId = userId;
+                //await GetIncomes(Id);
+            }
         }
 
         public async void Receive(IncomeAddedOrChangedMessage message)

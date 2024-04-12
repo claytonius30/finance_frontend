@@ -7,17 +7,41 @@
 
     <VerticalStackLayout Margin="20">
         <HorizontalStackLayout Spacing="20">
-            <Button Text="Weather" IsVisible="{Binding IsAuthenticated}" Command="{Binding GoToWeatherForecastCommand}" />
-            <Button Text="Logout" IsVisible="{Binding IsAuthenticated}" Command="{Binding LogoutCommand}" Background="IndianRed" />
-            <Label TextColor="CadetBlue" FontAttributes="Bold" Text="{Binding UserName, StringFormat='Hello {0}'}" Margin="0,0,0,0" HorizontalOptions="CenterAndExpand" />
+            <Button
+                Text="Weather"
+                IsVisible="{Binding IsAuthenticated}"
+                Command="{Binding GoToWeatherForecastCommand}" />
+            <Button
+                Text="Logout"
+                IsVisible="{Binding IsAuthenticated}"
+                Command="{Binding LogoutCommand}"
+                Background="IndianRed" />
+            <Label
+                TextColor="CadetBlue"
+                FontAttributes="Bold"
+                Text="{Binding UserName, StringFormat='Hello {0}'}"
+                Margin="0,0,0,0"
+                HorizontalOptions="CenterAndExpand" />
         </HorizontalStackLayout>
-        <Image Source="dotnet_bot.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" />
-        <Label Text="Please Create an Account" Margin="0,0,0,10" />
+        <!--<Image Source="dotnet_bot.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" />-->
+        <Label
+            Text="Please Create an Account"
+            Margin="0,0,0,10" />
         <Label Text="Email Address" />
-        <Entry Text="{Binding RegisterModel.Email}" Margin="0,0,0,5" />
+        <Entry
+            Text="{Binding RegisterModel.Email}"
+            Margin="0,0,0,5" />
         <Label Text="Password" />
-        <Entry Text="{Binding RegisterModel.Password}" IsPassword="True" Margin="0,0,0,5" />
-        <Button Text="Register" Command="{Binding RegisterCommand}" TextColor="White" Background="Black" CornerRadius="0" Margin="0,0,0,5" />
+        <Entry
+            Text="{Binding RegisterModel.Password}"
+            IsPassword="True" Margin="0,0,0,5" />
+        <Button
+            Text="Register"
+            Command="{Binding RegisterCommand}"
+            TextColor="White"
+            Background="Black"
+            CornerRadius="0"
+            Margin="0,0,0,5" />
 
 
         <Label Text="Please Login an Account" Margin="0,0,0,10" />
@@ -26,7 +50,11 @@
         <Label Text="Password" />
         <Entry Text="{Binding LoginModel.Password}" Margin="0,0,0,5" />
         <Button Text="Login" Command="{Binding LoginCommand}" CornerRadius="0" />
-        
-    </VerticalStackLayout>
 
+        <Grid  BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" 
+               IsVisible="{Binding IsLoading}">
+            <ActivityIndicator IsRunning="{Binding IsLoading}" />
+        </Grid>
+    </VerticalStackLayout>
+    
 </ContentPage>
