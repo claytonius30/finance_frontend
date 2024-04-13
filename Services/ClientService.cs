@@ -13,7 +13,7 @@ namespace FinanceMAUI.Services
     public class ClientService
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        //private AndroidHttpMessageHandler = private new AndroidHttpMessageHandler();
+        //private AndroidHttpMessageHandler = private new AndroidHttpMessageHandler
 
         public ClientService(IHttpClientFactory httpClientFactory)
         {
@@ -38,18 +38,41 @@ namespace FinanceMAUI.Services
             var httpClient = _httpClientFactory.CreateClient("custom-httpclient");
             var result = await httpClient.PostAsJsonAsync("/login", model);
             var response = await result.Content.ReadFromJsonAsync<LoginResponseModel>();
+
             if (result is not null)
             {
+                // Can't access /login built-in Identity endpoint to retrieve the UserId..
+                // so must use custom UserController endpoint using email
+                //string userId = await GetGuid(model.Email);
                 var serializeResponse = JsonSerializer.Serialize(
                     new LoginResponseModel()
                     {
                         AccessToken = response.AccessToken,
                         RefreshToken = response.RefreshToken,
                         UserName = model.Email
+                        //UserId = userId
                     });
                 await SecureStorage.Default.SetAsync("Authentication", serializeResponse);
             }
         }
+
+        //public async Task<Guid> GetGuid(string email)
+        //{
+        //    using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
+
+        //    //try
+        //    //{
+        //        Guid userId = await client.GetFromJsonAsync<Guid>(
+        //            $"api/User/{email}/GetGuid",
+        //            new JsonSerializerOptions(JsonSerializerDefaults.Web));
+
+        //        return userId;
+        //    //}
+        //    //catch (Exception)
+        //    //{
+        //    //    return null;
+        //    //}
+        //}
 
 
 

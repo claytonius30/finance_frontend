@@ -44,12 +44,20 @@
             Margin="0,0,0,5" />
 
 
-        <Label Text="Please Login an Account" Margin="0,0,0,10" />
+        <Label
+            Text="Please Login an Account"
+            Margin="0,0,0,10" />
         <Label Text="Email Address" />
-        <Entry Text="{Binding LoginModel.Email}" Margin="0,0,0,5" />
+        <Entry Text="{Binding LoginModel.Email}"
+               Margin="0,0,0,5" />
         <Label Text="Password" />
-        <Entry Text="{Binding LoginModel.Password}" Margin="0,0,0,5" />
-        <Button Text="Login" Command="{Binding LoginCommand}" CornerRadius="0" />
+        <Entry
+            Text="{Binding LoginModel.Password}"
+            Margin="0,0,0,5" />
+        <Button
+            Text="Login"
+            Command="{Binding LoginCommand}"
+            CornerRadius="0" />
 
         <Grid  BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" 
                IsVisible="{Binding IsLoading}">

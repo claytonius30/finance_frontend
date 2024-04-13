@@ -19,17 +19,35 @@ namespace FinanceMAUI.Repositories
             _httpClientFactory = httpClientFactory;
         }
 
+        public async Task<Guid> GetGuid(string email)
+        {
+            using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
+
+            //try
+            //{
+            Guid userId = await client.GetFromJsonAsync<Guid>(
+                $"api/User/{email}/GetGuid",
+                new JsonSerializerOptions(JsonSerializerDefaults.Web));
+
+            return userId;
+            //}
+            //catch (Exception)
+            //{
+            //    return null;
+            //}
+        }
+
         public async Task<UserModel?> GetUser(Guid id)
         {
             using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
 
             try
             {
-                UserModel? @user = await client.GetFromJsonAsync<UserModel>(
+                UserModel? user = await client.GetFromJsonAsync<UserModel>(
                     $"api/User/{id}",
                     new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
-                return @user;
+                return user;
             }
             catch (Exception)
             {

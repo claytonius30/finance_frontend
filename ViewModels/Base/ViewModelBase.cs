@@ -1,9 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FinanceMAUI.Models;
+using FinanceMAUI.Services;
+using FinanceMAUI.ViewModels;
+using FinanceMAUI.ViewModels.Base;
+using FinanceMAUI.Views;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FinanceMAUI.ViewModels.Base

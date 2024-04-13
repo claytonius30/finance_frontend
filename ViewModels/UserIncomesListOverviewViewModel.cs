@@ -41,7 +41,7 @@ namespace FinanceMAUI.ViewModels
         [RelayCommand]
         private async Task Back()
         {
-            await _navigationService.GoToOverview();
+            await _navigationService.GoToUserDetail(UserId);
         }
 
         public UserIncomesListOverviewViewModel(IUserService userService, INavigationService navigationService)
@@ -80,9 +80,9 @@ namespace FinanceMAUI.ViewModels
         {
             List<IncomeModel> incomes = await _userService.GetIncomes(id);
             List<UserIncomesListItemViewModel> listItems = new();
-            foreach (var @income in incomes)
+            foreach (var income in incomes)
             {
-                listItems.Insert(0, MapIncomeModelToUserIncomesListItemViewModel(@income));
+                listItems.Insert(0, MapIncomeModelToUserIncomesListItemViewModel(income));
             }
 
             Incomes.Clear();

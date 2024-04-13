@@ -51,7 +51,7 @@ namespace FinanceMAUI.ViewModels
                 if (await _userService.DeleteIncome(UserId, IncomeId))
                 {
                     WeakReferenceMessenger.Default.Send(new IncomeDeletedMessage(UserId, IncomeId));
-                    await _navigationService.GoToOverview();
+                    await _navigationService.GoToUserDetail(UserId);
                 }
             }
         }

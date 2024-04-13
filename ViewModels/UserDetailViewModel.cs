@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace FinanceMAUI.ViewModels
 {
-    public partial class UserDetailViewModel : ViewModelBase, IRecipient<IncomeAddedOrChangedMessage>, IRecipient<IncomeDeletedMessage>
+    public partial class UserDetailViewModel : ViewModelBase, IQueryAttributable, IRecipient<IncomeAddedOrChangedMessage>, IRecipient<IncomeDeletedMessage>
     {
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
@@ -64,8 +64,8 @@ namespace FinanceMAUI.ViewModels
         {
             _userService = userService;
             _navigationService = navigationService;
-
-            Id = Guid.Parse("64cfed22-96ed-45a4-3524-08dc5a68942a");
+                              
+            //Id = Guid.Parse("64cfed22-96ed-45a4-3524-08dc5a68942a");
             ////GetUser(Id);
             //GetCurrentBalance(Id);
             //Id = 0;
@@ -94,11 +94,11 @@ namespace FinanceMAUI.ViewModels
 
         private async Task GetUser(Guid id)
         {
-            var @user = await _userService.GetUser(id);
+            var user = await _userService.GetUser(id);
 
-            if (@user != null)
+            if (user != null)
             {
-                MapUserData(@user);
+                MapUserData(user);
             }
         }
 
@@ -137,12 +137,28 @@ namespace FinanceMAUI.ViewModels
             CheckSummary = checkSummary;
         }
 
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (query.Count > 0)
+            {
+                Guid userId = (Guid) query["UserId"];
+
+                Id = userId;
+                //await GetIncomes(Id);
+            }
+        }
+
         public void Receive(IncomeAddedOrChangedMessage message)
         {
             
         }
 
         public void Receive(IncomeDeletedMessage message)
+        {
+            
+        }
+
+        public void Receive(LoginMessage message)
         {
             
         }

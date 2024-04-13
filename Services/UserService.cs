@@ -17,6 +17,9 @@ namespace FinanceMAUI.Services
             _userRepository = userRepository;
         }
 
+        public  Task<Guid> GetGuid(string email)
+            => _userRepository.GetGuid(email);
+
         public Task<UserModel?> GetUser(Guid id)
             => _userRepository.GetUser(id);
 

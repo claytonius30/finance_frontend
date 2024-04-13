@@ -21,7 +21,7 @@
                             RowDefinitions="*,*,*,*,*,*"
                             RowSpacing="10">
 
-                            <!-- Row 1 Username -->
+                            <!-- Row 1 Login Username -->
                             <Label
                                 Grid.Row="3"
                                 Grid.Column="0"
@@ -29,7 +29,7 @@
                             <Entry
                                 Grid.Row="3"
                                 Grid.Column="1"
-                                Text="{Binding RegisterModel.Email}"
+                                Text="{Binding LoginModel.Email}"
                                 Placeholder="Username"
                                 TextColor="Black"
                                 FontAttributes="Bold"
@@ -37,20 +37,21 @@
                                 HorizontalOptions="FillAndExpand"
                                 Margin="0,0,20,0" />
 
-                            <!-- Row 1 Username -->
+                            <!-- Row 2 Login Email -->
                             <Label
                                 Grid.Row="4"
                                 Grid.Column="0"
                                 Text="Password" />
                             <Entry Grid.Row="4"
                                 Grid.Column="1"
-                                Text="{Binding RegisterModel.Password}"
+                                Text="{Binding LoginModel.Password}"
                                 Placeholder="Password"
                                 TextColor="Black"
                                 FontAttributes="Bold"
                                 VerticalOptions="Center"
                                 HorizontalOptions="FillAndExpand"
-                                Margin="0,0,20,0" />
+                                Margin="0,0,20,0"
+                                IsPassword="True" />
 
                             <StackLayout Grid.Row="5" Grid.Column="0" Orientation="Horizontal" Margin="0,10,0,0" Padding="0">
                                 <CheckBox IsChecked="False" />
@@ -79,9 +80,16 @@
                         <Button
                             Margin="0,10,0,0"
                             Text="Sign In"
-                            Command="{Binding LogInCommand}" />
+                            Command="{Binding LoginCommand}" />
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="0,40,0,0" Padding="0">
+                    <StackLayout>
+                        <Button
+                            Text="Logout"
+                            IsVisible="{Binding IsAuthenticated}"
+                            Command="{Binding LogoutCommand}"
+                            Background="IndianRed" />
+                    </StackLayout>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="0,40,0,0" Padding="0">
                         <Label
                             Text="New User?       "
                             TextColor="DarkGray"

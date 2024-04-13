@@ -10,6 +10,14 @@ namespace FinanceMAUI.Services
 {
     public class NavigationService : INavigationService
     {
+
+
+        public async Task GoToUserDetail(Guid userId)
+        {
+            var parameters = new Dictionary<string, object> { { "UserId", userId } };
+            await Shell.Current.GoToAsync("user", parameters);
+        }
+
         public async Task GoToUserIncomes(Guid userId)
         {
             var parameters = new Dictionary<string, object> { { "UserId", userId} };

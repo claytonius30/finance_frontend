@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using FinanceMAUI.Messages;
 using FinanceMAUI.Models;
 using FinanceMAUI.Services;
 using FinanceMAUI.ViewModels.Base;
@@ -15,6 +17,11 @@ namespace FinanceMAUI.ViewModels
 {
     public partial class LoginViewModel : ViewModelBase
     {
+        private readonly ClientService _clientService;
+        private readonly IUserService _userService;
+        private readonly INavigationService _navigationService;
+        private readonly IDialogService _dialogService;
+
         [ObservableProperty]
         private RegisterModel _registerModel;
 
@@ -24,18 +31,21 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private string _userName;
 
+        public Guid UserId { get; set; }
+
         [ObservableProperty]
         private bool _isAuthenticated;
 
-        private readonly ClientService _clientService;
-
-        public LoginViewModel(ClientService clientService)
+        public LoginViewModel(ClientService clientService, IUserService userService, INavigationService navigationService, IDialogService dialogService)
         {
             _clientService = clientService;
+            _userService = userService;
+            _navigationService = navigationService;
             RegisterModel = new();
             LoginModel = new();
             IsAuthenticated = false;
             GetUserNameFromSecuredStorage();
+            _dialogService = dialogService;
         }
 
         [RelayCommand]
@@ -49,6 +59,13 @@ namespace FinanceMAUI.ViewModels
         {
             await _clientService.Login(LoginModel);
             GetUserNameFromSecuredStorage();
+            if (IsAuthenticated)
+            {
+                Guid userId = await _userService.GetGuid(UserName);
+                WeakReferenceMessenger.Default.Send(new LoginMessage());
+                await _dialogService.Notify("Success", "You are logged in.");
+                await _navigationService.GoToUserDetail(userId);
+            }
         }
 
         [RelayCommand]
@@ -70,14 +87,16 @@ namespace FinanceMAUI.ViewModels
             var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");
             if (serializedLoginResponseInStorage != null)
             {
+                string stringId;
                 UserName = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.UserName!;
+                //stringId = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.UserId!;
+                //UserId = Guid.Parse(stringId);
                 IsAuthenticated = true;
                 return;
             }
             UserName = "Guest";
             IsAuthenticated = false;
         }
-
 
         [RelayCommand]
         private async Task GoToWeatherForecast()

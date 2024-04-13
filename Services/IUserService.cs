@@ -9,6 +9,7 @@ namespace FinanceMAUI.Services
 {
     public interface IUserService
     {
+        Task<Guid> GetGuid(string email);
         Task<UserModel?> GetUser(Guid id);
 
         Task<decimal> GetCurrentBalance(Guid id);

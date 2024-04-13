@@ -92,7 +92,7 @@ namespace FinanceMAUI.ViewModels
             }
             else
             {
-                await _navigationService.GoToOverview();
+                await _navigationService.GoToUserDetail(UserId);
             }
         }
 
@@ -113,7 +113,7 @@ namespace FinanceMAUI.ViewModels
                 {
                     WeakReferenceMessenger.Default.Send(new IncomeAddedOrChangedMessage());
                     await _dialogService.Notify("Success", "The income is added.");
-                    await _navigationService.GoToOverview();
+                    await _navigationService.GoToUserDetail(UserId);
                 }
                 else
                 {
@@ -128,7 +128,7 @@ namespace FinanceMAUI.ViewModels
                     await _dialogService.Notify("Success", "The income is updated.");
                     //await _navigationService.GoBack();
                     //await _navigationService.GoToUserIncomes(UserId)
-                    await _navigationService.GoToOverview();;
+                    await _navigationService.GoToUserDetail(UserId);
                 }
                 else
                 {
