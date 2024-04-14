@@ -5,6 +5,10 @@
              xmlns:vm="clr-namespace:FinanceMAUI.ViewModels"
              xmlns:views="clr-namespace:FinanceMAUI.Views"
              Title="LoginPage">
+    <Shell.TitleView>
+        <views:SimpleLogoView />
+    </Shell.TitleView>
+
     <Grid>
         <ScrollView>
             <Grid>
@@ -82,13 +86,13 @@
                             Text="Sign In"
                             Command="{Binding LoginCommand}" />
                     </StackLayout>
-                    <StackLayout>
+                    <!--<StackLayout>
                         <Button
                             Text="Logout"
                             IsVisible="{Binding IsAuthenticated}"
                             Command="{Binding LogoutCommand}"
                             Background="IndianRed" />
-                    </StackLayout>
+                    </StackLayout>-->
                         <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="0,40,0,0" Padding="0">
                         <Label
                             Text="New User?       "

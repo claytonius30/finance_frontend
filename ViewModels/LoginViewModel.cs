@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace FinanceMAUI.ViewModels
 {
-    public partial class LoginViewModel : ViewModelBase
+    public partial class LoginViewModel : ViewModelBase, IRecipient<LogoutMessage>
     {
         private readonly ClientService _clientService;
         private readonly IUserService _userService;
@@ -31,8 +31,6 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private string _userName;
 
-        public Guid UserId { get; set; }
-
         [ObservableProperty]
         private bool _isAuthenticated;
 
@@ -46,6 +44,7 @@ namespace FinanceMAUI.ViewModels
             IsAuthenticated = false;
             GetUserNameFromSecuredStorage();
             _dialogService = dialogService;
+            WeakReferenceMessenger.Default.Register(this);
         }
 
         [RelayCommand]
@@ -68,13 +67,13 @@ namespace FinanceMAUI.ViewModels
             }
         }
 
-        [RelayCommand]
-        private async Task Logout()
+        //[RelayCommand]
+        private void Logout()
         {
             SecureStorage.Default.Remove("Authentication");
             IsAuthenticated = false;
             UserName = "Guest";
-            await Shell.Current.GoToAsync("..");
+            //await Shell.Current.GoToAsync("..");
         }
         
         private async void GetUserNameFromSecuredStorage()
@@ -87,10 +86,7 @@ namespace FinanceMAUI.ViewModels
             var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");
             if (serializedLoginResponseInStorage != null)
             {
-                string stringId;
                 UserName = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.UserName!;
-                //stringId = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.UserId!;
-                //UserId = Guid.Parse(stringId);
                 IsAuthenticated = true;
                 return;
             }
@@ -102,6 +98,11 @@ namespace FinanceMAUI.ViewModels
         private async Task GoToWeatherForecast()
         {
             await Shell.Current.GoToAsync(nameof(WeatherForecastPage));
+        }
+
+        public void Receive(LogoutMessage message)
+        {
+            Logout();
         }
     }
 }

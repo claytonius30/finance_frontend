@@ -11,7 +11,7 @@
     <Shell.TitleView>
         <views:LogoView />
     </Shell.TitleView>
-    
+
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate views:LoginPage}"

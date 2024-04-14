@@ -47,7 +47,7 @@ namespace FinanceMAUI.Services
         }
 
         public Task GoToOverview()
-            => Shell.Current.GoToAsync("//user");
+            => Shell.Current.GoToAsync("//login");
 
         public Task GoBack()
             => Shell.Current.GoToAsync("..");

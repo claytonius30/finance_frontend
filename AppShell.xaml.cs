@@ -1,4 +1,7 @@
-﻿using FinanceMAUI.Views;
+﻿using FinanceMAUI.ViewModels;
+using System;
+using Microsoft.Maui.Controls;
+using FinanceMAUI.Views;
 
 namespace FinanceMAUI
 {
@@ -13,7 +16,7 @@ namespace FinanceMAUI
             Routing.RegisterRoute("income", typeof(IncomeDetailPage));
             Routing.RegisterRoute("income/add", typeof(IncomeAddEditPage));
             Routing.RegisterRoute("income/edit", typeof(IncomeAddEditPage));
-            
+
             Routing.RegisterRoute(nameof(WeatherForecastPage), typeof(WeatherForecastPage));
         }
     }

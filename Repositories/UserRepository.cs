@@ -21,11 +21,18 @@ namespace FinanceMAUI.Repositories
 
         public async Task<Guid> GetGuid(string email)
         {
-            using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
+            //using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
+
+            var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");
+            //if (serializedLoginResponseInStorage is null) return null;
+
+            string token = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.AccessToken!;
+            var httpClient = _httpClientFactory.CreateClient("custom-httpclient");
+            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
             //try
             //{
-            Guid userId = await client.GetFromJsonAsync<Guid>(
+            Guid userId = await httpClient.GetFromJsonAsync<Guid>(
                 $"api/User/{email}/GetGuid",
                 new JsonSerializerOptions(JsonSerializerDefaults.Web));
 

@@ -3,11 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FinanceMAUI.Views.LogoView">
     <ContentView.Content>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <!-- Define two columns: one for the image and one for the button -->
+            <ColumnDefinition Width="Auto" />
+            <!-- Auto width for the image -->
+            <ColumnDefinition Width="*" />
+            <!-- Star width to fill remaining space for the button -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Column 1 Logo -->
         <Image
+            Grid.Column="0"
             HeightRequest="40"
-            HorizontalOptions="Start"
             Source="globoticket_logo.png"
-            VerticalOptions="Center"
-            />
+            VerticalOptions="Center" />
+
+        <!-- column 2 Logout -->
+        <Button 
+            Grid.Column="1"
+            Text="Logout"
+            Clicked="OnLogoutClicked"
+            HorizontalOptions="End"
+            VerticalOptions="Center" />
+        
+    </Grid>
     </ContentView.Content>
 </ContentView>
