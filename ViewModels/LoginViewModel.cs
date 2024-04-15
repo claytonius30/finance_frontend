@@ -245,6 +245,8 @@ namespace FinanceMAUI.ViewModels
         public void Receive(LogoutMessage message)
         {
             Logout();
+            //SignUpLabel();
+            UserName = EmailLogin;
         }
 
         //[RelayCommand]
