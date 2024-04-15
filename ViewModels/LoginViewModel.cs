@@ -37,9 +37,9 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private string _userName;
 
-        //[Required]
-        //[EmailAddress]
-        //[NotifyDataErrorInfo]
+        [Required]
+        [EmailAddress]
+        [NotifyDataErrorInfo]
         [ObservableProperty]
         private string _emailRegister;
 
@@ -49,9 +49,9 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private string _emailLogin;
 
-        //[Required]
-        //[PasswordPropertyText]
-        //[NotifyDataErrorInfo]
+        [Required]
+        [PasswordPropertyText]
+        [NotifyDataErrorInfo]
         [ObservableProperty]
         private string _passwordRegister;
 
@@ -61,15 +61,15 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private string _passwordLogin;
 
-        //[MinLength(1)]
-        //[MaxLength(50)]
-        //[NotifyDataErrorInfo]
+        [MinLength(1)]
+        [MaxLength(50)]
+        [NotifyDataErrorInfo]
         [ObservableProperty]
         private string _firstName;
-        
-        //[MinLength(1)]
-        //[MaxLength(50)]
-        //[NotifyDataErrorInfo]
+
+        [MinLength(1)]
+        [MaxLength(50)]
+        [NotifyDataErrorInfo]
         [ObservableProperty]
         private string _lastName;
 
@@ -107,48 +107,43 @@ namespace FinanceMAUI.ViewModels
         [RelayCommand(CanExecute = nameof(CanRegisterUser))]
         private async Task Register()
         {
-            //ValidateAllProperties();
+            ValidateAllProperties();
             if (Errors.Any())
             {
                 return;
             }
 
-            RegisterModel registerModel = MapDataToRegisterModel();
+        RegisterModel registerModel = MapDataToRegisterModel();
             
-            //if (await _dialogService.Ask(
-            //    "Register User",
-            //    "Confirm user registration?"))
-            //{
-                await _clientService.Register(registerModel);
+            await _clientService.Register(registerModel);
 
-                Guid userId = await _userService.GetGuid(EmailRegister);
+            Guid userId = await _userService.GetGuid(EmailRegister);
 
-                UserModel? newUser = await _userService.GetUser(userId);
+            UserModel? newUser = await _userService.GetUser(userId);
 
-                if (newUser != null)
+            if (newUser != null)
+            {
+                if (FirstName == null && LastName == null)
                 {
-                    if (FirstName == null && LastName == null)
-                    {
-                        newUser.FirstName = EmailRegister;
-                    }
-                    newUser.FirstName = FirstName!;
-                    newUser.LastName = LastName!;
-                    if (await _userService.PutUser(newUser))
-                    {
-                        WeakReferenceMessenger.Default.Send(new UserCreatedMessage());
-                        await _dialogService.Notify("Success", "You have been registered.");
-                        await _navigationService.GoToUserDetail(userId);
-                    }
-                    else
-                    {
-                        await _dialogService.Notify("Failed", "User Registration failed.");
-                    }
+                    newUser.FirstName = EmailRegister;
+                }
+                newUser.FirstName = FirstName!;
+                newUser.LastName = LastName!;
+                if (await _userService.PutUser(newUser))
+                {
+                    WeakReferenceMessenger.Default.Send(new UserCreatedMessage());
+                    await _dialogService.Notify("Success", "You have been registered.");
+                    await _navigationService.GoToUserDetail(userId);
                 }
                 else
                 {
                     await _dialogService.Notify("Failed", "User Registration failed.");
                 }
-            //}
+            }
+            else
+            {
+                await _dialogService.Notify("Failed", "User Registration failed.");
+            }
         }
 
         private bool CanRegisterUser() => !HasErrors;
@@ -187,9 +182,6 @@ namespace FinanceMAUI.ViewModels
         private void Logout()
         {
             SecureStorage.Default.Remove("Authentication");
-            IsAuthenticated = false;
-            //UserName = "Guest";
-            //await Shell.Current.GoToAsync("..");
         }
 
 
@@ -225,7 +217,6 @@ namespace FinanceMAUI.ViewModels
                 IsAuthenticated = true;
                 return;
             }
-            UserName = "Guest";
             IsAuthenticated = false;
         }
 
@@ -245,8 +236,10 @@ namespace FinanceMAUI.ViewModels
         public void Receive(LogoutMessage message)
         {
             Logout();
-            //SignUpLabel();
-            UserName = EmailLogin;
+            ToggleRegister = false;
+            ToggleLogin = true;
+            IsAuthenticated = false;
+            PasswordLogin = "";
         }
 
         //[RelayCommand]

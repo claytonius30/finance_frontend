@@ -62,7 +62,7 @@
                                 <Entry
                                     Grid.Row="2"
                                     Grid.Column="1"
-                                    Text="{Binding UserName}"
+                                    Text="{Binding UserName, Mode=TwoWay}"
                                     Placeholder="Email"
                                     TextColor="Black"
                                     FontAttributes="Bold"
