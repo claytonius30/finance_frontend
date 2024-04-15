@@ -11,6 +11,7 @@ namespace FinanceMAUI.Models
         public Guid Id { get; set; }
         public string FirstName { get; set; } = default!;
         public string LastName { get; set; } = default!;
+        public string? UserName { get; set; }
         public double? Balance { get; set; }
         public DateTime? Date { get; set; }
     }

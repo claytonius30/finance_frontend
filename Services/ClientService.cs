@@ -27,9 +27,15 @@ namespace FinanceMAUI.Services
             var result = await httpClient.PostAsJsonAsync("/register", model);
             if (result.IsSuccessStatusCode)
             {
-                await Shell.Current.DisplayAlert("Alert", "successfully Register", "Ok");
+                Console.WriteLine($"{model.Email} Successfully Registered");
+                //await Shell.Current.DisplayAlert("Alert", "Successfully Registered", "Ok");
             }
-            await Shell.Current.DisplayAlert("Alert", result.ReasonPhrase, "Ok");
+            else
+            {
+                Console.WriteLine("Registration Unsuccessful");
+                //await Shell.Current.DisplayAlert("Alert", "Registration Unsuccessful", "Ok");
+            }
+            //await Shell.Current.DisplayAlert("Alert", result.ReasonPhrase, "Ok");
         }
 
         public async Task Login(LoginModel model)
@@ -41,16 +47,12 @@ namespace FinanceMAUI.Services
 
             if (result is not null)
             {
-                // Can't access /login built-in Identity endpoint to retrieve the UserId..
-                // so must use custom UserController endpoint using email
-                //string userId = await GetGuid(model.Email);
                 var serializeResponse = JsonSerializer.Serialize(
                     new LoginResponseModel()
                     {
                         AccessToken = response.AccessToken,
                         RefreshToken = response.RefreshToken,
                         UserName = model.Email
-                        //UserId = userId
                     });
                 await SecureStorage.Default.SetAsync("Authentication", serializeResponse);
             }

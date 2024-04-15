@@ -21,14 +21,14 @@ namespace FinanceMAUI.Repositories
 
         public async Task<Guid> GetGuid(string email)
         {
-            //using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
+            using HttpClient httpClient = _httpClientFactory.CreateClient("custom-httpclient");
 
-            var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");
+            //var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");
             //if (serializedLoginResponseInStorage is null) return null;
 
-            string token = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.AccessToken!;
-            var httpClient = _httpClientFactory.CreateClient("custom-httpclient");
-            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            //string token = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.AccessToken!;
+            //var httpClient = _httpClientFactory.CreateClient("custom-httpclient");
+            //httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
             //try
             //{
@@ -60,6 +60,27 @@ namespace FinanceMAUI.Repositories
             {
                 return null;
             }
+        }
+
+        public async Task<bool> PutUser(UserModel model)
+        {
+            using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
+
+            try
+            {
+                var content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+                var response = await client.PutAsync($"api/User/{model.Id}", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return false;
         }
 
         public async Task<IncomeModel?> GetIncome(Guid userId, int incomeId)

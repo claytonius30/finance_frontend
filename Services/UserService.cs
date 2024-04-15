@@ -23,6 +23,9 @@ namespace FinanceMAUI.Services
         public Task<UserModel?> GetUser(Guid id)
             => _userRepository.GetUser(id);
 
+        public Task<bool> PutUser(UserModel model)
+            => _userRepository.PutUser(model);
+
         public Task<decimal> GetCurrentBalance(Guid id)
             => _userRepository.GetCurrentBalance(id);
 

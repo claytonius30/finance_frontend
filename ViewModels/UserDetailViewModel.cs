@@ -27,10 +27,6 @@ namespace FinanceMAUI.ViewModels
         private string _lastName;
         [ObservableProperty]
         private string _fullName;
-        //public string FullName
-        //{
-        //    get => FirstName + " " + LastName;
-        //}
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(HideBalanceCommand))]
