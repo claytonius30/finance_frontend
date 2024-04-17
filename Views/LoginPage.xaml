@@ -4,6 +4,8 @@
              x:Class="FinanceMAUI.Views.LoginPage"
              xmlns:vm="clr-namespace:FinanceMAUI.ViewModels"
              xmlns:views="clr-namespace:FinanceMAUI.Views"
+             xmlns:dataAnnotations="clr-namespace:System.ComponentModel.DataAnnotations;assembly=System.ComponentModel.Annotations"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Title="LoginPage">
     <Shell.TitleView>
         <views:SimpleLogoView />
@@ -75,7 +77,8 @@
                                     Grid.Row="3"
                                     Grid.Column="0"
                                     Text="Password" />
-                                <Entry Grid.Row="3"
+                                <Entry
+                                    Grid.Row="3"
                                     Grid.Column="1"
                                     Text="{Binding PasswordLogin}"
                                     Placeholder="Password"
@@ -88,7 +91,19 @@
                             </Grid>
                         </Grid>
                         <StackLayout IsVisible="{Binding ToggleLogin}" >
+
+                            <VerticalStackLayout Margin="0,10,0,0" BindableLayout.ItemsSource="{Binding LoginErrors}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="dataAnnotations:ValidationResult">
+                                        <Label
+                                            Text="{Binding ErrorMessage}"
+                                            Style="{StaticResource ErrorLabelStyle}" />
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+
                             <Button
+                                IsEnabled="{Binding ToggleLogin}"
                                 Margin="0,10,0,0"
                                 Text="Sign In"
                                 Command="{Binding LoginCommand}" />
@@ -124,7 +139,8 @@
                                     Grid.Row="2"
                                     Grid.Column="0"
                                     Text="Last Name" />
-                                <Entry Grid.Row="2"
+                                <Entry
+                                    Grid.Row="2"
                                     Grid.Column="1"
                                     Text="{Binding LastName}"
                                     Placeholder="Last Name"
@@ -155,7 +171,8 @@
                                     Grid.Row="4"
                                     Grid.Column="0"
                                     Text="Password" />
-                                <Entry Grid.Row="4"
+                                <Entry
+                                    Grid.Row="4"
                                     Grid.Column="1"
                                     Text="{Binding PasswordRegister}"
                                     Placeholder="Password"
@@ -168,7 +185,19 @@
                             </Grid>
                         </Grid>
                         <StackLayout IsVisible="{Binding ToggleRegister}">
+
+                            <VerticalStackLayout Margin="0,10,0,0" BindableLayout.ItemsSource="{Binding RegisterErrors}" >
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="dataAnnotations:ValidationResult">
+                                        <Label
+                                            Text="{Binding ErrorMessage}"
+                                            Style="{StaticResource ErrorLabelStyle}" />
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+
                             <Button
+                                IsEnabled="{Binding ToggleRegister}"
                                 Margin="0,10,0,0"
                                 Text="Register"
                                 Command="{Binding RegisterCommand}" />

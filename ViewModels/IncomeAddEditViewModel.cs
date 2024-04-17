@@ -33,8 +33,8 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private int _incomeId;
 
-        [Required]
-        [MinLength(2)]
+        //[Required]
+        [MinLength(1)]
         [MaxLength(50)]
         [NotifyDataErrorInfo]
         [ObservableProperty]
@@ -117,7 +117,7 @@ namespace FinanceMAUI.ViewModels
                 }
                 else
                 {
-                    await _dialogService.Notify("Failed", "Adding the income failed.");
+                    await _dialogService.Notify("Failed", "Source field is empty.");
                 }
             }
             else
@@ -146,6 +146,8 @@ namespace FinanceMAUI.ViewModels
             _userService = userService;
             _navigationService = navigationService;
             _dialogService = dialogService;
+
+            _amount = 0.01m;
 
             ErrorsChanged += AddIncomeViewModel_ErrorsChanged;
         }

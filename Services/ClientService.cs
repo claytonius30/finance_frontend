@@ -71,27 +71,6 @@ namespace FinanceMAUI.Services
             Console.WriteLine("Login Unsuccessful");
         }
 
-        //public async Task<Guid> GetGuid(string email)
-        //{
-        //    using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
-
-        //    //try
-        //    //{
-        //        Guid userId = await client.GetFromJsonAsync<Guid>(
-        //            $"api/User/{email}/GetGuid",
-        //            new JsonSerializerOptions(JsonSerializerDefaults.Web));
-
-        //        return userId;
-        //    //}
-        //    //catch (Exception)
-        //    //{
-        //    //    return null;
-        //    //}
-        //}
-
-
-
-
         public async Task<WeatherForecast[]> GetWeatherForeCastData()
         {
             var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");
