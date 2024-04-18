@@ -19,24 +19,21 @@
                         <Label
                             HorizontalOptions="Start"
                             Text="User Sign In"
-                            Style="{StaticResource TitleLabelStyle}"
-                            IsVisible="{Binding ToggleLogin}" />
-                        <Label
+                            Style="{StaticResource TitleLabelStyle}" />
+                        <!--<Label
                             Text="Register User"
                             Style="{StaticResource TitleLabelStyle}"
-                            IsVisible="{Binding ToggleRegister}" />
+                            IsVisible="{Binding ToggleRegister}" />-->
                         <StackLayout HorizontalOptions="End">
                             <HorizontalStackLayout>
                                 <Label
                                     Text="New User?   "
                                     TextColor="DarkGray"
-                                    FontSize="Small"
-                                    IsVisible="{Binding ToggleLogin}" />
+                                    FontSize="Small" />
                                 <Button
                                     Text="Sign Up"
-                                    Command="{Binding SignUpLabelCommand}"
-                                    IsVisible="{Binding ToggleLogin}" />
-                                <Label
+                                    Command="{Binding SignUpLabelCommand}" />
+                                <!--<Label
                                     Text="Back to login   "
                                     TextColor="DarkGray"
                                     FontSize="Small"
@@ -44,11 +41,11 @@
                                 <Button
                                     Text="Login"
                                     Command="{Binding SignUpLabelCommand}"
-                                    IsVisible="{Binding ToggleRegister}" />
+                                    IsVisible="{Binding ToggleRegister}" />-->
                             </HorizontalStackLayout>
                         </StackLayout>
                     </Grid>
-                    <StackLayout Padding="10" IsVisible="{Binding ToggleLogin}">
+                    <StackLayout Padding="10">
                         <Grid RowDefinitions="Auto,*" >
                             <Grid
                                 ColumnDefinitions=".3*,.7*"
@@ -103,14 +100,13 @@
                             </VerticalStackLayout>
 
                             <Button
-                                IsEnabled="{Binding ToggleLogin}"
                                 Margin="0,10,0,0"
                                 Text="Sign In"
                                 Command="{Binding LoginCommand}" />
                         </StackLayout>
                     </StackLayout>
                     
-                    <StackLayout Padding="10" IsVisible="{Binding ToggleRegister}">
+                    <!--<StackLayout Padding="10" IsVisible="{Binding ToggleRegister}">
                         <Grid RowDefinitions="Auto,*">
                             <Grid
                                 ColumnDefinitions=".3*,.7*"
@@ -118,7 +114,7 @@
                                 RowDefinitions="*,*,*,*,*,*"
                                 RowSpacing="10">
 
-                                <!-- Row 3 Register FirstName -->
+                                --><!-- Row 3 Register FirstName --><!--
                                 <Label
                                     Grid.Row="1"
                                     Grid.Column="0"
@@ -134,7 +130,7 @@
                                     HorizontalOptions="FillAndExpand"
                                     Margin="0,0,20,0" />
                                 
-                                <!-- Row 4 Register LastName -->
+                                --><!-- Row 4 Register LastName --><!--
                                 <Label
                                     Grid.Row="2"
                                     Grid.Column="0"
@@ -150,7 +146,7 @@
                                     HorizontalOptions="FillAndExpand"
                                     Margin="0,0,20,0" />
 
-                                <!-- Row 5 Register Email -->
+                                --><!-- Row 5 Register Email --><!--
                                 <Label
                                     Grid.Row="3"
                                     Grid.Column="0"
@@ -166,7 +162,7 @@
                                     HorizontalOptions="FillAndExpand"
                                     Margin="0,0,20,0" />  
                                 
-                                <!-- Row 6 Register Password -->
+                                --><!-- Row 6 Register Password --><!--
                                 <Label
                                     Grid.Row="4"
                                     Grid.Column="0"
@@ -202,7 +198,7 @@
                                 Text="Register"
                                 Command="{Binding RegisterCommand}" />
                         </StackLayout>
-                    </StackLayout>
+                    </StackLayout>-->
                 </VerticalStackLayout>
             </Grid>
         </ScrollView>

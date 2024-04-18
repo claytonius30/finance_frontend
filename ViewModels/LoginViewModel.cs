@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace FinanceMAUI.ViewModels
 {
-    public partial class LoginViewModel : ViewModelBase, IRecipient<LogoutMessage>
+    public partial class LoginViewModel : ViewModelBase, IRecipient<LogoutMessage>, IRecipient<LoginMessage>
     {
         private readonly ClientService _clientService;
         private readonly IUserService _userService;
@@ -26,6 +26,9 @@ namespace FinanceMAUI.ViewModels
 
         [ObservableProperty]
         private bool _isAuthenticated;
+
+        public bool FailedAttempt { get; set; }
+        public int LoginAttempts { get; set; }
 
         [Required]
         [EmailAddress]
@@ -44,42 +47,42 @@ namespace FinanceMAUI.ViewModels
         //    return ValidationResult.Success;
         //}
 
-        [Required]
-        [EmailAddress]
-        [CustomValidation(typeof(LoginViewModel), nameof(ValidateBypass))]
-        [NotifyDataErrorInfo]
-        [ObservableProperty]
-        private string _emailRegister;
+        //[Required]
+        //[EmailAddress]
+        //[CustomValidation(typeof(LoginViewModel), nameof(ValidateBypass))]
+        //[NotifyDataErrorInfo]
+        //[ObservableProperty]
+        //private string _emailRegister;
+
+        //[Required]
+        //[PasswordPropertyText]
+        //[CustomValidation(typeof(LoginViewModel), nameof(ValidateBypass))]
+        //[NotifyDataErrorInfo]
+        //[ObservableProperty]
+        //private string _passwordRegister;
 
         [Required]
         [PasswordPropertyText]
-        [CustomValidation(typeof(LoginViewModel), nameof(ValidateBypass))]
-        [NotifyDataErrorInfo]
-        [ObservableProperty]
-        private string _passwordRegister;
-
-        [Required]
-        [PasswordPropertyText]
-        [CustomValidation(typeof(LoginViewModel), nameof(ValidateBypass))]
+        //[CustomValidation(typeof(LoginViewModel), nameof(ValidateBypass))]
         [NotifyDataErrorInfo]
         [ObservableProperty]
         private string _passwordLogin;
 
-        [Required]
-        [MinLength(1)]
-        [MaxLength(50)]
-        [CustomValidation(typeof(LoginViewModel), nameof(ValidateBypass))]
-        [NotifyDataErrorInfo]
-        [ObservableProperty]
-        private string _firstName;
+        //[Required]
+        //[MinLength(1)]
+        //[MaxLength(50)]
+        //[CustomValidation(typeof(LoginViewModel), nameof(ValidateBypass))]
+        //[NotifyDataErrorInfo]
+        //[ObservableProperty]
+        //private string _firstName;
 
-        [Required]
-        [MinLength(1)]
-        [MaxLength(50)]
-        [CustomValidation(typeof(LoginViewModel), nameof(ValidateBypass))]
-        [NotifyDataErrorInfo]
-        [ObservableProperty]
-        private string _lastName;
+        //[Required]
+        //[MinLength(1)]
+        //[MaxLength(50)]
+        //[CustomValidation(typeof(LoginViewModel), nameof(ValidateBypass))]
+        //[NotifyDataErrorInfo]
+        //[ObservableProperty]
+        //private string _lastName;
 
         [ObservableProperty]
         private bool _toggleRegister = false;
@@ -87,7 +90,7 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private bool _toggleLogin = true;
         
-        public ObservableCollection<ValidationResult> RegisterErrors { get; } = new();
+        //public ObservableCollection<ValidationResult> RegisterErrors { get; } = new();
 
         public ObservableCollection<ValidationResult> LoginErrors { get; } = new();
 
@@ -111,15 +114,15 @@ namespace FinanceMAUI.ViewModels
             return ValidationResult.Success;
         }
 
-        private void ToggleLoginFields()
-        {
-                EmailRegister = "hid@den";
-                PasswordRegister = "hidden";
-                FirstName = "hidden";
-                LastName = "hidden";
-                //UserName = "";
-                //PasswordLogin = "";
-        }
+        //private void ToggleLoginFields()
+        //{
+        //        EmailRegister = "hid@den";
+        //        PasswordRegister = "hidden";
+        //        FirstName = "hidden";
+        //        LastName = "hidden";
+        //        //UserName = "";
+        //        //PasswordLogin = "";
+        //}
 
         private void ToggleRegisterFields()
         {
@@ -140,11 +143,14 @@ namespace FinanceMAUI.ViewModels
             //RegisterModel = new();
             //LoginModel = new();
             IsAuthenticated = false;
-            GetUserNameFromSecuredStorage();
-            
-            WeakReferenceMessenger.Default.Register(this);
+            FailedAttempt = false;
+            LoginAttempts = 0;
+            //GetUserNameFromSecuredStorage();
 
-            ErrorsChanged += RegisterUserViewModel_ErrorsChanged;
+            WeakReferenceMessenger.Default.Register<LogoutMessage>(this);
+            WeakReferenceMessenger.Default.Register<LoginMessage>(this);
+
+            //ErrorsChanged += RegisterUserViewModel_ErrorsChanged;
             ErrorsChanged += LoginUserViewModel_ErrorsChanged;
         }
 
@@ -161,83 +167,86 @@ namespace FinanceMAUI.ViewModels
         //}
 
         [RelayCommand]
-        private void SignUpLabel()
+        private async Task SignUpLabel()
         {
-            (ToggleRegister, ToggleLogin) = (ToggleLogin, ToggleRegister);
+            await _navigationService.GoToRegister();
+
+            //(ToggleRegister, ToggleLogin) = (ToggleLogin, ToggleRegister);
             //BypassHiddenFields();
             //RegisterErrors.Clear();
             //LoginErrors.Clear();
 
-            ErrorsChanged -= LoginUserViewModel_ErrorsChanged;
+            //ErrorsChanged -= LoginUserViewModel_ErrorsChanged;
 
-            if (ToggleLogin == true)
-            {
-                UserName = default!;
-                PasswordLogin = default!;
-                //ErrorsChanged -= RegisterUserViewModel_ErrorsChanged;
-            }
-            else
-            {
-                EmailRegister = default!;
-                PasswordRegister = default!;
-                FirstName = default!;
-                LastName = default!;
-                LoginErrors.Clear();
-                RegisterErrors.Clear();
-                //ErrorsChanged -= LoginUserViewModel_ErrorsChanged;
-            }
+            //if (ToggleLogin == true)
+            //{
+            //    UserName = default!;
+            //    PasswordLogin = default!;
+            //    //ErrorsChanged -= RegisterUserViewModel_ErrorsChanged;
+            //}
+            //else
+            //{
+            //    EmailRegister = default!;
+            //    PasswordRegister = default!;
+            //    FirstName = default!;
+            //    LastName = default!;
+            //    LoginErrors.Clear();
+            //    RegisterErrors.Clear();
+            //    //ErrorsChanged -= LoginUserViewModel_ErrorsChanged;
+            //}
         }
 
-        [RelayCommand(CanExecute = nameof(CanRegisterUser))]
-        private async Task Register()
-        {
-            ToggleRegisterFields();
-            ValidateAllProperties();
-            if (RegisterErrors.Any())
-            {
-                return;
-            }
+        //[RelayCommand(CanExecute = nameof(CanRegisterUser))]
+        //private async Task Register()
+        //{
+        //    ToggleRegisterFields();
+        //    ValidateAllProperties();
+        //    if (RegisterErrors.Any())
+        //    {
+        //        return;
+        //    }
 
-        RegisterModel registerModel = MapDataToRegisterModel();
+        //    RegisterModel registerModel = MapDataToRegisterModel();
             
-            await _clientService.Register(registerModel);
+        //    await _clientService.Register(registerModel);
 
-            Guid userId = await _userService.GetGuid(EmailRegister);
+        //    Guid userId = await _userService.GetGuid(EmailRegister);
 
-            UserModel? newUser = await _userService.GetUser(userId);
+        //    UserModel? newUser = await _userService.GetUser(userId);
 
-            if (newUser != null)
-            {
-                if (FirstName == null && LastName == null)
-                {
-                    newUser.FirstName = EmailRegister;
-                }
-                newUser.FirstName = FirstName!;
-                newUser.LastName = LastName!;
-                if (await _userService.PutUser(newUser))
-                {
-                    WeakReferenceMessenger.Default.Send(new UserCreatedMessage());
-                    await _dialogService.Notify("Success", "You have been registered.");
-                    await _navigationService.GoToUserDetail(userId);
-                }
-                else
-                {
-                    await _dialogService.Notify("Failed", "User Registration failed.");
-                }
-            }
-            else
-            {
-                await _dialogService.Notify("Failed", "User Registration failed.");
-            }
-        }
+        //    if (newUser != null)
+        //    {
+        //        if (FirstName == null && LastName == null)
+        //        {
+        //            newUser.FirstName = EmailRegister;
+        //        }
+        //        newUser.FirstName = FirstName!;
+        //        newUser.LastName = LastName!;
+        //        if (await _userService.PutUser(newUser))
+        //        {
+        //            WeakReferenceMessenger.Default.Send(new UserCreatedMessage());
+        //            await _dialogService.Notify("Success", "You have been registered.");
+        //            await _navigationService.GoToUserDetail(userId);
+        //        }
+        //        else
+        //        {
+        //            await _dialogService.Notify("Failed", "User Registration failed.");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        await _dialogService.Notify("Failed", "User Registration failed.");
+        //    }
+        //}
 
-        //private bool CanRegisterUser() => !HasErrors;
-        private bool CanRegisterUser() => ToggleRegister && !HasErrors;
+        ////private bool CanRegisterUser() => !HasErrors;
+        //private bool CanRegisterUser() => ToggleRegister && !HasErrors;
 
         [RelayCommand(CanExecute = nameof(CanLoginUser))]
         private async Task Login()
         {
-            ToggleLoginFields();
+            //ToggleLoginFields();
+            FailedAttempt = false;
             ValidateAllProperties();
             if (LoginErrors.Any())
             {
@@ -249,13 +258,20 @@ namespace FinanceMAUI.ViewModels
             //LoginModel.Email = Email;
             //LoginModel.Password = Password;
             await _clientService.Login(loginModel);
-            GetUserNameFromSecuredStorage();
+            if (FailedAttempt == false)
+            {
+                GetUserNameFromSecuredStorage();
+            }
             if (IsAuthenticated)
             {
                 Guid userId = await _userService.GetGuid(UserName);
-                WeakReferenceMessenger.Default.Send(new LoginMessage());
+                //WeakReferenceMessenger.Default.Send(new LoginMessage());
                 //await _dialogService.Notify("Success", "You are logged in.");
                 await _navigationService.GoToUserDetail(userId);
+            }
+            else if (LoginAttempts > 4)
+            {
+                await _dialogService.Notify("Failed", "User locked out for 6 hours.");
             }
             else
             {
@@ -264,13 +280,14 @@ namespace FinanceMAUI.ViewModels
         }
 
         //private bool CanLoginUser() => !HasErrors;
-        private bool CanLoginUser() => ToggleLogin && !HasErrors;
+        private bool CanLoginUser() => !HasErrors;
 
 
         //[RelayCommand]
         private void Logout()
         {
             SecureStorage.Default.Remove("Authentication");
+            IsAuthenticated = false;
             //if (UserName == "hidden")
             //{
             //    UserName = "";
@@ -286,14 +303,14 @@ namespace FinanceMAUI.ViewModels
         }
 
 
-        private RegisterModel MapDataToRegisterModel()
-        {
-            return new RegisterModel
-            {
-                Email = EmailRegister,
-                Password = PasswordRegister
-            };
-        }
+        //private RegisterModel MapDataToRegisterModel()
+        //{
+        //    return new RegisterModel
+        //    {
+        //        Email = EmailRegister,
+        //        Password = PasswordRegister
+        //    };
+        //}
 
         private LoginModel MapDataToLoginModel()
         {
@@ -306,13 +323,13 @@ namespace FinanceMAUI.ViewModels
 
         private async void GetUserNameFromSecuredStorage()
         {
-            if (!string.IsNullOrEmpty(UserName) && UserName! != "guest")
+            if (!string.IsNullOrEmpty(UserName) && UserName! != "guest" && FailedAttempt == false)
             {
                 IsAuthenticated = true;
                 return;
             }
             var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");
-            if (serializedLoginResponseInStorage != null)
+            if (serializedLoginResponseInStorage != null && FailedAttempt == false)
             {
                 UserName = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.UserName!;
                 IsAuthenticated = true;
@@ -321,12 +338,13 @@ namespace FinanceMAUI.ViewModels
             IsAuthenticated = false;
         }
 
-        private void RegisterUserViewModel_ErrorsChanged(object? sender, DataErrorsChangedEventArgs e)
-        {
-            RegisterErrors.Clear();
-            GetErrors().ToList().ForEach(RegisterErrors.Add);
-            RegisterCommand.NotifyCanExecuteChanged();
-        }
+        //private void RegisterUserViewModel_ErrorsChanged(object? sender, DataErrorsChangedEventArgs e)
+        //{
+        //    RegisterErrors.Clear();
+        //    GetErrors().ToList().ForEach(RegisterErrors.Add);
+        //    RegisterCommand.NotifyCanExecuteChanged();
+        //}
+
         private void LoginUserViewModel_ErrorsChanged(object? sender, DataErrorsChangedEventArgs e)
         {
             LoginErrors.Clear();
@@ -337,15 +355,21 @@ namespace FinanceMAUI.ViewModels
         public void Receive(LogoutMessage message)
         {
             Logout();
-            ToggleRegister = false;
-            ToggleLogin = true;
-            IsAuthenticated = false;
+            //ToggleRegister = false;
+            //ToggleLogin = true;
+            //IsAuthenticated = false;
         }
 
-        //[RelayCommand]
-        //private async Task GoToWeatherForecast()
-        //{
-        //    await Shell.Current.GoToAsync(nameof(WeatherForecastPage));
-        //}
-    }
+        public void Receive(LoginMessage message)
+        {
+            FailedAttempt = true;
+            LoginAttempts++;
+        }
+
+            //[RelayCommand]
+            //private async Task GoToWeatherForecast()
+            //{
+            //    await Shell.Current.GoToAsync(nameof(WeatherForecastPage));
+            //}
+        }
 }

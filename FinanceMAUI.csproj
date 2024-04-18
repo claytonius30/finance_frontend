@@ -88,6 +88,9 @@
 	  <MauiXaml Update="Views\LogoView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\RegisterPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\SimpleLogoView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

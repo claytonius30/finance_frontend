@@ -1,4 +1,6 @@
-﻿using FinanceMAUI.Models;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using FinanceMAUI.Messages;
+using FinanceMAUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +17,12 @@ namespace FinanceMAUI.Services
         private readonly IHttpClientFactory _httpClientFactory;
         //private AndroidHttpMessageHandler = private new AndroidHttpMessageHandler
 
-        public ClientService(IHttpClientFactory httpClientFactory)
+        private readonly IDialogService _dialogService;
+
+        public ClientService(IHttpClientFactory httpClientFactory, IDialogService dialogService)
         {
             _httpClientFactory = httpClientFactory;
+            _dialogService = dialogService;
         }
 
         public async Task Register(RegisterModel model)
@@ -56,7 +61,8 @@ namespace FinanceMAUI.Services
             var result = await httpClient.PostAsJsonAsync("/login", model);
             var response = await result.Content.ReadFromJsonAsync<LoginResponseModel>();
 
-            if (result is not null)
+            //if (result is not null)
+            if (result.IsSuccessStatusCode)
             {
                 var serializeResponse = JsonSerializer.Serialize(
                     new LoginResponseModel()
@@ -68,19 +74,24 @@ namespace FinanceMAUI.Services
                 await SecureStorage.Default.SetAsync("Authentication", serializeResponse);
                 Console.WriteLine($"{model.Email} Successfully Logged In");
             }
+            else
+            {
+                WeakReferenceMessenger.Default.Send(new LoginMessage());
+            }
+            //await _dialogService.Notify("Login Failed", "User does not exist.");
             Console.WriteLine("Login Unsuccessful");
         }
 
-        public async Task<WeatherForecast[]> GetWeatherForeCastData()
-        {
-            var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");
-            if (serializedLoginResponseInStorage is null) return null;
+        //public async Task<WeatherForecast[]> GetWeatherForeCastData()
+        //{
+        //    var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");
+        //    if (serializedLoginResponseInStorage is null) return null;
 
-            string token = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.AccessToken!;
-            var httpClient = _httpClientFactory.CreateClient("custom-httpclient");
-            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            var result = await httpClient.GetFromJsonAsync<WeatherForecast[]>("/WeatherForecast");
-            return result!;
-        }
+        //    string token = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.AccessToken!;
+        //    var httpClient = _httpClientFactory.CreateClient("custom-httpclient");
+        //    httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+        //    var result = await httpClient.GetFromJsonAsync<WeatherForecast[]>("/WeatherForecast");
+        //    return result!;
+        //}
     }
 }

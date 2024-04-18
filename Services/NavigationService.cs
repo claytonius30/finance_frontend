@@ -10,7 +10,8 @@ namespace FinanceMAUI.Services
 {
     public class NavigationService : INavigationService
     {
-
+        public Task GoToRegister()
+            => Shell.Current.GoToAsync("register");
 
         public async Task GoToUserDetail(Guid userId)
         {

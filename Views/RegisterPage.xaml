@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FinanceMAUI.Views.RegisterPage"
+             xmlns:vm="clr-namespace:FinanceMAUI.ViewModels"
+             xmlns:views="clr-namespace:FinanceMAUI.Views"
+             xmlns:dataAnnotations="clr-namespace:System.ComponentModel.DataAnnotations;assembly=System.ComponentModel.Annotations"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="RegisterPage">
+    <Shell.TitleView>
+        <views:SimpleLogoView />
+    </Shell.TitleView>
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" />
+    </Shell.BackButtonBehavior>
+
+    <Grid>
+        <ScrollView>
+            <Grid>
+                <VerticalStackLayout Padding="10">
+                    <Grid>
+                        <!--<Label
+                        HorizontalOptions="Start"
+                        Text="User Sign In"
+                        Style="{StaticResource TitleLabelStyle}"
+                        IsVisible="{Binding ToggleLogin}" />-->
+                        <Label
+                        Text="Register User"
+                        Style="{StaticResource TitleLabelStyle}" />
+                        <StackLayout HorizontalOptions="End">
+                            <HorizontalStackLayout>
+                                <!--<Label
+                                Text="New User?   "
+                                TextColor="DarkGray"
+                                FontSize="Small"
+                                IsVisible="{Binding ToggleLogin}" />
+                            <Button
+                                Text="Sign Up"
+                                Command="{Binding SignUpLabelCommand}"
+                                IsVisible="{Binding ToggleLogin}" />-->
+                                <Label
+                                Text="Back to login   "
+                                TextColor="DarkGray"
+                                FontSize="Small" />
+                                <Button
+                                Text="Login"
+                                Command="{Binding LoginLabelCommand}" />
+                            </HorizontalStackLayout>
+                        </StackLayout>
+                    </Grid>
+                    <!--<StackLayout Padding="10" IsVisible="{Binding ToggleLogin}">
+                    <Grid RowDefinitions="Auto,*" >
+                        <Grid
+                        ColumnDefinitions=".3*,.7*"
+                        ColumnSpacing="5"
+                        RowDefinitions="*,*,*,*,*,*"
+                        RowSpacing="10">
+
+                            -->
+                    <!-- Row 1 Login Email -->
+                    <!--
+                            <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Text="Email" />
+                            <Entry
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Text="{Binding UserName, Mode=TwoWay}"
+                            Placeholder="Email"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            HorizontalOptions="FillAndExpand"
+                            Margin="0,0,20,0" />
+
+                            -->
+                    <!-- Row 2 Login Password -->
+                    <!--
+                            <Label
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            Text="Password" />
+                            <Entry
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Text="{Binding PasswordLogin}"
+                            Placeholder="Password"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            HorizontalOptions="FillAndExpand"
+                            Margin="0,0,20,0"
+                            IsPassword="True" />
+                        </Grid>
+                    </Grid>
+                    <StackLayout IsVisible="{Binding ToggleLogin}" >
+
+                        <VerticalStackLayout Margin="0,10,0,0" BindableLayout.ItemsSource="{Binding LoginErrors}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="dataAnnotations:ValidationResult">
+                                    <Label
+                                    Text="{Binding ErrorMessage}"
+                                    Style="{StaticResource ErrorLabelStyle}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                        <Button
+                        IsEnabled="{Binding ToggleLogin}"
+                        Margin="0,10,0,0"
+                        Text="Sign In"
+                        Command="{Binding LoginCommand}" />
+                    </StackLayout>
+                </StackLayout>-->
+
+                    <StackLayout Padding="10">
+                        <Grid RowDefinitions="Auto,*">
+                            <Grid
+                            ColumnDefinitions=".3*,.7*"
+                            ColumnSpacing="5"
+                            RowDefinitions="*,*,*,*,*,*"
+                            RowSpacing="10">
+
+                                <!-- Row 3 Register FirstName -->
+                                <Label
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Text="First Name" />
+                                <Entry
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Text="{Binding FirstName}"
+                                Placeholder="First Name"
+                                TextColor="Black"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center"
+                                HorizontalOptions="FillAndExpand"
+                                Margin="0,0,20,0" />
+
+                                <!-- Row 4 Register LastName -->
+                                <Label
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Text="Last Name" />
+                                <Entry
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Text="{Binding LastName}"
+                                Placeholder="Last Name"
+                                TextColor="Black"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center"
+                                HorizontalOptions="FillAndExpand"
+                                Margin="0,0,20,0" />
+
+                                <!-- Row 5 Register Email -->
+                                <Label
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                Text="Email" />
+                                <Entry
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                Text="{Binding EmailRegister}"
+                                Placeholder="Email"
+                                TextColor="Black"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center"
+                                HorizontalOptions="FillAndExpand"
+                                Margin="0,0,20,0" />
+
+                                <!-- Row 6 Register Password -->
+                                <Label
+                                Grid.Row="4"
+                                Grid.Column="0"
+                                Text="Password" />
+                                <Entry
+                                Grid.Row="4"
+                                Grid.Column="1"
+                                Text="{Binding PasswordRegister}"
+                                Placeholder="Password"
+                                TextColor="Black"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center"
+                                HorizontalOptions="FillAndExpand"
+                                Margin="0,0,20,0"
+                                IsPassword="True" />
+                            </Grid>
+                        </Grid>
+                        <StackLayout>
+
+                            <VerticalStackLayout Margin="0,10,0,0" BindableLayout.ItemsSource="{Binding RegisterErrors}" >
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="dataAnnotations:ValidationResult">
+                                        <Label
+                                    Text="{Binding ErrorMessage}"
+                                    Style="{StaticResource ErrorLabelStyle}" />
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+
+                            <Button
+                            Margin="0,10,0,0"
+                            Text="Register"
+                            Command="{Binding RegisterCommand}" />
+                        </StackLayout>
+                    </StackLayout>
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+        <Grid  BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" 
+    IsVisible="{Binding IsLoading}">
+            <ActivityIndicator IsRunning="{Binding IsLoading}" />
+        </Grid>
+    </Grid>
+</views:ContentPageBase>
