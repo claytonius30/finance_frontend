@@ -26,9 +26,9 @@ namespace FinanceMAUI.ViewModels
 
         [ObservableProperty]
         private bool _isAuthenticated;
-
-        public bool FailedAttempt { get; set; }
-        public int LoginAttempts { get; set; }
+        
+        private bool failedAttempt;
+        private int loginAttempts;
 
         [Required]
         [EmailAddress]
@@ -143,8 +143,8 @@ namespace FinanceMAUI.ViewModels
             //RegisterModel = new();
             //LoginModel = new();
             IsAuthenticated = false;
-            FailedAttempt = false;
-            LoginAttempts = 0;
+            failedAttempt = false;
+            loginAttempts = 0;
             //GetUserNameFromSecuredStorage();
 
             WeakReferenceMessenger.Default.Register<LogoutMessage>(this);
@@ -246,21 +246,40 @@ namespace FinanceMAUI.ViewModels
         private async Task Login()
         {
             //ToggleLoginFields();
-            FailedAttempt = false;
+            failedAttempt = false;
             ValidateAllProperties();
             if (LoginErrors.Any())
             {
                 return;
             }
 
+            LockoutInfoModel lockoutEnd = await _userService.GetLockoutEnd(UserName);
+
             LoginModel loginModel = MapDataToLoginModel();
 
             //LoginModel.Email = Email;
             //LoginModel.Password = Password;
             await _clientService.Login(loginModel);
-            if (FailedAttempt == false)
+            if (failedAttempt == false)
             {
                 GetUserNameFromSecuredStorage();
+            }
+            else if (lockoutEnd != null && !lockoutEnd.LockoutRemaining!.Equals(""))
+            {
+                await _dialogService.Notify("Account Locked", $"Lockout ends {lockoutEnd.LockoutEnd}\n{lockoutEnd.LockoutRemaining}");
+                IsAuthenticated = false;
+                return;
+            }
+            else
+            {
+                await _dialogService.Notify("Failed", "Email or Password incorrect.");
+                return;
+            }
+            if (!lockoutEnd.LockoutRemaining!.Equals(""))
+            {
+                await _dialogService.Notify("Account Locked", $"Lockout ends {lockoutEnd.LockoutEnd}\n{lockoutEnd.LockoutRemaining}");
+                IsAuthenticated = false;
+                return;
             }
             if (IsAuthenticated)
             {
@@ -269,13 +288,9 @@ namespace FinanceMAUI.ViewModels
                 //await _dialogService.Notify("Success", "You are logged in.");
                 await _navigationService.GoToUserDetail(userId);
             }
-            else if (LoginAttempts > 4)
-            {
-                await _dialogService.Notify("Failed", "User locked out for 6 hours.");
-            }
             else
             {
-                await _dialogService.Notify("Failed", "Login failed.");
+                await _dialogService.Notify("Failed", "Login Failed.");
             }
         }
 
@@ -284,25 +299,27 @@ namespace FinanceMAUI.ViewModels
 
 
         //[RelayCommand]
-        private void Logout()
+        private async Task Logout()
         {
+            //await _dialogService.Notify("Success", "You have been logged out.");
+            var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");
+            var serializedLogoutResponseInStorage = await SecureStorage.Default.GetAsync("RegPW");
+            string tempUserName = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.UserName!;
+            if (tempUserName == UserName && serializedLogoutResponseInStorage != PasswordLogin)
+            {
+                
+            }
+            //else if (serializedLoginResponseInStorage != null && serializedLogoutResponseInStorage != null)
+            else
+            {
+                UserName = tempUserName;
+                PasswordLogin = JsonSerializer.Deserialize<string>(serializedLogoutResponseInStorage)!;
+            }
+            
             SecureStorage.Default.Remove("Authentication");
             IsAuthenticated = false;
-            //if (UserName == "hidden")
-            //{
-            //    UserName = "";
-            //    PasswordLogin = "";
-            //}
-            //else
-            //{
-            //    EmailRegister = "";
-            //    PasswordRegister = "";
-            //    FirstName = "";
-            //    LastName = "";
-            //}
         }
-
-
+        
         //private RegisterModel MapDataToRegisterModel()
         //{
         //    return new RegisterModel
@@ -321,15 +338,27 @@ namespace FinanceMAUI.ViewModels
             };
         }
 
+        //public override async Task LoadAsync()
+        //{
+        //    await Loading(
+        //        async () =>
+        //        {
+        //            if (IsAuthenticated == true)
+        //            {
+        //                await Logout();
+        //            }
+        //        });
+        //}
+
         private async void GetUserNameFromSecuredStorage()
         {
-            if (!string.IsNullOrEmpty(UserName) && UserName! != "guest" && FailedAttempt == false)
+            if (!string.IsNullOrEmpty(UserName) && failedAttempt == false)
             {
                 IsAuthenticated = true;
                 return;
             }
             var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");
-            if (serializedLoginResponseInStorage != null && FailedAttempt == false)
+            if (serializedLoginResponseInStorage != null && failedAttempt == false)
             {
                 UserName = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.UserName!;
                 IsAuthenticated = true;
@@ -352,9 +381,11 @@ namespace FinanceMAUI.ViewModels
             LoginCommand.NotifyCanExecuteChanged();
         }
 
-        public void Receive(LogoutMessage message)
+        public async void Receive(LogoutMessage message)
         {
-            Logout();
+            await Logout();
+            await _dialogService.Notify("Success", "You have been logged out.");
+            //message.LoadFromXaml(UserName);
             //ToggleRegister = false;
             //ToggleLogin = true;
             //IsAuthenticated = false;
@@ -362,8 +393,8 @@ namespace FinanceMAUI.ViewModels
 
         public void Receive(LoginMessage message)
         {
-            FailedAttempt = true;
-            LoginAttempts++;
+            failedAttempt = true;
+            loginAttempts++;
         }
 
             //[RelayCommand]

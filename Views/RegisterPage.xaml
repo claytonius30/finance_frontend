@@ -39,12 +39,12 @@
                                 Command="{Binding SignUpLabelCommand}"
                                 IsVisible="{Binding ToggleLogin}" />-->
                                 <Label
-                                Text="Back to login   "
-                                TextColor="DarkGray"
-                                FontSize="Small" />
+                                    Text="Back to login   "
+                                    TextColor="DarkGray"
+                                    FontSize="Small" />
                                 <Button
-                                Text="Login"
-                                Command="{Binding LoginLabelCommand}" />
+                                    Text="Login"
+                                    Command="{Binding LoginLabelCommand}" />
                             </HorizontalStackLayout>
                         </StackLayout>
                     </Grid>
@@ -117,75 +117,75 @@
                     <StackLayout Padding="10">
                         <Grid RowDefinitions="Auto,*">
                             <Grid
-                            ColumnDefinitions=".3*,.7*"
-                            ColumnSpacing="5"
-                            RowDefinitions="*,*,*,*,*,*"
-                            RowSpacing="10">
+                                ColumnDefinitions=".3*,.7*"
+                                ColumnSpacing="5"
+                                RowDefinitions="*,*,*,*,*,*"
+                                RowSpacing="10">
 
                                 <!-- Row 3 Register FirstName -->
                                 <Label
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Text="First Name" />
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Text="First Name" />
                                 <Entry
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Text="{Binding FirstName}"
-                                Placeholder="First Name"
-                                TextColor="Black"
-                                FontAttributes="Bold"
-                                VerticalOptions="Center"
-                                HorizontalOptions="FillAndExpand"
-                                Margin="0,0,20,0" />
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Text="{Binding FirstName}"
+                                    Placeholder="First Name"
+                                    TextColor="Black"
+                                    FontAttributes="Bold"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="FillAndExpand"
+                                    Margin="0,0,20,0" />
 
                                 <!-- Row 4 Register LastName -->
                                 <Label
-                                Grid.Row="2"
-                                Grid.Column="0"
-                                Text="Last Name" />
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Text="Last Name" />
                                 <Entry
-                                Grid.Row="2"
-                                Grid.Column="1"
-                                Text="{Binding LastName}"
-                                Placeholder="Last Name"
-                                TextColor="Black"
-                                FontAttributes="Bold"
-                                VerticalOptions="Center"
-                                HorizontalOptions="FillAndExpand"
-                                Margin="0,0,20,0" />
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Text="{Binding LastName}"
+                                    Placeholder="Last Name"
+                                    TextColor="Black"
+                                    FontAttributes="Bold"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="FillAndExpand"
+                                    Margin="0,0,20,0" />
 
                                 <!-- Row 5 Register Email -->
                                 <Label
-                                Grid.Row="3"
-                                Grid.Column="0"
-                                Text="Email" />
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    Text="Email" />
                                 <Entry
-                                Grid.Row="3"
-                                Grid.Column="1"
-                                Text="{Binding EmailRegister}"
-                                Placeholder="Email"
-                                TextColor="Black"
-                                FontAttributes="Bold"
-                                VerticalOptions="Center"
-                                HorizontalOptions="FillAndExpand"
-                                Margin="0,0,20,0" />
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    Text="{Binding EmailRegister}"
+                                    Placeholder="Email"
+                                    TextColor="Black"
+                                    FontAttributes="Bold"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="FillAndExpand"
+                                    Margin="0,0,20,0" />
 
                                 <!-- Row 6 Register Password -->
                                 <Label
-                                Grid.Row="4"
-                                Grid.Column="0"
-                                Text="Password" />
+                                    Grid.Row="4"
+                                    Grid.Column="0"
+                                    Text="Password" />
                                 <Entry
-                                Grid.Row="4"
-                                Grid.Column="1"
-                                Text="{Binding PasswordRegister}"
-                                Placeholder="Password"
-                                TextColor="Black"
-                                FontAttributes="Bold"
-                                VerticalOptions="Center"
-                                HorizontalOptions="FillAndExpand"
-                                Margin="0,0,20,0"
-                                IsPassword="True" />
+                                    Grid.Row="4"
+                                    Grid.Column="1"
+                                    Text="{Binding PasswordRegister}"
+                                    Placeholder="Password"
+                                    TextColor="Black"
+                                    FontAttributes="Bold"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="FillAndExpand"
+                                    Margin="0,0,20,0"
+                                    IsPassword="True" />
                             </Grid>
                         </Grid>
                         <StackLayout>
@@ -201,9 +201,9 @@
                             </VerticalStackLayout>
 
                             <Button
-                            Margin="0,10,0,0"
-                            Text="Register"
-                            Command="{Binding RegisterCommand}" />
+                                Margin="0,10,0,0"
+                                Text="Register"
+                                Command="{Binding RegisterCommand}" />
                         </StackLayout>
                     </StackLayout>
                 </VerticalStackLayout>

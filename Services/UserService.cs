@@ -17,7 +17,10 @@ namespace FinanceMAUI.Services
             _userRepository = userRepository;
         }
 
-        public  Task<Guid> GetGuid(string email)
+        public Task<LockoutInfoModel> GetLockoutEnd(string email)
+            => _userRepository.GetLockoutEnd(email);
+
+        public Task<Guid> GetGuid(string email)
             => _userRepository.GetGuid(email);
 
         public Task<UserModel?> GetUser(Guid id)

@@ -44,14 +44,17 @@ namespace FinanceMAUI.Services
                             RefreshToken = response.RefreshToken,
                             UserName = model.Email
                         });
+                    var serializeResponse2 = JsonSerializer.Serialize(model.Password);
                     await SecureStorage.Default.SetAsync("Authentication", serializeResponse);
+                    await SecureStorage.Default.SetAsync("RegPW", serializeResponse2);
                 }
                 Console.WriteLine($"{model.Email} Successfully Registered");
             }
             else
             {
-                Console.WriteLine("Registration Unsuccessful");
+                WeakReferenceMessenger.Default.Send(new RegisterMessage());
             }
+            Console.WriteLine("Registration Unsuccessful");
         }
 
         public async Task Login(LoginModel model)

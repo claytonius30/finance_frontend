@@ -9,8 +9,8 @@ namespace FinanceMAUI.Repositories
 {
     public interface IUserRepository
     {
-        
 
+        Task<LockoutInfoModel> GetLockoutEnd(string email);
         Task<Guid> GetGuid(string email);
 
         Task<UserModel?> GetUser(Guid id);

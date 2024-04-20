@@ -8,13 +8,13 @@ namespace FinanceMAUI.Messages
 {
     public class LogoutMessage
     {
-        public string UserName { get; set; }
+        private Task<string> UserName { get; set; }
 
         public LogoutMessage()
         {
         }
 
-        public LogoutMessage(string userName)
+        public LogoutMessage(Task<string> userName)
         {
             UserName = userName;
         }

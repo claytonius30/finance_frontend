@@ -9,6 +9,8 @@ namespace FinanceMAUI.Services
 {
     public interface IUserService
     {
+        Task<LockoutInfoModel> GetLockoutEnd(string email);
+
         Task<Guid> GetGuid(string email);
 
         Task<UserModel?> GetUser(Guid id);

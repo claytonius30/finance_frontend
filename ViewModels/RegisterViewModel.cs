@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace FinanceMAUI.ViewModels
 {
-    public partial class RegisterViewModel : ViewModelBase
+    public partial class RegisterViewModel : ViewModelBase, IRecipient<RegisterMessage>
     {
         private readonly ClientService _clientService;
         private readonly IUserService _userService;
@@ -26,7 +26,7 @@ namespace FinanceMAUI.ViewModels
 
         [ObservableProperty]
         private bool _isAuthenticated;
-
+        private bool emailExists;
         //[Required]
         //[EmailAddress]
         ////[CustomValidation(typeof(LoginViewModel), nameof(ValidateEmail))]
@@ -80,7 +80,10 @@ namespace FinanceMAUI.ViewModels
             _navigationService = navigationService;
             _dialogService = dialogService;
             IsAuthenticated = false;
-            GetEmailFromSecuredStorage();
+            emailExists = false;
+            //GetEmailFromSecuredStorage();
+
+            WeakReferenceMessenger.Default.Register<RegisterMessage>(this);
 
             ErrorsChanged += RegisterUserViewModel_ErrorsChanged;
         }
@@ -95,6 +98,7 @@ namespace FinanceMAUI.ViewModels
         [RelayCommand(CanExecute = nameof(CanRegisterUser))]
         private async Task Register()
         {
+            emailExists = false;
             ValidateAllProperties();
             if (RegisterErrors.Any())
             {
@@ -104,28 +108,35 @@ namespace FinanceMAUI.ViewModels
             RegisterModel registerModel = MapDataToRegisterModel();
 
             await _clientService.Register(registerModel);
-
-            Guid userId = await _userService.GetGuid(EmailRegister);
-
-            UserModel? newUser = await _userService.GetUser(userId);
-
-            if (newUser != null)
+            if (emailExists == false)
             {
-                if (FirstName == null && LastName == null)
+                GetEmailFromSecuredStorage();
+            }
+            else
+            {
+                await _dialogService.Notify("Failed", "Email already exists.");
+                return;
+            }
+            if (IsAuthenticated)
+            {
+                Guid userId = await _userService.GetGuid(EmailRegister);
+
+                UserModel? newUser = await _userService.GetUser(userId);
+
+                if (newUser != null)
                 {
-                    newUser.FirstName = EmailRegister;
-                }
-                newUser.FirstName = FirstName!;
-                newUser.LastName = LastName!;
-                if (await _userService.PutUser(newUser))
-                {
-                    WeakReferenceMessenger.Default.Send(new UserCreatedMessage());
-                    await _dialogService.Notify("Success", "You have been registered.");
-                    await _navigationService.GoToUserDetail(userId);
-                }
-                else
-                {
-                    await _dialogService.Notify("Failed", "User Registration failed.");
+                    newUser.FirstName = FirstName!;
+                    newUser.LastName = LastName!;
+                    if (await _userService.PutUser(newUser))
+                    {
+                        //WeakReferenceMessenger.Default.Send(new UserCreatedMessage());
+                        await _dialogService.Notify("Success", "You have been registered.");
+                        await _navigationService.GoToUserDetail(userId);
+                    }
+                    else
+                    {
+                        await _dialogService.Notify("Failed", "User Registration failed.");
+                    }
                 }
             }
             else
@@ -148,13 +159,13 @@ namespace FinanceMAUI.ViewModels
 
         private async void GetEmailFromSecuredStorage()
         {
-            if (!string.IsNullOrEmpty(EmailRegister) && EmailRegister! != "guest")
+            if (!string.IsNullOrEmpty(EmailRegister) && emailExists == false)
             {
                 IsAuthenticated = true;
                 return;
             }
             var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");
-            if (serializedLoginResponseInStorage != null)
+            if (serializedLoginResponseInStorage != null && emailExists == false)
             {
                 EmailRegister = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.UserName!;
                 IsAuthenticated = true;
@@ -168,6 +179,11 @@ namespace FinanceMAUI.ViewModels
             RegisterErrors.Clear();
             GetErrors().ToList().ForEach(RegisterErrors.Add);
             RegisterCommand.NotifyCanExecuteChanged();
+        }
+
+        public void Receive(RegisterMessage message)
+        {
+            emailExists = true;
         }
     }
 }

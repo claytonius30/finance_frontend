@@ -6,6 +6,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+
 //using Windows.System;
 
 namespace FinanceMAUI.Repositories
@@ -19,6 +20,25 @@ namespace FinanceMAUI.Repositories
             _httpClientFactory = httpClientFactory;
         }
 
+        public async Task<LockoutInfoModel> GetLockoutEnd(string email)
+        {
+            using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
+
+            try
+            {
+                LockoutInfoModel? lockoutEnd = await client.GetFromJsonAsync<LockoutInfoModel>(
+                    $"api/CustomIdentity/{email}/GetLockoutEnd",
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web));
+
+                
+                return lockoutEnd!;
+        }
+            catch (Exception)
+            {
+                return null;
+            }
+}
+
         public async Task<Guid> GetGuid(string email)
         {
             var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");
@@ -30,7 +50,7 @@ namespace FinanceMAUI.Repositories
 
             //try
             //{
-            Guid userId = await httpClient.GetFromJsonAsync<Guid>(
+                Guid userId = await httpClient.GetFromJsonAsync<Guid>(
                 $"api/User/{email}/GetGuid",
                 new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
