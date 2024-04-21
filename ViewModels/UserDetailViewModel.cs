@@ -39,6 +39,9 @@ namespace FinanceMAUI.ViewModels
         private DateTime? _date = DateTime.Now;
         //public DateTime _date {  get; set; } = DateTime.Now;
 
+        [ObservableProperty]
+        private string _balanceColor;
+
         [RelayCommand]
         private void HideBalance() => Balance = null;
 
@@ -84,6 +87,14 @@ namespace FinanceMAUI.ViewModels
                     if (CheckSummary == true)
                     {
                         await GetCurrentBalance(Id);
+                        if (Balance > 0)
+                        {
+                            BalanceColor = "Green";
+                        }
+                        else if (Balance < 0)
+                        {
+                            BalanceColor = "Red";
+                        }
                     }
                 });
         }

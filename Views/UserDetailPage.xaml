@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:FinanceMAUI.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:views="clr-namespace:FinanceMAUI.Views"
+             xmlns:services="clr-namespace:FinanceMAUI.Services"
              Title="UserDetailPage">
     <ContentPage.Resources>
         <toolkit:ListToStringConverter x:Key="ListToStringConverter" Separator=", " />
@@ -12,6 +13,7 @@
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsVisible="False" />
     </Shell.BackButtonBehavior>
+
     <Grid>
         <ScrollView>
             <Grid>
@@ -48,6 +50,7 @@
                                 Grid.Row="4"
                                 Grid.Column="1"
                                 Style="{StaticResource ValueLabelStyle}"
+                                TextColor="{Binding BalanceColor}"
                                 Text="{Binding Balance, Mode=OneWay, StringFormat='{0:C}', TargetNullValue='No balance provided',
                                     FallbackValue='No balance available'}" />
                         </Grid>

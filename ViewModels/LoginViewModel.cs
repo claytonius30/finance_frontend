@@ -6,6 +6,7 @@ using FinanceMAUI.Models;
 using FinanceMAUI.Services;
 using FinanceMAUI.ViewModels.Base;
 using FinanceMAUI.Views;
+using Microsoft.Maui.ApplicationModel.Communication;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +14,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FinanceMAUI.ViewModels
@@ -32,17 +34,35 @@ namespace FinanceMAUI.ViewModels
 
         [Required]
         [EmailAddress]
-        //[CustomValidation(typeof(LoginViewModel), nameof(ValidateBypass))]
+        //[CustomValidation(typeof(LoginViewModel), nameof(ValidateEmail))]
         [NotifyDataErrorInfo]
         [ObservableProperty]
         private string _userName;
 
         //public static ValidationResult? ValidateEmail(string userName, ValidationContext context)
         //{
-        //    if (userName.Length < 1)
-        //    {
-        //        return new("Please enter an email address.");
-        //    }
+            // Regular expression pattern for validating email addresses
+            //string pattern = @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$";
+
+            // Create a Regex object with the pattern
+            //Regex regex = new Regex(pattern);
+
+            // Find the position of the '@' symbol
+            //int atIndex = userName.IndexOf('@');
+            //EmailAddressAttribute emailAddressAttribute = new EmailAddressAttribute();
+            // Check if the '@' symbol is present and is not the first character
+            //if (userName.Contains('@'))
+            //{
+                // Get the substring after the '@' symbol
+                //string domain = userName.Substring(atIndex + 1);
+
+                // Validate the domain part of the email address
+                //if (!regex.IsMatch(domain))
+                //if (emailAddressAttribute.IsValid(userName))
+                //{
+                //    return new ValidationResult("Please enter a valid email address.");
+                //}
+            //}
 
         //    return ValidationResult.Success;
         //}
@@ -142,6 +162,7 @@ namespace FinanceMAUI.ViewModels
             _dialogService = dialogService;
             //RegisterModel = new();
             //LoginModel = new();
+
             IsAuthenticated = false;
             failedAttempt = false;
             loginAttempts = 0;
