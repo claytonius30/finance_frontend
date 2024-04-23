@@ -10,14 +10,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Android.Graphics.ImageDecoder;
 //using static Android.Provider.CalendarContract;
 
 namespace FinanceMAUI.ViewModels
 {
-    public partial class UserDetailViewModel : ViewModelBase, IQueryAttributable, IRecipient<IncomeAddedOrChangedMessage>, IRecipient<IncomeDeletedMessage>
+    public partial class UserDetailViewModel : ViewModelBase, IQueryAttributable, IRecipient<IncomeDeletedMessage>
     {
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
+        private readonly IDialogService _dialogService;
 
         [ObservableProperty]
         private Guid _id;
@@ -59,10 +61,11 @@ namespace FinanceMAUI.ViewModels
         private async Task NavigateToAddIncome()
             => await _navigationService.GoToAddIncome(Id);
 
-        public UserDetailViewModel(IUserService userService, INavigationService navigationService) 
+        public UserDetailViewModel(IUserService userService, INavigationService navigationService, IDialogService dialogService) 
         {
             _userService = userService;
             _navigationService = navigationService;
+            _dialogService = dialogService;
                               
             //Id = Guid.Parse("64cfed22-96ed-45a4-3524-08dc5a68942a");
             ////GetUser(Id);
@@ -73,7 +76,7 @@ namespace FinanceMAUI.ViewModels
             //Balance = 0;
             //Date = DateTime.Now;
 
-            WeakReferenceMessenger.Default.Register<IncomeAddedOrChangedMessage>(this);
+            //WeakReferenceMessenger.Default.Register<IncomeAddedOrChangedMessage>(this);
             WeakReferenceMessenger.Default.Register<IncomeDeletedMessage>(this);
         }
 
@@ -94,6 +97,10 @@ namespace FinanceMAUI.ViewModels
                         else if (Balance < 0)
                         {
                             BalanceColor = "Red";
+                        }
+                        else
+                        {
+                            BalanceColor = "Black";
                         }
                     }
                 });
@@ -155,19 +162,20 @@ namespace FinanceMAUI.ViewModels
             }
         }
 
-        public void Receive(IncomeAddedOrChangedMessage message)
-        {
+        //public void Receive(IncomeAddedOrChangedMessage message)
+        //{
             
-        }
+        //}
 
         public void Receive(IncomeDeletedMessage message)
         {
-            
+            //DeletedIncomeAlert(message.Source);
+            //_dialogService.Notify("Success", $"The income {message.Source} is deleted.");
         }
 
-        public void Receive(LoginMessage message)
-        {
+        //public void Receive(LoginMessage message)
+        //{
             
-        }
+        //}
     }
 }

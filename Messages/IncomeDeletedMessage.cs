@@ -10,11 +10,18 @@ namespace FinanceMAUI.Messages
     {
         public int IncomeId { get; set; }
         public Guid UserId { get; set; }
+        public string Source { get; set; }
 
-        public IncomeDeletedMessage(Guid userId, int incomeId)
+        public IncomeDeletedMessage(string source)
+        {
+            Source = source;
+        }
+
+        public IncomeDeletedMessage(Guid userId, int incomeId, string source)
         {
             IncomeId = incomeId;
             UserId = userId;
+            Source = source;
         }
     }
 }

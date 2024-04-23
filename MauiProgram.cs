@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+//using FinanceMAUI.Platforms.Windows;
 using FinanceMAUI.Repositories;
 using FinanceMAUI.Services;
 using FinanceMAUI.ViewModels;
@@ -40,6 +41,9 @@ namespace FinanceMAUI
             {
 #if ANDROID
                 return new AndroidHttpMessageHandler();
+
+#elif WINDOWS
+                return new WindowsHttpMessageHandler();
 #else
                 return null!;
 #endif
