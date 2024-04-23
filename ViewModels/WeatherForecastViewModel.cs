@@ -12,12 +12,12 @@ namespace FinanceMAUI.ViewModels
 {
     public partial class WeatherForecastViewModel : ViewModelBase
     {
-        private readonly ClientService _clientService;
+        private readonly IClientService _clientService;
 
 
         public ObservableCollection<WeatherForecast> WeatherForecasts { get; set; } = [];
 
-        public WeatherForecastViewModel(ClientService clientService)
+        public WeatherForecastViewModel(IClientService clientService)
         {
             _clientService = clientService;
             //LoadWeatherForecastData();

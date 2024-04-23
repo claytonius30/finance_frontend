@@ -56,7 +56,7 @@ namespace FinanceMAUI.ViewModels
 
             return ValidationResult.Success;
         }
-
+        
         [Required]
         [NotifyDataErrorInfo]
         [ObservableProperty]

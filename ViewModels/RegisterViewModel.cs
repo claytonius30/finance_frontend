@@ -19,7 +19,7 @@ namespace FinanceMAUI.ViewModels
 {
     public partial class RegisterViewModel : ViewModelBase, IRecipient<RegisterMessage>
     {
-        private readonly ClientService _clientService;
+        private readonly IClientService _clientService;
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
         private readonly IDialogService _dialogService;
@@ -27,30 +27,13 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private bool _isAuthenticated;
         private bool emailExists;
-        //[Required]
-        //[EmailAddress]
-        ////[CustomValidation(typeof(LoginViewModel), nameof(ValidateEmail))]
-        //[NotifyDataErrorInfo]
-        //[ObservableProperty]
-        //private string _userName;
-
-        //public static ValidationResult? ValidateEmail(string userName, ValidationContext context)
-        //{
-        //    if (userName.Length < 1)
-        //    {
-        //        return new("Please enter an email address.");
-        //    }
-
-        //    return ValidationResult.Success;
-        //}
 
         [Required]
         [EmailAddress]
         [NotifyDataErrorInfo]
         [ObservableProperty]
         private string _emailRegister;
-
-
+        
         [Required]
         [PasswordPropertyText]
         [NotifyDataErrorInfo]
@@ -73,7 +56,7 @@ namespace FinanceMAUI.ViewModels
 
         public ObservableCollection<ValidationResult> RegisterErrors { get; } = new();
 
-        public RegisterViewModel(ClientService clientService, IUserService userService, INavigationService navigationService, IDialogService dialogService)
+        public RegisterViewModel(IClientService clientService, IUserService userService, INavigationService navigationService, IDialogService dialogService)
         {
             _clientService = clientService;
             _userService = userService;
@@ -81,7 +64,6 @@ namespace FinanceMAUI.ViewModels
             _dialogService = dialogService;
             IsAuthenticated = false;
             emailExists = false;
-            //GetEmailFromSecuredStorage();
 
             WeakReferenceMessenger.Default.Register<RegisterMessage>(this);
 
@@ -120,7 +102,6 @@ namespace FinanceMAUI.ViewModels
             if (IsAuthenticated)
             {
                 Guid userId = await _userService.GetGuid(EmailRegister);
-
                 UserModel? newUser = await _userService.GetUser(userId);
 
                 if (newUser != null)
@@ -129,7 +110,6 @@ namespace FinanceMAUI.ViewModels
                     newUser.LastName = LastName!;
                     if (await _userService.PutUser(newUser))
                     {
-                        //WeakReferenceMessenger.Default.Send(new UserCreatedMessage());
                         await _dialogService.Notify("Success", "You have been registered.");
                         await _navigationService.GoToUserDetail(userId);
                     }
@@ -144,8 +124,7 @@ namespace FinanceMAUI.ViewModels
                 await _dialogService.Notify("Failed", "User Registration failed.");
             }
         }
-
-        //private bool CanRegisterUser() => !HasErrors;
+        
         private bool CanRegisterUser() => !HasErrors;
 
         private RegisterModel MapDataToRegisterModel()

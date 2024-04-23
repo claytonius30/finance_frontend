@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace FinanceMAUI.Services
 {
-    public class ClientService
+    public class ClientService : IClientService
     {
         private readonly IHttpClientFactory _httpClientFactory;
         //private AndroidHttpMessageHandler = private new AndroidHttpMessageHandler
@@ -27,7 +27,6 @@ namespace FinanceMAUI.Services
 
         public async Task Register(RegisterModel model)
         {
-            // model.Email = "maui@gmail.com"; model.Password = "Maui@123";
             var httpClient = _httpClientFactory.CreateClient("custom-httpclient");
             var result = await httpClient.PostAsJsonAsync("/register", model);
             if (result.IsSuccessStatusCode)
@@ -59,12 +58,10 @@ namespace FinanceMAUI.Services
 
         public async Task Login(LoginModel model)
         {
-            // model.Email = "maui@gmail.com"; model.Password = "Maui@123";
             var httpClient = _httpClientFactory.CreateClient("custom-httpclient");
             var result = await httpClient.PostAsJsonAsync("/login", model);
             var response = await result.Content.ReadFromJsonAsync<LoginResponseModel>();
-
-            //if (result is not null)
+            
             if (result.IsSuccessStatusCode)
             {
                 var serializeResponse = JsonSerializer.Serialize(
@@ -81,7 +78,6 @@ namespace FinanceMAUI.Services
             {
                 WeakReferenceMessenger.Default.Send(new LoginMessage());
             }
-            //await _dialogService.Notify("Login Failed", "User does not exist.");
             Console.WriteLine("Login Unsuccessful");
         }
 

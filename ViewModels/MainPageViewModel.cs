@@ -27,9 +27,9 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private bool _isAuthenticated;
 
-        private readonly ClientService _clientService;
+        private readonly IClientService _clientService;
 
-        public MainPageViewModel(ClientService clientService)
+        public MainPageViewModel(IClientService clientService)
         {
             _clientService = clientService;
             RegisterModel = new();

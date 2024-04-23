@@ -4,8 +4,6 @@ using FinanceMAUI.Services;
 using FinanceMAUI.ViewModels;
 using FinanceMAUI.Views;
 using Microsoft.Extensions.Logging;
-//using FinanceMAUI.Platforms;
-
 
 namespace FinanceMAUI
 {
@@ -28,21 +26,10 @@ namespace FinanceMAUI
                 .RegisterServices()
                 .RegisterViewModels()
                 .RegisterViews();
-
-//            builder.Services.AddSingleton<IPlatformHttpMessageHandler>(sp =>
-//            {
-//#if ANDROID
-//                return new AndroidHttpMessageHandler();
-//#else
-//                return null!;
-//#endif
-//            });
-
-
+            
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-
             return builder.Build();
         }
 
@@ -59,8 +46,6 @@ namespace FinanceMAUI
             });
 
             var baseurl = DeviceInfo.Platform == DevicePlatform.Android
-                    //? "http://10.0.2.2:5280"
-                    //: "https://localhost:7210";
                     ? "https://10.0.2.2:7208"
                     : "https://localhost:7208";
             builder.Services.AddHttpClient("custom-httpclient",
@@ -73,9 +58,7 @@ namespace FinanceMAUI
                     var platformMessageHandler = configureBuilder.Services.GetRequiredService<IPlatformHttpMessageHandler>();
                     configureBuilder.PrimaryHandler = platformMessageHandler.GetHttpMessageHandler();
                 });
-
             
-
             builder.Services.AddTransient<IUserRepository, UserRepository>();
 
             return builder;
@@ -87,7 +70,7 @@ namespace FinanceMAUI
             builder.Services.AddSingleton<INavigationService, NavigationService>();
             builder.Services.AddSingleton<IDialogService, DialogService>();
 
-            builder.Services.AddSingleton<ClientService>();
+            builder.Services.AddSingleton<IClientService, ClientService>();
 
             return builder;
         }
@@ -101,8 +84,8 @@ namespace FinanceMAUI
             builder.Services.AddTransient<IncomeAddEditViewModel>();
             builder.Services.AddTransient<IncomeDetailViewModel>();
 
-            builder.Services.AddSingleton<MainPageViewModel>();
-            builder.Services.AddSingleton<WeatherForecastViewModel>();
+            //builder.Services.AddSingleton<MainPageViewModel>();
+            //builder.Services.AddSingleton<WeatherForecastViewModel>();
 
             return builder;
         }
@@ -116,8 +99,8 @@ namespace FinanceMAUI
             builder.Services.AddTransient<IncomeAddEditPage>();
             builder.Services.AddTransient<IncomeDetailPage>();
 
-            builder.Services.AddSingleton<MainPage>();
-            builder.Services.AddSingleton<WeatherForecastPage>();
+            //builder.Services.AddSingleton<MainPage>();
+            //builder.Services.AddSingleton<WeatherForecastPage>();
 
             return builder;
         }
