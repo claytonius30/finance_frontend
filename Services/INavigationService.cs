@@ -12,6 +12,7 @@ namespace FinanceMAUI.Services
         Task GoToRegister();
         Task GoToUserDetail(Guid userId);
         Task GoToUserIncomes(Guid userId);
+        Task GoToTransactions(Guid userId);
         Task GoToEditIncome(IncomeModel detailModel);
         Task GoToIncomeDetail(Guid userId, int incomeId);
         Task GoToAddIncome(Guid userId);

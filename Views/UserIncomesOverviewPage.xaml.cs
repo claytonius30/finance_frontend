@@ -1,5 +1,4 @@
 using FinanceMAUI.ViewModels;
-
 namespace FinanceMAUI.Views;
 
 public partial class UserIncomesOverviewPage : ContentPageBase

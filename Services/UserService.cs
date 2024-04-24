@@ -38,6 +38,12 @@ namespace FinanceMAUI.Services
         public Task<List<IncomeModel>> GetIncomes(Guid id)
             => _userRepository.GetIncomes(id);
 
+        public Task<List<TransactionModel>> GetAllTransactions(Guid userId)
+            => _userRepository.GetAllTransactions(userId);
+
+        public Task<List<TransactionModel>> GetTransactionsForDateRange(Guid userId, DateTime startDate, DateTime endDate)
+            => _userRepository.GetTransactionsForDateRange(userId, startDate, endDate);
+
         public Task<bool> CheckFinancialSummary(Guid id)
             => _userRepository.CheckFinancialSummary(id);
 

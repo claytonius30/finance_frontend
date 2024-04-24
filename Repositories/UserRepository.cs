@@ -155,6 +155,44 @@ namespace FinanceMAUI.Repositories
             }
         }
 
+        public async Task<List<TransactionModel>> GetAllTransactions(Guid userId)
+        {
+            using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
+
+            try
+            {
+                List<TransactionModel>? transactions = await client.GetFromJsonAsync<List<TransactionModel>>(
+                    $"api/User/{userId}/GetAllTransactions",
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web));
+
+                return transactions ?? new List<TransactionModel>();
+            }
+            catch (Exception)
+            {
+                return new List<TransactionModel>();
+            }
+        }
+
+        public async Task<List<TransactionModel>> GetTransactionsForDateRange(Guid userId, DateTime startDate, DateTime endDate)
+        {
+            using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
+
+            try
+            {
+                // Construct the URL with query parameters
+                string url = $"api/User/{userId}/GetTransactionsForDateRange" +
+                             $"?startDate={startDate:s}&endDate={endDate:s}";
+
+                List<TransactionModel>? transactions = await client.GetFromJsonAsync<List<TransactionModel>>(url);
+
+                return transactions ?? new List<TransactionModel>();
+            }
+            catch (Exception)
+            {
+                return new List<TransactionModel>();
+            }
+        }
+
         public async Task<bool> CheckFinancialSummary(Guid id)
         {
             using HttpClient client = _httpClientFactory.CreateClient   ("custom-httpclient");

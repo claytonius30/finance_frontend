@@ -25,6 +25,12 @@ namespace FinanceMAUI.Services
             await Shell.Current.GoToAsync("incomes", parameters);
         }
 
+        public async Task GoToTransactions(Guid userId)
+        {
+            var parameters = new Dictionary<string, object> { { "UserId", userId } };
+            await Shell.Current.GoToAsync("transactions", parameters);
+        }
+
         public async Task GoToEditIncome(IncomeModel detailModel)
         {
             var navigationParameter = new ShellNavigationQueryParameters

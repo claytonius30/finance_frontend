@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FinanceMAUI.Views.TransactionsOverviewPage"
+             xmlns:vm="clr-namespace:FinanceMAUI.ViewModels"
+             xmlns:views="clr-namespace:FinanceMAUI.Views"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="TransactionsOverviewPage">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackCommand}" />
+    </Shell.BackButtonBehavior>
+
+    <Grid>
+        <ScrollView>
+            <CollectionView
+                ItemsSource="{Binding Transactions}"
+                SelectedItem="{Binding SelectedTransaction, Mode=TwoWay}"
+                SelectionMode="Single"
+                SelectionChangedCommand="{Binding NavigateToSelectedDetailCommand}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            Padding="10"
+                            ColumnDefinitions="Auto,Auto">
+                            <VerticalStackLayout
+                                Grid.Column="1"
+                                Padding="10"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                                <Label
+                                    Style="{StaticResource ValueLabelStyle}"
+                                    Margin="0"
+                                    Text="{Binding Date, StringFormat='{0:D}'}" />
+                                <Label Text="{Binding Type}" />
+                                <Label Text="{Binding Amount, StringFormat='{0:C}'}" />
+                                <Label Text="{Binding Description}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+        <Grid  BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" 
+            IsVisible="{Binding IsLoading}">
+            <ActivityIndicator IsRunning="{Binding IsLoading}" />
+        </Grid>
+    </Grid>
+</views:ContentPageBase>

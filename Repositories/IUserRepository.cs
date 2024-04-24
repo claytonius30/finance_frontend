@@ -23,6 +23,10 @@ namespace FinanceMAUI.Repositories
 
         Task<List<IncomeModel>> GetIncomes(Guid userId);
 
+        Task<List<TransactionModel>> GetAllTransactions(Guid userId);
+
+        Task<List<TransactionModel>> GetTransactionsForDateRange(Guid userId, DateTime startDate, DateTime endDate);
+
         Task<bool> CheckFinancialSummary(Guid id);
 
         Task<bool> CreateIncome(IncomeModel model);

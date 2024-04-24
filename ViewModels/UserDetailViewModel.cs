@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Android.Graphics.ImageDecoder;
+//using static Android.Graphics.ImageDecoder;
 //using static Android.Provider.CalendarContract;
 
 namespace FinanceMAUI.ViewModels
@@ -51,10 +51,14 @@ namespace FinanceMAUI.ViewModels
         private async Task ViewIncomes()
         {
             //Shell.Current.GoToAsync("incomes");
-
             //Id = 1;
-
             await _navigationService.GoToUserIncomes(Id);
+        }
+
+        [RelayCommand]
+        private async Task ViewTransactions()
+        {
+            await _navigationService.GoToTransactions(Id);
         }
 
         [RelayCommand]

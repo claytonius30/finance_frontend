@@ -67,16 +67,6 @@ namespace FinanceMAUI.ViewModels
             _userService = userService;
             _navigationService = navigationService;
             _dialogService = dialogService; 
-
-            //UserId = 1;
-            //IncomeId = 1;
-            //GetUser(Id);
-            //GetCurrentBalance(Id);
-            //Id = 0;
-            //FirstName = "John";
-            //LastName = "Smith";
-            //Balance = 0;
-            //Date = DateTime.Now;
         }
 
         public override async Task LoadAsync()

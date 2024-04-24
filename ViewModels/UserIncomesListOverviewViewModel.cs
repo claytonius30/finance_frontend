@@ -19,6 +19,7 @@ namespace FinanceMAUI.ViewModels
     {
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
+
         [ObservableProperty]
         private Guid _userId;
 
