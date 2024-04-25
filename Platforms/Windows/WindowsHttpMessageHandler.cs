@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinanceMAUI.Platforms.Windows
+namespace FinanceMAUI
 {
     public class WindowsHttpMessageHandler : IPlatformHttpMessageHandler
     {

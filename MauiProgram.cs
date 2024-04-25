@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Maui;
-//using FinanceMAUI.Platforms.Windows;
 using FinanceMAUI.Repositories;
 using FinanceMAUI.Services;
 using FinanceMAUI.ViewModels;

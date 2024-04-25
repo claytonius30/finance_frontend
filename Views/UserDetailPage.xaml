@@ -55,12 +55,12 @@
                                     FallbackValue='No balance available'}" />
                         </Grid>
                     </Grid>
-                    <VerticalStackLayout Grid.Row="1">
+                    <!--<VerticalStackLayout Grid.Row="1">
                         <Button
                             Margin="0,10,0,0"
                             Text="Hide balance"
                             Command="{Binding HideBalanceCommand}" />
-                    </VerticalStackLayout>
+                    </VerticalStackLayout>-->
                     <VerticalStackLayout Grid.Row="1">
                         <Button
                             Margin="0,10,0,0"
@@ -75,10 +75,14 @@
                     </VerticalStackLayout>
                     <StackLayout>
                         <Button
+                            Margin="0,10,0,0"
+                            Command="{Binding NavigateToAddIncomeCommand}"
+                            Text="Add Income" />
+                        <!--<Button
                             Margin="5"
                             Command="{Binding NavigateToAddIncomeCommand}"
                             HorizontalOptions="Fill"
-                            Text="Add Income" />
+                            Text="Add Income" />-->
                     </StackLayout>
                 </VerticalStackLayout>
             </Grid>

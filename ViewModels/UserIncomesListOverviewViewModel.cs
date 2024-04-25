@@ -22,8 +22,7 @@ namespace FinanceMAUI.ViewModels
 
         [ObservableProperty]
         private Guid _userId;
-
-
+        
         [ObservableProperty]
         private ObservableCollection<UserIncomesListItemViewModel> _incomes = new();
         [ObservableProperty]

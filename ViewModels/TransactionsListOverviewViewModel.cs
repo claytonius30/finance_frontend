@@ -9,6 +9,7 @@ using FinanceMAUI.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,15 @@ namespace FinanceMAUI.ViewModels
 
         [ObservableProperty]
         private Guid _userId;
+
+        [ObservableProperty]
+        private DateTime _startDate = DateTime.Now.AddMonths(-1);
+
+        [ObservableProperty]
+        private DateTime _endDate = DateTime.Now;
+
+        [ObservableProperty]
+        private DateTime _minDate = DateTime.Now.AddYears(-4);
 
         [ObservableProperty]
         private ObservableCollection<TransactionsListItemViewModel> _transactions = new();
@@ -50,6 +60,21 @@ namespace FinanceMAUI.ViewModels
             _navigationService = navigationService;
 
             //WeakReferenceMessenger.Default.Register(this);
+            PropertyChanged += OnPropertyChanged!;
+        }
+
+        private async void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
+            {
+                await ReloadTransactions();
+            }
+        }
+
+        [RelayCommand]
+        private async Task ReloadTransactions()
+        {
+            await GetTransactionsForDateRange(UserId, StartDate, EndDate);
         }
 
         public override async Task LoadAsync()
@@ -57,13 +82,27 @@ namespace FinanceMAUI.ViewModels
             await Loading(
                 async () =>
                 {
-                    await GetAllTransactions(UserId);
+                    //await GetAllTransactions(UserId);
+                    await GetTransactionsForDateRange(UserId, StartDate, EndDate);
                 });
         }
 
-        private async Task GetAllTransactions(Guid id)
+        private async Task GetTransactionsForDateRange(Guid userId, DateTime startDate, DateTime endDate)
         {
-            List<TransactionModel> transactions = await _userService.GetAllTransactions(id);
+            List<TransactionModel> transactions = await _userService.GetTransactionsForDateRange(userId, startDate, endDate);
+            List<TransactionsListItemViewModel> listItems = new();
+            foreach (var transaction in transactions)
+            {
+                listItems.Insert(0, MapTransactionModelToTransactionsListItemViewModel(transaction));
+            }
+
+            Transactions.Clear();
+            Transactions = listItems.ToObservableCollection();
+        }
+
+        private async Task GetAllTransactions(Guid userId)
+        {
+            List<TransactionModel> transactions = await _userService.GetAllTransactions(userId);
             List<TransactionsListItemViewModel> listItems = new();
             foreach (var transaction in transactions)
             {

@@ -35,7 +35,7 @@ namespace FinanceMAUI.ViewModels
 
         //[Required]
         [MinLength(1)]
-        [MaxLength(50)]
+        [MaxLength(46)]
         [NotifyDataErrorInfo]
         [ObservableProperty]
         private string? _source;
