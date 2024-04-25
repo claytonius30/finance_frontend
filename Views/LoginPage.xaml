@@ -17,13 +17,12 @@
                 <VerticalStackLayout Padding="10">
                     <Grid>
                         <Label
-                            HorizontalOptions="Start"
                             Text="User Sign In"
                             Style="{StaticResource TitleLabelStyle}" />
                         <StackLayout HorizontalOptions="End">
                             <HorizontalStackLayout>
-                                <Label
-                                    Text="New User?   "
+                                <Label Padding="0,0,10,0"
+                                    Text="New User?"
                                     TextColor="DarkGray"
                                     FontSize="Small" />
                                 <Button

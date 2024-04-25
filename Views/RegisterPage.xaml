@@ -24,8 +24,8 @@
                             Style="{StaticResource TitleLabelStyle}" />
                         <StackLayout HorizontalOptions="End">
                             <HorizontalStackLayout>
-                                <Label
-                                    Text="Back to login   "
+                                <Label Padding="0,0,10,0"
+                                    Text="Back to login"
                                     TextColor="DarkGray"
                                     FontSize="Small" />
                                 <Button

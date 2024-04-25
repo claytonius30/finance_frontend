@@ -12,11 +12,18 @@
 
     <Grid>
         <VerticalStackLayout>
-            <Label Padding="10,10"
-                Style="{StaticResource TitleLabelStyle}"
-                Text="Transactions"
-                TextColor="{StaticResource Primary}" />
-            <HorizontalStackLayout HorizontalOptions="Start">
+            <Grid>
+                <Label
+                    Padding="10,10,0,0"
+                    Style="{StaticResource TitleLabelStyle}"
+                    Text="Transactions" />
+                <Button
+                    HorizontalOptions="End"
+                    Margin="0,10,10,0"
+                    Command="{Binding ViewAllTransactionsCommand}"
+                    Text="View All" />
+            </Grid>
+            <HorizontalStackLayout>
                 <Label
                     Style="{StaticResource ValueLabelStyle}"
                     Text="Date Range: " />
@@ -33,7 +40,7 @@
                     WidthRequest="118" />
             </HorizontalStackLayout>
         </VerticalStackLayout>
-        <Grid Padding="0,90,0,0">
+        <Grid Padding="0,100,0,0">
             <ScrollView>
                 <Grid>
                     <VerticalStackLayout>

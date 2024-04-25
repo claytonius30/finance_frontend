@@ -185,6 +185,8 @@ namespace FinanceMAUI.Repositories
 
                 List<TransactionModel>? transactions = await client.GetFromJsonAsync<List<TransactionModel>>(url);
 
+                /*if (transactions)*/
+
                 return transactions ?? new List<TransactionModel>();
             }
             catch (Exception)

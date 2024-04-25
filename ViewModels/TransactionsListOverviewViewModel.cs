@@ -20,6 +20,7 @@ namespace FinanceMAUI.ViewModels
     {
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
+        private readonly IDialogService _dialogService;
 
         [ObservableProperty]
         private Guid _userId;
@@ -49,15 +50,31 @@ namespace FinanceMAUI.ViewModels
         //}
 
         [RelayCommand]
+        private async Task ViewAllTransactions()
+        {
+            await GetAllTransactions(UserId);
+            if (Transactions.Count != 0)
+            {
+                StartDate = Transactions.LastOrDefault()!.Date;
+                EndDate = Transactions.FirstOrDefault()!.Date;
+            }
+            else
+            {
+                await _dialogService.Notify("Empty", "No transactions have been added.");
+            }
+        }
+
+        [RelayCommand]
         private async Task Back()
         {
             await _navigationService.GoToUserDetail(UserId);
         }
 
-        public TransactionsListOverviewViewModel(IUserService userService, INavigationService navigationService)
+        public TransactionsListOverviewViewModel(IUserService userService, INavigationService navigationService, IDialogService dialogService)
         {
             _userService = userService;
             _navigationService = navigationService;
+            _dialogService = dialogService;
 
             //WeakReferenceMessenger.Default.Register(this);
             PropertyChanged += OnPropertyChanged!;
@@ -90,6 +107,10 @@ namespace FinanceMAUI.ViewModels
         private async Task GetTransactionsForDateRange(Guid userId, DateTime startDate, DateTime endDate)
         {
             List<TransactionModel> transactions = await _userService.GetTransactionsForDateRange(userId, startDate, endDate);
+            //if (!transactions.Any())
+            //{
+            //    return;
+            //}
             List<TransactionsListItemViewModel> listItems = new();
             foreach (var transaction in transactions)
             {
