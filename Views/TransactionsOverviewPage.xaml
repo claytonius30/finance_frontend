@@ -11,7 +11,12 @@
     </Shell.BackButtonBehavior>
 
     <Grid>
-        <VerticalStackLayout>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <VerticalStackLayout Grid.Row="0">
             <Grid>
                 <Label
                     Padding="10,10,0,0"
@@ -40,41 +45,35 @@
                     WidthRequest="118" />
             </HorizontalStackLayout>
         </VerticalStackLayout>
-        <Grid Padding="0,100,0,0">
-            <ScrollView>
-                <Grid>
-                    <VerticalStackLayout>
-                        <CollectionView
-                            ItemsSource="{Binding Transactions}"
-                            SelectedItem="{Binding SelectedTransaction, Mode=TwoWay}"
-                            SelectionMode="Single"
-                            SelectionChangedCommand="{Binding NavigateToSelectedDetailCommand}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid
-                                        Padding="10"
-                                        ColumnDefinitions="Auto,Auto">
-                                        <VerticalStackLayout
-                                            Grid.Column="1"
-                                            Padding="10"
-                                            HorizontalOptions="Center"
-                                            VerticalOptions="Center">
-                                            <Label
-                                                Style="{StaticResource ValueLabelStyle}"
-                                                Margin="0"
-                                                Text="{Binding Date, StringFormat='{0:D}'}" />
-                                            <Label Text="{Binding Type}" />
-                                            <Label Text="{Binding Amount, StringFormat='{0:C}'}" />
-                                            <Label Text="{Binding Description}" />
-                                        </VerticalStackLayout>
-                                    </Grid>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </VerticalStackLayout>
-                </Grid>
-            </ScrollView>
-        </Grid>
+        <ScrollView Grid.Row="1">
+            <CollectionView
+                ItemsSource="{Binding Transactions}"
+                SelectedItem="{Binding SelectedTransaction, Mode=TwoWay}"
+                SelectionMode="Single"
+                SelectionChangedCommand="{Binding NavigateToSelectedDetailCommand}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            Padding="10"
+                            ColumnDefinitions="Auto,Auto">
+                            <VerticalStackLayout
+                                Grid.Column="1"
+                                Padding="10"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                                <Label
+                                    Style="{StaticResource ValueLabelStyle}"
+                                    Margin="0"
+                                    Text="{Binding Date, StringFormat='{0:D}'}" />
+                                <Label Text="{Binding Type}" />
+                                <Label Text="{Binding Amount, StringFormat='{0:C}'}" />
+                                <Label Text="{Binding Description}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
         <Grid  BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" 
             IsVisible="{Binding IsLoading}">
             <ActivityIndicator IsRunning="{Binding IsLoading}" />
