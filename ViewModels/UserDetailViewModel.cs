@@ -62,6 +62,12 @@ namespace FinanceMAUI.ViewModels
         }
 
         [RelayCommand]
+        private async Task ViewGoals()
+        {
+            await _navigationService.GoToGoals(Id);
+        }
+
+        [RelayCommand]
         private async Task NavigateToAddIncome()
             => await _navigationService.GoToAddIncome(Id);
 
@@ -131,10 +137,10 @@ namespace FinanceMAUI.ViewModels
         {
             var balance = await _userService.GetCurrentBalance(id);
 
-            //if (balance != null)
-            //{
-                MapUserBalance(balance);
-            //}
+            if (balance != null)
+            {
+                MapUserBalance((decimal)balance);
+            }
         }
 
         private void MapUserData(UserModel user)

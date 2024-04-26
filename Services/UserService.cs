@@ -29,14 +29,11 @@ namespace FinanceMAUI.Services
         public Task<bool> PutUser(UserModel model)
             => _userRepository.PutUser(model);
 
-        public Task<decimal> GetCurrentBalance(Guid id)
+        public Task<decimal?> GetCurrentBalance(Guid id)
             => _userRepository.GetCurrentBalance(id);
 
-        public Task<IncomeModel?> GetIncome(Guid userId, int incomeId)
-            => _userRepository.GetIncome(userId, incomeId);
-
-        public Task<List<IncomeModel>> GetIncomes(Guid id)
-            => _userRepository.GetIncomes(id);
+        public Task<decimal?> GetBalanceForDateRange(Guid id, DateTime startDate, DateTime endDate)
+            => _userRepository.GetBalanceForDateRange(id,startDate, endDate);
 
         public Task<List<TransactionModel>> GetAllTransactions(Guid userId)
             => _userRepository.GetAllTransactions(userId);
@@ -47,6 +44,15 @@ namespace FinanceMAUI.Services
         public Task<bool> CheckFinancialSummary(Guid id)
             => _userRepository.CheckFinancialSummary(id);
 
+        public Task<IncomeModel?> GetIncome(Guid userId, int incomeId)
+            => _userRepository.GetIncome(userId, incomeId);
+
+        public Task<List<IncomeModel>> GetIncomesForDateRange(Guid userId, DateTime startDate, DateTime endDate)
+            => _userRepository.GetIncomesForDateRange(userId, startDate, endDate);
+
+        public Task<List<IncomeModel>> GetIncomes(Guid id)
+            => _userRepository.GetIncomes(id);
+
         public Task<bool> CreateIncome(IncomeModel model)
             => _userRepository.CreateIncome(model);
 
@@ -55,5 +61,38 @@ namespace FinanceMAUI.Services
 
         public Task<bool> DeleteIncome(Guid userId, int incomeId)
         => _userRepository.DeleteIncome(userId, incomeId);
+
+        public Task<List<ExpenseModel>> GetExpenses(Guid userId)
+            => _userRepository.GetExpenses(userId);
+
+        public Task<List<ExpenseModel>> GetExpensesForDateRange(Guid userId, DateTime startDate, DateTime endDate)
+            => _userRepository.GetExpensesForDateRange(userId, startDate, endDate);
+
+        public Task<ExpenseModel?> GetExpense(Guid userId, int expenseId)
+            => _userRepository.GetExpense(userId, expenseId);
+
+        public Task<bool> CreateExpense(ExpenseModel model)
+            => _userRepository.CreateExpense(model);
+
+        public Task<bool> EditExpense(ExpenseModel model)
+            => _userRepository.EditExpense(model);
+
+        public Task<bool> DeleteExpense(Guid userId, int expenseId)
+            => _userRepository.DeleteExpense(userId, expenseId);
+
+        public Task<List<GoalModel>> GetGoals(Guid userId)
+            => _userRepository.GetGoals(userId);
+
+        public Task<GoalModel?> GetGoal(Guid userId, int goalId)
+            => _userRepository.GetGoal(userId, goalId);
+
+        public Task<bool> CreateGoal(GoalModel model)
+            => _userRepository.CreateGoal(model);
+
+        public Task<bool> EditGoal(GoalModel model)
+            => _userRepository.EditGoal(model);
+
+        public Task<bool> DeleteGoal(Guid userId, int goalId)
+            => _userRepository.DeleteGoal(userId, goalId);
     }
 }

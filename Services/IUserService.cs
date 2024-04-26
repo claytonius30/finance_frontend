@@ -17,11 +17,9 @@ namespace FinanceMAUI.Services
 
         Task<bool> PutUser(UserModel model);
 
-        Task<decimal> GetCurrentBalance(Guid id);
+        Task<decimal?> GetCurrentBalance(Guid id);
 
-        Task<IncomeModel?> GetIncome(Guid userid, int incomeId);
-
-        Task<List<IncomeModel>> GetIncomes(Guid id);
+        Task<decimal?> GetBalanceForDateRange(Guid id, DateTime startDate, DateTime endDate);
 
         Task<List<TransactionModel>> GetAllTransactions(Guid userId);
 
@@ -29,10 +27,38 @@ namespace FinanceMAUI.Services
 
         Task<bool> CheckFinancialSummary(Guid id);
 
+        Task<List<IncomeModel>> GetIncomes(Guid userId);
+
+        Task<List<IncomeModel>> GetIncomesForDateRange(Guid userId, DateTime startDate, DateTime endDate);
+
+        Task<IncomeModel?> GetIncome(Guid userId, int incomeId);
+
         Task<bool> CreateIncome(IncomeModel model);
 
         Task<bool> EditIncome(IncomeModel model);
 
         Task<bool> DeleteIncome(Guid userId, int incomeId);
+
+        Task<List<ExpenseModel>> GetExpenses(Guid userId);
+
+        Task<List<ExpenseModel>> GetExpensesForDateRange(Guid userId, DateTime startDate, DateTime endDate);
+
+        Task<ExpenseModel?> GetExpense(Guid userId, int expenseId);
+
+        Task<bool> CreateExpense(ExpenseModel model);
+
+        Task<bool> EditExpense(ExpenseModel model);
+
+        Task<bool> DeleteExpense(Guid userId, int expenseId);
+
+        Task<List<GoalModel>> GetGoals(Guid userId);
+
+        Task<GoalModel?> GetGoal(Guid userId, int goalId);
+
+        Task<bool> CreateGoal(GoalModel model);
+
+        Task<bool> EditGoal(GoalModel model);
+
+        Task<bool> DeleteGoal(Guid userId, int goalId);
     }
 }

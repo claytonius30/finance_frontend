@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FinanceMAUI.Views.GoalDetailPage"
+             xmlns:vm="clr-namespace:FinanceMAUI.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:views="clr-namespace:FinanceMAUI.Views"
+             Title="GoalDetailPage">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackCommand}" />
+    </Shell.BackButtonBehavior>
+
+    <Grid>
+        <ScrollView>
+            <Grid>
+                <VerticalStackLayout Padding="10">
+                    <!-- Type -->
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Label
+                            Text="Goal"
+                            Style="{StaticResource TitleLabelStyle}" />
+                        <Button
+                            Grid.Column="1"
+                            Margin="5"
+                            Command="{Binding NavigateToEditGoalCommand}"
+                            FontFamily="MaterialIconsRegular"
+                            FontSize="20"
+                            HorizontalOptions="End"
+                            Text="&#xe3c9;"
+                            WidthRequest="50" />
+                    </Grid>
+
+                    <Grid RowDefinitions="Auto,*">
+                        <Grid
+                            ColumnDefinitions=".3*,.7*"
+                            ColumnSpacing="5"
+                            RowDefinitions="*,*,*,*,*,*"
+                            RowSpacing="10">
+
+                            <!-- Row 1 Date -->
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Text="Date" />
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Style="{StaticResource ValueLabelStyle}"
+                                Text="{Binding Date, StringFormat='{0:D}'}" />
+
+                            <!-- Row 2 Amount -->
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Text="Amount"/>
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Style="{StaticResource ValueLabelStyle}"
+                                Text="{Binding Amount, Mode=OneWay, StringFormat='{0:C}', TargetNullValue='No amount provided',
+                                    FallbackValue='No amount available'}" />
+
+                            <!-- Row 3 Description -->
+                            <Label
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Text="Description" />
+                            <Label
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Style="{StaticResource ValueLabelStyle}" 
+                                Text="{Binding Description, Mode=OneWay}"/>
+
+                            <!-- Row 4 Days Until Goal -->
+                            <Label
+                                 Grid.Row="3"
+                                 Grid.Column="0"
+                                 Text="Days Until Goal" />
+                            <Label
+                                 Grid.Row="3"
+                                 Grid.Column="1"
+                                 Style="{StaticResource ValueLabelStyle}"
+                                 Text="{Binding DaysUntilGoal, StringFormat='{0:D}'}" />
+
+                            <!-- Row 5 Current Balance Difference -->
+                            <Label
+                                 Grid.Row="4"
+                                 Grid.Column="0"
+                                 Text="Current Balance Difference"/>
+                            <Label
+                                 Grid.Row="4"
+                                 Grid.Column="1"
+                                 TextColor="{Binding BalanceColor}"
+                                 Style="{StaticResource ValueLabelStyle}"
+                                 Text="{Binding CurrentBalanceDifference, Mode=OneWay, StringFormat='{0:C}', TargetNullValue='No amount provided',
+                                     FallbackValue='No amount available'}" />
+                        </Grid>
+                    </Grid>
+                    <VerticalStackLayout Grid.Row="1">
+                        <Button
+                            Margin="0,10,0,0"
+                            Command="{Binding DeleteGoalCommand}"
+                            BackgroundColor="{StaticResource Error}"
+                            Text="Delete goal" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+        <Grid  BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" 
+               IsVisible="{Binding IsLoading}">
+            <ActivityIndicator IsRunning="{Binding IsLoading}" />
+        </Grid>
+    </Grid>
+</views:ContentPageBase>

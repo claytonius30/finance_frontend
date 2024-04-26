@@ -51,7 +51,7 @@ namespace FinanceMAUI.ViewModels
                 if (await _userService.DeleteIncome(UserId, IncomeId))
                 {
                     await _navigationService.GoToUserDetail(UserId);
-                    await _dialogService.Notify("Success", $"The income {Source} is deleted.");
+                    await _dialogService.Notify("Success", $"The income '{Source}' is deleted.");
                 }
             }
         }

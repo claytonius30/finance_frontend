@@ -87,6 +87,9 @@ namespace FinanceMAUI
             builder.Services.AddTransient<IncomeAddEditViewModel>();
             builder.Services.AddTransient<IncomeDetailViewModel>();
             builder.Services.AddTransient<TransactionsListOverviewViewModel>();
+            builder.Services.AddTransient<GoalsListOverviewViewModel>();
+            builder.Services.AddTransient<GoalDetailViewModel>();
+            builder.Services.AddTransient<GoalAddEditViewModel>();
 
             //builder.Services.AddSingleton<MainPageViewModel>();
             //builder.Services.AddSingleton<WeatherForecastViewModel>();
@@ -103,6 +106,9 @@ namespace FinanceMAUI
             builder.Services.AddTransient<IncomeAddEditPage>();
             builder.Services.AddTransient<IncomeDetailPage>();
             builder.Services.AddTransient<TransactionsOverviewPage>();
+            builder.Services.AddTransient<GoalsOverviewPage>();
+            builder.Services.AddTransient<GoalDetailPage>();
+            builder.Services.AddTransient<GoalAddEditPage>();
 
             //builder.Services.AddSingleton<MainPage>();
             //builder.Services.AddSingleton<WeatherForecastPage>();

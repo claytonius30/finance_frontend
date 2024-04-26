@@ -14,6 +14,10 @@ namespace FinanceMAUI
             Routing.RegisterRoute("register", typeof(RegisterPage));
             Routing.RegisterRoute("user", typeof(UserDetailPage));
             Routing.RegisterRoute("transactions", typeof(TransactionsOverviewPage));
+            Routing.RegisterRoute("goals", typeof(GoalsOverviewPage));
+            Routing.RegisterRoute("goal", typeof(GoalDetailPage));
+            Routing.RegisterRoute("goal/add", typeof(GoalAddEditPage));
+            Routing.RegisterRoute("goal/edit", typeof(GoalAddEditPage));
             Routing.RegisterRoute("incomes", typeof(UserIncomesOverviewPage));
             Routing.RegisterRoute("income", typeof(IncomeDetailPage));
             Routing.RegisterRoute("income/add", typeof(IncomeAddEditPage));

@@ -20,7 +20,7 @@ namespace FinanceMAUI.Services
         public Task<UserModel?> GetUser(Guid id)
             => _userRepository.GetUser(id);
 
-        public Task<decimal> GetCurrentBalance(Guid id)
+        public Task<decimal?> GetCurrentBalance(Guid id)
             => _userRepository.GetCurrentBalance(id);
 
         public Task<List<IncomeModel>> GetIncomes(Guid id)
