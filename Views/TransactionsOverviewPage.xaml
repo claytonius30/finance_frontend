@@ -46,11 +46,13 @@
             </HorizontalStackLayout>
         </VerticalStackLayout>
         <ScrollView Grid.Row="1">
-            <CollectionView
+            <!--<CollectionView
                 ItemsSource="{Binding Transactions}"
                 SelectedItem="{Binding SelectedTransaction, Mode=TwoWay}"
                 SelectionMode="Single"
-                SelectionChangedCommand="{Binding NavigateToSelectedDetailCommand}">
+                SelectionChangedCommand="{Binding NavigateToSelectedDetailCommand}">-->
+            <CollectionView
+                ItemsSource="{Binding Transactions}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid

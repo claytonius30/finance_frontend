@@ -6,7 +6,7 @@
         <Image
             HeightRequest="40"
             HorizontalOptions="Center"
-            Source="globoticket_logo.png"
+            Source="financetracker_logo.png"
             VerticalOptions="Center" />
     </ContentView.Content>
 </ContentView>

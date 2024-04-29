@@ -25,6 +25,12 @@ namespace FinanceMAUI.Services
             await Shell.Current.GoToAsync("incomes", parameters);
         }
 
+        public async Task GoToUserExpenses(Guid userId)
+        {
+            var parameters = new Dictionary<string, object> { { "UserId", userId } };
+            await Shell.Current.GoToAsync("expenses", parameters);
+        }
+
         public async Task GoToTransactions(Guid userId)
         {
             var parameters = new Dictionary<string, object> { { "UserId", userId } };
@@ -39,6 +45,16 @@ namespace FinanceMAUI.Services
             };
 
             await Shell.Current.GoToAsync("income/edit", navigationParameter);
+        }
+
+        public async Task GoToEditExpense(ExpenseModel detailModel)
+        {
+            var navigationParameter = new ShellNavigationQueryParameters
+            {
+                { "Expense", detailModel }
+            };
+
+            await Shell.Current.GoToAsync("editexpense", navigationParameter);
         }
 
         public async Task GoToEditGoal(GoalModel detailModel)
@@ -69,10 +85,22 @@ namespace FinanceMAUI.Services
             await Shell.Current.GoToAsync("income", parameters);
         }
 
+        public async Task GoToExpenseDetail(Guid userId, int expenseId)
+        {
+            var parameters = new Dictionary<string, object> { { "UserId", userId }, { "ExpenseId", expenseId } };
+            await Shell.Current.GoToAsync("expense", parameters);
+        }
+
         public async Task GoToAddIncome(Guid userId)
         {
             var parameters = new Dictionary<string, object> { { "UserId", userId } };
             await Shell.Current.GoToAsync("income/add", parameters);
+        }
+
+        public async Task GoToAddExpense(Guid userId)
+        {
+            var parameters = new Dictionary<string, object> { { "UserId", userId } };
+            await Shell.Current.GoToAsync("addexpense", parameters);
         }
 
         public async Task GoToAddGoal(Guid userId)

@@ -47,6 +47,9 @@ namespace FinanceMAUI.Services
         public Task<IncomeModel?> GetIncome(Guid userId, int incomeId)
             => _userRepository.GetIncome(userId, incomeId);
 
+        public Task<ExpenseModel?> GetExpense(Guid userId, int expenseId)
+            => _userRepository.GetExpense(userId, expenseId);
+
         public Task<List<IncomeModel>> GetIncomesForDateRange(Guid userId, DateTime startDate, DateTime endDate)
             => _userRepository.GetIncomesForDateRange(userId, startDate, endDate);
 
@@ -68,8 +71,7 @@ namespace FinanceMAUI.Services
         public Task<List<ExpenseModel>> GetExpensesForDateRange(Guid userId, DateTime startDate, DateTime endDate)
             => _userRepository.GetExpensesForDateRange(userId, startDate, endDate);
 
-        public Task<ExpenseModel?> GetExpense(Guid userId, int expenseId)
-            => _userRepository.GetExpense(userId, expenseId);
+        
 
         public Task<bool> CreateExpense(ExpenseModel model)
             => _userRepository.CreateExpense(model);

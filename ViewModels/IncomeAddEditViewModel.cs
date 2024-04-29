@@ -28,7 +28,8 @@ namespace FinanceMAUI.ViewModels
         public IncomeModel? incomeDetail;
 
         [ObservableProperty]
-        private string _pageTitle = default!;
+        //private string _incomePageTitle = default!;
+        private string _incomePageTitle;
 
         [ObservableProperty]
         private int _incomeId;
@@ -128,7 +129,7 @@ namespace FinanceMAUI.ViewModels
                     await _dialogService.Notify("Success", "The income is updated.");
                     //await _navigationService.GoBack();
                     //await _navigationService.GoToUserIncomes(UserId)
-                    await _navigationService.GoToUserDetail(UserId);
+                    await _navigationService.GoToUserIncomes(UserId);
                 }
                 else
                 {
@@ -185,7 +186,7 @@ namespace FinanceMAUI.ViewModels
                 UserId = model.Id;
             }
 
-            PageTitle = IncomeId > 0 ? "Edit Income" : "Add Income";
+            IncomePageTitle = IncomeId > 0 ? "Edit Income" : "Add Income";
         }
 
         private IncomeModel MapDataToIncomeModel()

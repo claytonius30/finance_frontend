@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FinanceMAUI.Views.ExpenseDetailPage"
+             xmlns:vm="clr-namespace:FinanceMAUI.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:views="clr-namespace:FinanceMAUI.Views"
+             Title="ExpenseDetailPage">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackCommand}" />
+    </Shell.BackButtonBehavior>
+
+    <Grid>
+        <ScrollView>
+            <Grid>
+                <VerticalStackLayout Padding="10">
+                    <!-- Type -->
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Label
+                            Text="Expense"
+                            Style="{StaticResource TitleLabelStyle}" />
+                        <Button
+                            Grid.Column="1"
+                            Margin="5"
+                            Command="{Binding NavigateToEditExpenseCommand}"
+                            FontFamily="MaterialIconsRegular"
+                            FontSize="20"
+                            HorizontalOptions="End"
+                            Text="&#xe3c9;"
+                            WidthRequest="50" />
+                    </Grid>
+
+                    <Grid RowDefinitions="Auto,*">
+                        <Grid
+                            ColumnDefinitions=".3*,.7*"
+                            ColumnSpacing="5"
+                            RowDefinitions="*,*,*,*,*,*"
+                            RowSpacing="10">
+
+                            <!-- Row 1 Category -->
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Text="Category" />
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Style="{StaticResource ValueLabelStyle}"
+                                Text="{Binding Category, Mode=OneWay}" />
+
+                            <!-- Row 2 Amount -->
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Text="Amount"/>
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Style="{StaticResource ValueLabelStyle}"
+                                Text="{Binding Amount, Mode=OneWay, StringFormat='{0:C}', TargetNullValue='No amount provided',
+                                FallbackValue='No amount available'}" />
+
+                            <!-- Row 3 Date -->
+                            <Label
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Text="Date" />
+                            <Label
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Style="{StaticResource ValueLabelStyle}" 
+                                Text="{Binding DateReceived, StringFormat='{0:D}'}"/>
+                        </Grid>
+                    </Grid>
+                    <VerticalStackLayout Grid.Row="1">
+                        <Button
+                            Margin="0,10,0,0"
+                            Command="{Binding DeleteExpenseCommand}"
+                            BackgroundColor="{StaticResource Error}"
+                            Text="Delete expense" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+        <Grid  BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" 
+           IsVisible="{Binding IsLoading}">
+            <ActivityIndicator IsRunning="{Binding IsLoading}" />
+        </Grid>
+    </Grid>
+</views:ContentPageBase>

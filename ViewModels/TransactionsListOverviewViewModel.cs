@@ -36,8 +36,8 @@ namespace FinanceMAUI.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<TransactionsListItemViewModel> _transactions = new();
-        [ObservableProperty]
-        private TransactionsListItemViewModel? _selectedTransaction;
+        //[ObservableProperty]
+        //private TransactionsListItemViewModel? _selectedTransaction;
 
         //[RelayCommand]
         //private async Task NavigateToSelectedDetail()

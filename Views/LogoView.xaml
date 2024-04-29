@@ -16,7 +16,7 @@
         <Image
             Grid.Column="0"
             HeightRequest="40"
-            Source="globoticket_logo.png"
+            Source="financetracker_logo.png"
             VerticalOptions="Center" />
 
         <!-- column 2 Logout -->

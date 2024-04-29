@@ -56,6 +56,12 @@ namespace FinanceMAUI.ViewModels
         }
 
         [RelayCommand]
+        private async Task ViewExpenses()
+        {
+            await _navigationService.GoToUserExpenses(Id);
+        }
+
+        [RelayCommand]
         private async Task ViewTransactions()
         {
             await _navigationService.GoToTransactions(Id);
@@ -70,6 +76,10 @@ namespace FinanceMAUI.ViewModels
         [RelayCommand]
         private async Task NavigateToAddIncome()
             => await _navigationService.GoToAddIncome(Id);
+
+        [RelayCommand]
+        private async Task NavigateToAddExpense()
+            => await _navigationService.GoToAddExpense(Id);
 
         public UserDetailViewModel(IUserService userService, INavigationService navigationService, IDialogService dialogService) 
         {
@@ -87,7 +97,7 @@ namespace FinanceMAUI.ViewModels
             //Date = DateTime.Now;
 
             //WeakReferenceMessenger.Default.Register<IncomeAddedOrChangedMessage>(this);
-            WeakReferenceMessenger.Default.Register<IncomeDeletedMessage>(this);
+            //WeakReferenceMessenger.Default.Register<IncomeDeletedMessage>(this);
         }
 
         public override async Task LoadAsync()

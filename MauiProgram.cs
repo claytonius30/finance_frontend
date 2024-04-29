@@ -3,6 +3,7 @@ using FinanceMAUI.Repositories;
 using FinanceMAUI.Services;
 using FinanceMAUI.ViewModels;
 using FinanceMAUI.Views;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace FinanceMAUI
@@ -86,6 +87,9 @@ namespace FinanceMAUI
             builder.Services.AddTransient<UserIncomesListOverviewViewModel>();
             builder.Services.AddTransient<IncomeAddEditViewModel>();
             builder.Services.AddTransient<IncomeDetailViewModel>();
+            builder.Services.AddTransient<UserExpensesListOverviewViewModel>();
+            builder.Services.AddTransient<ExpenseAddEditViewModel>();
+            builder.Services.AddTransient<ExpenseDetailViewModel>();
             builder.Services.AddTransient<TransactionsListOverviewViewModel>();
             builder.Services.AddTransient<GoalsListOverviewViewModel>();
             builder.Services.AddTransient<GoalDetailViewModel>();
@@ -105,6 +109,9 @@ namespace FinanceMAUI
             builder.Services.AddTransient<UserIncomesOverviewPage>();
             builder.Services.AddTransient<IncomeAddEditPage>();
             builder.Services.AddTransient<IncomeDetailPage>();
+            builder.Services.AddTransient<UserExpensesOverviewPage>();
+            builder.Services.AddTransient<ExpenseAddEditPage>();
+            builder.Services.AddTransient<ExpenseDetailPage>();
             builder.Services.AddTransient<TransactionsOverviewPage>();
             builder.Services.AddTransient<GoalsOverviewPage>();
             builder.Services.AddTransient<GoalDetailPage>();

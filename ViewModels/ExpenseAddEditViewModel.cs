@@ -16,30 +16,31 @@ using System.Threading.Tasks;
 
 namespace FinanceMAUI.ViewModels
 {
-    public partial class GoalAddEditViewModel : ViewModelBase, IQueryAttributable
+    public partial class ExpenseAddEditViewModel : ViewModelBase, IQueryAttributable
     {
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
         private readonly IDialogService _dialogService;
 
-        public GoalModel? goalDetail;
+        public ExpenseModel? expenseDetail;
 
         [ObservableProperty]
-        private string _pageTitle = default!;
+        //private string _expensePageTitle = default!;
+        private string _expensePageTitle;
 
         [ObservableProperty]
-        private int _goalId;
+        private int _expenseId;
 
         //[Required]
         [MinLength(1)]
         [MaxLength(50)]
         [NotifyDataErrorInfo]
         [ObservableProperty]
-        private string? _description;
+        private string? _category;
 
         [Required]
         //[Range(0, 1000000000)]
-        [CustomValidation(typeof(GoalAddEditViewModel), nameof(ValidateAmount))]
+        [CustomValidation(typeof(ExpenseAddEditViewModel), nameof(ValidateAmount))]
         [NotifyDataErrorInfo]
         [ObservableProperty]
         private decimal _amount;
@@ -57,35 +58,22 @@ namespace FinanceMAUI.ViewModels
         [Required]
         [NotifyDataErrorInfo]
         [ObservableProperty]
-        private DateTime _date = DateTime.Now.AddDays(1);
+        private DateTime _dateIncurred = DateTime.Now;
 
         [ObservableProperty]
-        private DateTime _minDate = DateTime.Now;
+        private DateTime _minDate = DateTime.Now.AddYears(-4);
 
         [ObservableProperty]
         private Guid _userId;
 
         public ObservableCollection<ValidationResult> Errors { get; } = new();
 
-        //[ObservableProperty]
-        //[NotifyCanExecuteChangedFor(nameof(AddIncomeCommand))]
-        //private string _addedIncome = default!;
-
-        //[RelayCommand(CanExecute = nameof(CanAddIncome))]
-        //private void AddIncome()
-        //{
-        //    Incomes.Add(AddedIncome);
-        //    AddedIncome = string.Empty;
-        //}
-
-        //private bool CanAddIncome() => !string.IsNullOrWhiteSpace(AddedIncome);
-
         [RelayCommand]
         private async Task Back()
         {
-            if (GoalId > 0)
+            if (ExpenseId > 0)
             {
-                await _navigationService.GoToGoals(UserId);
+                await _navigationService.GoToUserExpenses(UserId);
             }
             else
             {
@@ -93,7 +81,7 @@ namespace FinanceMAUI.ViewModels
             }
         }
 
-        [RelayCommand(CanExecute = nameof(CanSubmitGoal))]
+        [RelayCommand(CanExecute = nameof(CanSubmitExpense))]
         private async Task Submit()
         {
             ValidateAllProperties();
@@ -102,43 +90,41 @@ namespace FinanceMAUI.ViewModels
                 return;
             }
 
-            GoalModel model = MapDataToGoalModel();
+            ExpenseModel model = MapDataToExpenseModel();
 
-            if (goalDetail == null)
+            if (expenseDetail == null)
             {
-                if (await _userService.CreateGoal(model))
+                if (await _userService.CreateExpense(model))
                 {
-                    WeakReferenceMessenger.Default.Send(new GoalAddedOrChangedMessage());
-                    await _dialogService.Notify("Success", "The goal is added.");
-                    await _navigationService.GoToGoals(UserId);
+                    WeakReferenceMessenger.Default.Send(new ExpenseAddedOrChangedMessage());
+                    await _dialogService.Notify("Success", "The expense is added.");
+                    await _navigationService.GoToUserDetail(UserId);
                 }
                 else
                 {
-                    await _dialogService.Notify("Failed", "Description field is empty.");
+                    await _dialogService.Notify("Failed", "Category field is empty.");
                 }
             }
             else
             {
-                if (await _userService.EditGoal(model))
+                if (await _userService.EditExpense(model))
                 {
-                    WeakReferenceMessenger.Default.Send(new GoalAddedOrChangedMessage());
-                    await _dialogService.Notify("Success", "The goal is updated.");
-                    //await _navigationService.GoBack();
-                    //await _navigationService.GoToUserIncomes(UserId)
-                    await _navigationService.GoToGoals(UserId);
+                    WeakReferenceMessenger.Default.Send(new ExpenseAddedOrChangedMessage());
+                    await _dialogService.Notify("Success", "The expense is updated.");
+                    await _navigationService.GoToUserExpenses(UserId);
                 }
                 else
                 {
-                    await _dialogService.Notify("Failed", "Editing the goal failed.");
+                    await _dialogService.Notify("Failed", "Editing the expense failed.");
                 }
             }
         }
 
-        private bool CanSubmitGoal() => !HasErrors;
+        private bool CanSubmitExpense() => !HasErrors;
 
 
 
-        public GoalAddEditViewModel(IUserService userService, INavigationService navigationService, IDialogService dialogService)
+        public ExpenseAddEditViewModel(IUserService userService, INavigationService navigationService, IDialogService dialogService)
         {
             _userService = userService;
             _navigationService = navigationService;
@@ -146,7 +132,7 @@ namespace FinanceMAUI.ViewModels
 
             _amount = 0.01m;
 
-            ErrorsChanged += AddGoalViewModel_ErrorsChanged;
+            ErrorsChanged += AddExpenseViewModel_ErrorsChanged;
         }
 
         public override async Task LoadAsync()
@@ -154,45 +140,45 @@ namespace FinanceMAUI.ViewModels
             await Loading(
                 async () =>
                 {
-                    if (goalDetail is null && GoalId > 0)
+                    if (expenseDetail is null && ExpenseId > 0)
                     {
-                        goalDetail = await _userService.GetGoal(UserId, GoalId);
+                        expenseDetail = await _userService.GetExpense(UserId, ExpenseId);
                     }
-                    MapGoal(goalDetail);
+                    MapExpense(expenseDetail);
 
                     ValidateAllProperties();
                 });
         }
 
-        private void AddGoalViewModel_ErrorsChanged(object? sender, DataErrorsChangedEventArgs e)
+        private void AddExpenseViewModel_ErrorsChanged(object? sender, DataErrorsChangedEventArgs e)
         {
             Errors.Clear();
             GetErrors().ToList().ForEach(Errors.Add);
             SubmitCommand.NotifyCanExecuteChanged();
         }
 
-        private void MapGoal(GoalModel? model)
+        private void MapExpense(ExpenseModel? model)
         {
             if (model is not null)
             {
-                GoalId = model.GoalId;
-                Date = model.Date;
+                ExpenseId = model.ExpenseId;
+                Category = model.Category;
                 Amount = model.Amount;
-                Description = model.Description;
+                DateIncurred = model.DateIncurred;
                 UserId = model.Id;
             }
 
-            PageTitle = GoalId > 0 ? "Edit Goal" : "Add Goal";
+            ExpensePageTitle = ExpenseId > 0 ? "Edit Expense" : "Add Expense";
         }
 
-        private GoalModel MapDataToGoalModel()
+        private ExpenseModel MapDataToExpenseModel()
         {
-            return new GoalModel
+            return new ExpenseModel
             {
-                GoalId = GoalId,
-                Date = Date,
+                ExpenseId = ExpenseId,
+                Category = Category ?? string.Empty,
                 Amount = Amount,
-                Description = Description ?? string.Empty,
+                DateIncurred = DateIncurred,
                 Id = UserId
             };
         }
@@ -209,7 +195,7 @@ namespace FinanceMAUI.ViewModels
                 }
                 else
                 {
-                    goalDetail = query["Goal"] as GoalModel;
+                    expenseDetail = query["Expense"] as ExpenseModel;
                 }
             }
         }
