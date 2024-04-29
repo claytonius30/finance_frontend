@@ -9,7 +9,8 @@ namespace FinanceMAUI.Models
     public class GoalModel
     {
         public int GoalId { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime SetDate { get; set; }
+        public DateTime GoalDate {  get; set; }
         public decimal Amount { get; set; }
         public string Description { get; set; } = default!;
         public string Status { get; set; } = default!;

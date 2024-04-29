@@ -79,7 +79,8 @@ namespace FinanceMAUI.ViewModels
         {
             return new GoalsListItemViewModel(
                 goal.GoalId,
-                goal.Date,
+                goal.SetDate,
+                goal.GoalDate,
                 goal.Amount,
                 goal.Description,
                 goal.Status,

@@ -5,6 +5,7 @@ using FinanceMAUI.Messages;
 using FinanceMAUI.Models;
 using FinanceMAUI.Services;
 using FinanceMAUI.ViewModels.Base;
+using Java.Time;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -56,10 +57,13 @@ namespace FinanceMAUI.ViewModels
             return ValidationResult.Success;
         }
 
+        [ObservableProperty]
+        private DateTime _setDate = DateTime.Now;
+
         [Required]
         [NotifyDataErrorInfo]
         [ObservableProperty]
-        private DateTime _date = DateTime.Now.AddDays(1);
+        private DateTime _goalDate = DateTime.Now.AddDays(1);
 
         [ObservableProperty]
         private DateTime _minDate = DateTime.Now.AddDays(-7);
@@ -178,7 +182,8 @@ namespace FinanceMAUI.ViewModels
             if (model is not null)
             {
                 GoalId = model.GoalId;
-                Date = model.Date;
+                SetDate = model.SetDate;
+                GoalDate = model.GoalDate;
                 Amount = model.Amount;
                 Description = model.Description;
                 Status = model.Status;
@@ -193,10 +198,12 @@ namespace FinanceMAUI.ViewModels
             return new GoalModel
             {
                 GoalId = GoalId,
-                Date = Date,
+                SetDate = SetDate,
+                GoalDate = GoalDate,
                 Amount = Amount,
                 Description = Description ?? string.Empty,
-                Status = Status ?? "In progress",
+                //Status = Status ?? "In progress",
+                Status = Status,
                 Id = UserId
             };
         }

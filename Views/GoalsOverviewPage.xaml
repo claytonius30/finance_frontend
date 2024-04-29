@@ -64,7 +64,7 @@
                                 <Label
                                     Style="{StaticResource ValueLabelStyle}"
                                     Margin="0"
-                                    Text="{Binding Date, StringFormat='{0:D}'}" />
+                                    Text="{Binding GoalDate, StringFormat='{0:D}'}" />
                                 <Label
                                     FontAttributes="Italic"
                                     Text="{Binding Status}"

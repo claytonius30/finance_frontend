@@ -13,7 +13,9 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private int _goalId;
         [ObservableProperty]
-        private DateTime _date;
+        private DateTime _setDate;
+        [ObservableProperty]
+        private DateTime _goalDate;
         [ObservableProperty]
         private decimal _amount;
         [ObservableProperty]
@@ -23,10 +25,11 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private Guid _userId;
 
-        public GoalsListItemViewModel(int goalId, DateTime date, decimal amount, string description, string status, Guid userId)
+        public GoalsListItemViewModel(int goalId, DateTime setDate, DateTime goalDate, decimal amount, string description, string status, Guid userId)
         {
             GoalId = goalId;
-            Date = date;
+            SetDate = setDate;
+            GoalDate = goalDate;
             Amount = amount;
             Description = description;
             Status = status;

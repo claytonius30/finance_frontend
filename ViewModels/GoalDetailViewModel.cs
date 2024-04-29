@@ -20,7 +20,9 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private int _goalId;
         [ObservableProperty]
-        private DateTime _date;
+        private DateTime _setDate;
+        [ObservableProperty]
+        private DateTime _goalDate;
         [ObservableProperty]
         private decimal _amount;
         [ObservableProperty]
@@ -89,8 +91,7 @@ namespace FinanceMAUI.ViewModels
         private void CalculateDaysDifference()
         {
             DateTime now = DateTime.Now;
-            TimeSpan daysDifference;
-            daysDifference = Date.Subtract(now);
+            TimeSpan daysDifference = GoalDate.Subtract(now);
             double roundedDifference = Math.Round(daysDifference.TotalDays, 1);
             DaysUntilGoal = roundedDifference;
         }
@@ -127,7 +128,8 @@ namespace FinanceMAUI.ViewModels
         private void MapGoalData(GoalModel goal)
         {
             GoalId = goal.GoalId;
-            Date = goal.Date;
+            SetDate = goal.SetDate;
+            GoalDate = goal.GoalDate;
             Amount = goal.Amount;
             Description = goal.Description;
             Status = goal.Status;
@@ -139,7 +141,8 @@ namespace FinanceMAUI.ViewModels
             return new GoalModel
             {
                 GoalId = goalViewModel.GoalId,
-                Date = goalViewModel.Date,
+                SetDate = goalViewModel.SetDate,
+                GoalDate = goalViewModel.GoalDate,
                 Amount = goalViewModel.Amount,
                 Description = goalViewModel.Description,
                 Status = goalViewModel.Status,
