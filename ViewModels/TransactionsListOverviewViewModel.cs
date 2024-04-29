@@ -26,6 +26,15 @@ namespace FinanceMAUI.ViewModels
         private Guid _userId;
 
         [ObservableProperty]
+        public decimal? _balanceForDateRange;
+
+        [ObservableProperty]
+        public bool _isElementVisible = false;
+
+        [ObservableProperty]
+        private string _balanceColor;
+
+        [ObservableProperty]
         private DateTime _startDate = DateTime.Now.AddMonths(-1);
 
         [ObservableProperty]
@@ -36,6 +45,9 @@ namespace FinanceMAUI.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<TransactionsListItemViewModel> _transactions = new();
+
+        
+
         //[ObservableProperty]
         //private TransactionsListItemViewModel? _selectedTransaction;
 
@@ -80,11 +92,32 @@ namespace FinanceMAUI.ViewModels
             PropertyChanged += OnPropertyChanged!;
         }
 
+        // Used to keep Range Balance hidden when page first loads
+        private int count = 0;
+
         private async void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
             {
                 await ReloadTransactions();
+                BalanceForDateRange = await _userService.GetBalanceForDateRange(UserId, StartDate, EndDate);
+                if (BalanceForDateRange > 0)
+                {
+                    BalanceColor = "Green";
+                }
+                else if (BalanceForDateRange < 0)
+                {
+                    BalanceColor = "Red";
+                }
+                else
+                {
+                    BalanceColor = "Black";
+                }
+                if (count > 0)
+                {
+                    IsElementVisible = true;
+                }
+                count++;
             }
         }
 

@@ -44,6 +44,14 @@
                     MinimumDate="{Binding MinDate}"
                     WidthRequest="118" />
             </HorizontalStackLayout>
+            <HorizontalStackLayout IsVisible="{Binding IsElementVisible}">
+                <Label
+                    Padding="10,0,10,0"
+                    Text="Range Balance:" />
+                <Label
+                    TextColor="{Binding BalanceColor}"
+                    Text="{Binding BalanceForDateRange, Mode=OneWay, StringFormat='{0:C}'}" />
+            </HorizontalStackLayout>
         </VerticalStackLayout>
         <ScrollView Grid.Row="1">
             <!--<CollectionView

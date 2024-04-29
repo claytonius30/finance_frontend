@@ -106,7 +106,7 @@ namespace FinanceMAUI.ViewModels
 
         private async Task GetExpensesForDateRange(Guid userId, DateTime startDate, DateTime endDate)
         {
-            List<ExpenseModel> expenses = await _userService.GetExpensesForDateRange(userId, startDate, endDate);
+            List<ExpenseModel> expenses = await _userService.GetExpensesForDateRange(userId, startDate, endDate.AddDays(1));
             List<UserExpensesListItemViewModel> listItems = new();
             foreach (var expense in expenses)
             {

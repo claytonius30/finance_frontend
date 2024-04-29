@@ -22,7 +22,7 @@
                     <Grid RowDefinitions="Auto,*">
                         <Grid ColumnDefinitions=".3*,.7*"
                           ColumnSpacing="5"
-                          RowDefinitions="*,*,*,*,*,*,*,*"
+                          RowDefinitions="*,*,*,*"
                           RowSpacing="10">
                             
                             <!--  Row 1 Set Date  -->

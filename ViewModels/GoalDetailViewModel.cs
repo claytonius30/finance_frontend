@@ -42,6 +42,9 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private string _balanceColor;
 
+        [ObservableProperty]
+        private string _goalColor;
+
         [RelayCommand]
         private async Task NavigateToEditGoal()
         {
@@ -85,6 +88,8 @@ namespace FinanceMAUI.ViewModels
                     await GetGoal(UserId, GoalId);
                     CalculateDaysDifference();
                     await CalculateBalanceDifference();
+                    CalculateGoalColor();
+
                 });
         }
 
@@ -94,6 +99,18 @@ namespace FinanceMAUI.ViewModels
             TimeSpan daysDifference = GoalDate.Subtract(now);
             double roundedDifference = Math.Round(daysDifference.TotalDays, 1);
             DaysUntilGoal = roundedDifference;
+        }
+
+        private void CalculateGoalColor()
+        {
+            if (Status.Contains("met"))
+            {
+                GoalColor = "Green";
+            }
+            else if (Status.Contains("Missed"))
+            {
+                GoalColor = "Red";
+            }
         }
 
         private async Task CalculateBalanceDifference()

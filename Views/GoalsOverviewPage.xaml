@@ -66,9 +66,9 @@
                                     Margin="0"
                                     Text="{Binding GoalDate, StringFormat='{0:D}'}" />
                                 <Label
+                                    
                                     FontAttributes="Italic"
-                                    Text="{Binding Status}"
-                                    TextColor="{Binding BalanceColor}"/>
+                                    Text="{Binding Status}" />
                                 <Label Text="{Binding Amount, StringFormat='{0:C}'}" />
                                 <Label Text="{Binding Description}" />
                             </VerticalStackLayout>

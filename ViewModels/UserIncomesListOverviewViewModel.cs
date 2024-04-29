@@ -107,7 +107,7 @@ namespace FinanceMAUI.ViewModels
 
         private async Task GetIncomesForDateRange(Guid userId, DateTime startDate, DateTime endDate)
         {
-            List<IncomeModel> incomes = await _userService.GetIncomesForDateRange(userId, startDate, endDate);
+            List<IncomeModel> incomes = await _userService.GetIncomesForDateRange(userId, startDate, endDate.AddDays(1));
             List<UserIncomesListItemViewModel> listItems = new();
             foreach (var income in incomes)
             {

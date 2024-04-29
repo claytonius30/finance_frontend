@@ -67,6 +67,7 @@
                             <Label
                                 Grid.Row="2"
                                 Grid.Column="1"
+                                TextColor="{Binding GoalColor}"
                                 Style="{StaticResource ValueLabelStyle}"
                                 FontAttributes="Italic"
                                 Text="{Binding Status, Mode=OneWay}" />

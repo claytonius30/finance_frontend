@@ -5,7 +5,6 @@ using FinanceMAUI.Messages;
 using FinanceMAUI.Models;
 using FinanceMAUI.Services;
 using FinanceMAUI.ViewModels.Base;
-using Java.Time;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -45,7 +44,7 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private decimal _amount;
 
-        public string Status { get; set; }
+        public string Status { get; set; } = "In progress";
 
         public static ValidationResult? ValidateAmount(decimal amount, ValidationContext context)
         {
