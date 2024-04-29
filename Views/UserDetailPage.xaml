@@ -61,48 +61,50 @@
                             Text="Hide balance"
                             Command="{Binding HideBalanceCommand}" />
                     </VerticalStackLayout>-->
-                    <VerticalStackLayout Grid.Row="1">
+                    <VerticalStackLayout>
                         <Button
                             Margin="0,10,0,0"
                             Text="View Transactions"
                             Command="{Binding ViewTransactionsCommand}" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout Grid.Row="1">
-                        <Button
-                            Margin="0,10,0,0"
-                            Text="View Incomes"
-                            Command="{Binding ViewIncomesCommand}" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout Grid.Row="1">
-                        <Button
-                            Margin="0,10,0,0"
-                            Text="View Expenses"
-                            Command="{Binding ViewExpensesCommand}" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout Grid.Row="1">
-                        <Button
-                            Margin="0,10,0,0"
-                            Text="View Goals"
-                            Command="{Binding ViewGoalsCommand}" />
-                    </VerticalStackLayout>
-                    <StackLayout>
-                        <Button
+                    
+                    <!--<HorizontalStackLayout>-->
+                        <Grid ColumnDefinitions="*,*">
+                            <Button Grid.Column="0"
+                                Margin="0,10,10,0"
+                                Text="View Incomes"
+                                Command="{Binding ViewIncomesCommand}" />
+
+                            <Button Grid.Column="1"
+                                Margin="0,10,0,0"
+                                Text="View Expenses"
+                                Command="{Binding ViewExpensesCommand}" />
+                            </Grid>
+                    <!--</HorizontalStackLayout>-->
+                        <Grid ColumnDefinitions="*,*">
+                            <Button
+                                Margin="0,10,10,0"
+                                Command="{Binding NavigateToAddIncomeCommand}"
+                                Text="Add Income" />
+
+                            <Button Grid.Column="1"
                             Margin="0,10,0,0"
                             Command="{Binding NavigateToAddExpenseCommand}"
                             Text="Add Expense" />
-                    <!--</StackLayout>
+                            <!--</StackLayout>
                     <StackLayout>-->
-                        <Button
+                        </Grid>
+                        <Button Grid.Column="0"
                             Margin="0,10,0,0"
-                            Command="{Binding NavigateToAddIncomeCommand}"
-                            Text="Add Income" />
+                            Text="View Goals"
+                            Command="{Binding ViewGoalsCommand}" />
+                        
                         <!--<Button
                             Margin="5"
                             Command="{Binding NavigateToAddIncomeCommand}"
                             HorizontalOptions="Fill"
                             Text="Add Income" />-->
-                    </StackLayout>
-                    
+
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
             </Grid>
         </ScrollView>
