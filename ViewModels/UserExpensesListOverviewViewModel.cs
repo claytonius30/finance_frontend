@@ -9,6 +9,7 @@ using FinanceMAUI.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,19 @@ namespace FinanceMAUI.ViewModels
     {
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
+        private readonly IDialogService _dialogService;
 
         [ObservableProperty]
         private Guid _userId;
+
+        [ObservableProperty]
+        private DateTime _startDate = DateTime.Now.AddMonths(-1);
+
+        [ObservableProperty]
+        private DateTime _endDate = DateTime.Now;
+
+        [ObservableProperty]
+        private DateTime _minDate = DateTime.Now.AddYears(-4);
 
         [ObservableProperty]
         private ObservableCollection<UserExpensesListItemViewModel> _expenses = new();
@@ -39,32 +50,49 @@ namespace FinanceMAUI.ViewModels
         }
 
         [RelayCommand]
+        private async Task ViewAllExpenses()
+        {
+            await GetExpenses(UserId);
+            if (Expenses.Count != 0)
+            {
+                StartDate = Expenses.LastOrDefault()!.DateIncurred;
+                EndDate = Expenses.FirstOrDefault()!.DateIncurred;
+            }
+            else
+            {
+                await _dialogService.Notify("Empty", "No expenses have been added.");
+            }
+        }
+
+        [RelayCommand]
         private async Task Back()
         {
             await _navigationService.GoToUserDetail(UserId);
         }
 
-        public UserExpensesListOverviewViewModel(IUserService userService, INavigationService navigationService)
+        public UserExpensesListOverviewViewModel(IUserService userService, INavigationService navigationService, IDialogService dialogService)
         {
             _userService = userService;
             _navigationService = navigationService;
+            _dialogService = dialogService;
 
             WeakReferenceMessenger.Default.Register(this);
 
-            //Id = 1;
-            //GetIncomes(Id);
+            PropertyChanged += OnPropertyChanged!;
+        }
 
-            //Incomes = new List<UserIncomesListItemViewModel>
-            //{
-            //    new(1,
-            //        "salary",
-            //        (decimal) 600.55,
-            //        DateTime.Now),
-            //    new(2,
-            //        "gigs",
-            //        (decimal) 205.98,
-            //        DateTime.Now.AddDays(-3))
-            //};
+        private async void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
+            {
+                await ReloadExpenses();
+            }
+        }
+
+        [RelayCommand]
+        private async Task ReloadExpenses()
+        {
+            await GetExpensesForDateRange(UserId, StartDate, EndDate);
         }
 
         public override async Task LoadAsync()
@@ -72,8 +100,21 @@ namespace FinanceMAUI.ViewModels
             await Loading(
                 async () =>
                 {
-                    await GetExpenses(UserId);
+                    await GetExpensesForDateRange(UserId, StartDate, EndDate);
                 });
+        }
+
+        private async Task GetExpensesForDateRange(Guid userId, DateTime startDate, DateTime endDate)
+        {
+            List<ExpenseModel> expenses = await _userService.GetExpensesForDateRange(userId, startDate, endDate);
+            List<UserExpensesListItemViewModel> listItems = new();
+            foreach (var expense in expenses)
+            {
+                listItems.Insert(0, MapExpenseModelToUserExpensesListItemViewModel(expense));
+            }
+
+            Expenses.Clear();
+            Expenses = listItems.ToObservableCollection();
         }
 
         private async Task GetExpenses(Guid id)
@@ -106,14 +147,13 @@ namespace FinanceMAUI.ViewModels
                 Guid userId = (Guid)query["UserId"];
 
                 UserId = userId;
-                //await GetExpenses(Id);
             }
         }
 
         public async void Receive(ExpenseAddedOrChangedMessage message)
         {
             Expenses.Clear();
-            await GetExpenses(UserId);
+            await GetExpensesForDateRange(UserId, StartDate, EndDate);
         }
     }
 }

@@ -9,6 +9,7 @@ using FinanceMAUI.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,10 +20,20 @@ namespace FinanceMAUI.ViewModels
     {
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
+        private readonly IDialogService _dialogService;
 
         [ObservableProperty]
         private Guid _userId;
-        
+
+        [ObservableProperty]
+        private DateTime _startDate = DateTime.Now.AddMonths(-1);
+
+        [ObservableProperty]
+        private DateTime _endDate = DateTime.Now;
+
+        [ObservableProperty]
+        private DateTime _minDate = DateTime.Now.AddYears(-4);
+
         [ObservableProperty]
         private ObservableCollection<UserIncomesListItemViewModel> _incomes = new();
         [ObservableProperty]
@@ -39,32 +50,49 @@ namespace FinanceMAUI.ViewModels
         }
 
         [RelayCommand]
+        private async Task ViewAllIncomes()
+        {
+            await GetIncomes(UserId);
+            if (Incomes.Count != 0)
+            {
+                StartDate = Incomes.LastOrDefault()!.DateReceived;
+                EndDate = Incomes.FirstOrDefault()!.DateReceived;
+            }
+            else
+            {
+                await _dialogService.Notify("Empty", "No incomes have been added.");
+            }
+        }
+
+        [RelayCommand]
         private async Task Back()
         {
             await _navigationService.GoToUserDetail(UserId);
         }
 
-        public UserIncomesListOverviewViewModel(IUserService userService, INavigationService navigationService)
+        public UserIncomesListOverviewViewModel(IUserService userService, INavigationService navigationService, IDialogService dialogService)
         {
             _userService = userService;
             _navigationService = navigationService;
+            _dialogService = dialogService;
 
             WeakReferenceMessenger.Default.Register(this);
 
-            //Id = 1;
-            //GetIncomes(Id);
+            PropertyChanged += OnPropertyChanged!;
+        }
 
-            //Incomes = new List<UserIncomesListItemViewModel>
-            //{
-            //    new(1,
-            //        "salary",
-            //        (decimal) 600.55,
-            //        DateTime.Now),
-            //    new(2,
-            //        "gigs",
-            //        (decimal) 205.98,
-            //        DateTime.Now.AddDays(-3))
-            //};
+        private async void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
+            {
+                await ReloadIncomes();
+            }
+        }
+
+        [RelayCommand]
+        private async Task ReloadIncomes()
+        {
+            await GetIncomesForDateRange(UserId, StartDate, EndDate);
         }
 
         public override async Task LoadAsync()
@@ -72,8 +100,22 @@ namespace FinanceMAUI.ViewModels
             await Loading(
                 async () =>
                 {
-                    await GetIncomes(UserId);
+                    //await GetIncomes(UserId);
+                    await GetIncomesForDateRange(UserId, StartDate, EndDate);
                 });
+        }
+
+        private async Task GetIncomesForDateRange(Guid userId, DateTime startDate, DateTime endDate)
+        {
+            List<IncomeModel> incomes = await _userService.GetIncomesForDateRange(userId, startDate, endDate);
+            List<UserIncomesListItemViewModel> listItems = new();
+            foreach (var income in incomes)
+            {
+                listItems.Insert(0, MapIncomeModelToUserIncomesListItemViewModel(income));
+            }
+
+            Incomes.Clear();
+            Incomes = listItems.ToObservableCollection();
         }
 
         private async Task GetIncomes(Guid id)
@@ -113,7 +155,7 @@ namespace FinanceMAUI.ViewModels
         public async void Receive(IncomeAddedOrChangedMessage message)
         {
             Incomes.Clear();
-            await GetIncomes(UserId);
+            await GetIncomesForDateRange(UserId, StartDate, EndDate);
         }
     }
 }
