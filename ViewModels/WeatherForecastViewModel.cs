@@ -20,18 +20,6 @@ namespace FinanceMAUI.ViewModels
         public WeatherForecastViewModel(IClientService clientService)
         {
             _clientService = clientService;
-            //LoadWeatherForecastData();
         }
-
-        //private async void LoadWeatherForecastData()
-        //{
-        //    var response = await _clientService.GetWeatherForeCastData();
-        //    WeatherForecasts?.Clear();
-        //    if (response.Any())
-        //    {
-        //        foreach (var weatherForecast in response)
-        //            WeatherForecasts!.Add(weatherForecast);
-        //    }
-        //}
     }
 }

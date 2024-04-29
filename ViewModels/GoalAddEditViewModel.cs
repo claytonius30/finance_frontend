@@ -1,4 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿// Clayton DeSimone
+// .NET Applications
+// Final Project
+// 4/29/2024
+
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FinanceMAUI.Messages;
@@ -30,7 +35,6 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private int _goalId;
 
-        //[Required]
         [MinLength(1)]
         [MaxLength(50)]
         [NotifyDataErrorInfo]
@@ -38,7 +42,6 @@ namespace FinanceMAUI.ViewModels
         private string? _description;
 
         [Required]
-        //[Range(0, 1000000000)]
         [CustomValidation(typeof(GoalAddEditViewModel), nameof(ValidateAmount))]
         [NotifyDataErrorInfo]
         [ObservableProperty]
@@ -64,26 +67,18 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private DateTime _goalDate = DateTime.Now.AddDays(1);
 
+        // Enabled goal dates to be set before current day for testing.
+        // Otherwise, user must set GoalDate after and SetDate on current day.
         [ObservableProperty]
         private DateTime _minDate = DateTime.Now.AddDays(-7);
+
+        [ObservableProperty]
+        private DateTime _maxDate = DateTime.Now;
 
         [ObservableProperty]
         private Guid _userId;
 
         public ObservableCollection<ValidationResult> Errors { get; } = new();
-
-        //[ObservableProperty]
-        //[NotifyCanExecuteChangedFor(nameof(AddIncomeCommand))]
-        //private string _addedIncome = default!;
-
-        //[RelayCommand(CanExecute = nameof(CanAddIncome))]
-        //private void AddIncome()
-        //{
-        //    Incomes.Add(AddedIncome);
-        //    AddedIncome = string.Empty;
-        //}
-
-        //private bool CanAddIncome() => !string.IsNullOrWhiteSpace(AddedIncome);
 
         [RelayCommand]
         private async Task Back()
@@ -128,8 +123,6 @@ namespace FinanceMAUI.ViewModels
                 {
                     WeakReferenceMessenger.Default.Send(new GoalAddedOrChangedMessage());
                     await _dialogService.Notify("Success", "The goal is updated.");
-                    //await _navigationService.GoBack();
-                    //await _navigationService.GoToUserIncomes(UserId)
                     await _navigationService.GoToGoals(UserId);
                 }
                 else
@@ -140,8 +133,6 @@ namespace FinanceMAUI.ViewModels
         }
 
         private bool CanSubmitGoal() => !HasErrors;
-
-
 
         public GoalAddEditViewModel(IUserService userService, INavigationService navigationService, IDialogService dialogService)
         {
@@ -201,7 +192,6 @@ namespace FinanceMAUI.ViewModels
                 GoalDate = GoalDate,
                 Amount = Amount,
                 Description = Description ?? string.Empty,
-                //Status = Status ?? "In progress",
                 Status = Status,
                 Id = UserId
             };

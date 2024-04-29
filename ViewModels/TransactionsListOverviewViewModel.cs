@@ -1,4 +1,9 @@
-﻿using CommunityToolkit.Maui.Core.Extensions;
+﻿// Clayton DeSimone
+// .NET Applications
+// Final Project
+// 4/29/2024
+
+using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -46,21 +51,6 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private ObservableCollection<TransactionsListItemViewModel> _transactions = new();
 
-        
-
-        //[ObservableProperty]
-        //private TransactionsListItemViewModel? _selectedTransaction;
-
-        //[RelayCommand]
-        //private async Task NavigateToSelectedDetail()
-        //{
-        //    if (SelectedIncome is not null)
-        //    {
-        //        await _navigationService.GoToIncomeDetail(UserId, SelectedIncome.IncomeId);
-        //        SelectedIncome = null;
-        //    }
-        //}
-
         [RelayCommand]
         private async Task ViewAllTransactions()
         {
@@ -88,7 +78,6 @@ namespace FinanceMAUI.ViewModels
             _navigationService = navigationService;
             _dialogService = dialogService;
 
-            //WeakReferenceMessenger.Default.Register(this);
             PropertyChanged += OnPropertyChanged!;
         }
 
@@ -132,18 +121,13 @@ namespace FinanceMAUI.ViewModels
             await Loading(
                 async () =>
                 {
-                    //await GetAllTransactions(UserId);
                     await GetTransactionsForDateRange(UserId, StartDate, EndDate);
                 });
         }
 
         private async Task GetTransactionsForDateRange(Guid userId, DateTime startDate, DateTime endDate)
         {
-            List<TransactionModel> transactions = await _userService.GetTransactionsForDateRange(userId, startDate, endDate);
-            //if (!transactions.Any())
-            //{
-            //    return;
-            //}
+            List<TransactionModel> transactions = await _userService.GetTransactionsForDateRange(userId, startDate, endDate.AddDays(1));
             List<TransactionsListItemViewModel> listItems = new();
             foreach (var transaction in transactions)
             {
@@ -186,11 +170,5 @@ namespace FinanceMAUI.ViewModels
                 UserId = userId;
             }
         }
-
-        //public async void Receive(IncomeAddedOrChangedMessage message)
-        //{
-        //    Incomes.Clear();
-        //    await GetIncomes(UserId);
-        //}
     }
 }

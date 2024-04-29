@@ -34,7 +34,8 @@
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 Date="{Binding SetDate}"
-                                MinimumDate="{Binding MinDate}" />
+                                MinimumDate="{Binding MinDate}"
+                                MaximumDate="{Binding MaxDate}" />
 
                             <!--  Row 2 Goal Date  -->
                             <Label

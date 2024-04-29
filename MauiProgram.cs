@@ -1,4 +1,9 @@
-﻿using CommunityToolkit.Maui;
+﻿// Clayton DeSimone
+// .NET Applications
+// Final Project
+// 4/29/2024
+
+using CommunityToolkit.Maui;
 using FinanceMAUI.Repositories;
 using FinanceMAUI.Services;
 using FinanceMAUI.ViewModels;
@@ -56,7 +61,6 @@ namespace FinanceMAUI
                 client =>
                 {
                     client.BaseAddress = new Uri(baseurl);
-                    //client.DefaultRequestHeaders.Add("Accept", "application/json");
                 }).ConfigureHttpMessageHandlerBuilder(configureBuilder =>
                 {
                     var platformMessageHandler = configureBuilder.Services.GetRequiredService<IPlatformHttpMessageHandler>();
@@ -95,9 +99,6 @@ namespace FinanceMAUI
             builder.Services.AddTransient<GoalDetailViewModel>();
             builder.Services.AddTransient<GoalAddEditViewModel>();
 
-            //builder.Services.AddSingleton<MainPageViewModel>();
-            //builder.Services.AddSingleton<WeatherForecastViewModel>();
-
             return builder;
         }
 
@@ -116,9 +117,6 @@ namespace FinanceMAUI
             builder.Services.AddTransient<GoalsOverviewPage>();
             builder.Services.AddTransient<GoalDetailPage>();
             builder.Services.AddTransient<GoalAddEditPage>();
-
-            //builder.Services.AddSingleton<MainPage>();
-            //builder.Services.AddSingleton<WeatherForecastPage>();
 
             return builder;
         }

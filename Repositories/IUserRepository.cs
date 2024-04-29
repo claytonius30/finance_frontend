@@ -1,4 +1,9 @@
-﻿using FinanceMAUI.Models;
+﻿// Clayton DeSimone
+// .NET Applications
+// Final Project
+// 4/29/2024
+
+using FinanceMAUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +15,7 @@ namespace FinanceMAUI.Repositories
     public interface IUserRepository
     {
         Task<LockoutInfoModel> GetLockoutEnd(string email);
+
         Task<Guid> GetGuid(string email);
 
         Task<UserModel?> GetUser(Guid id);

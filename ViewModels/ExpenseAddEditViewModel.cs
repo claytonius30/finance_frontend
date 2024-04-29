@@ -1,4 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿// Clayton DeSimone
+// .NET Applications
+// Final Project
+// 4/29/2024
+
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FinanceMAUI.Messages;
@@ -25,13 +30,11 @@ namespace FinanceMAUI.ViewModels
         public ExpenseModel? expenseDetail;
 
         [ObservableProperty]
-        //private string _expensePageTitle = default!;
         private string _expensePageTitle;
 
         [ObservableProperty]
         private int _expenseId;
 
-        //[Required]
         [MinLength(1)]
         [MaxLength(50)]
         [NotifyDataErrorInfo]
@@ -39,7 +42,6 @@ namespace FinanceMAUI.ViewModels
         private string? _category;
 
         [Required]
-        //[Range(0, 1000000000)]
         [CustomValidation(typeof(ExpenseAddEditViewModel), nameof(ValidateAmount))]
         [NotifyDataErrorInfo]
         [ObservableProperty]
@@ -62,6 +64,9 @@ namespace FinanceMAUI.ViewModels
 
         [ObservableProperty]
         private DateTime _minDate = DateTime.Now.AddYears(-4);
+
+        [ObservableProperty]
+        private DateTime _maxDate = DateTime.Now;
 
         [ObservableProperty]
         private Guid _userId;
@@ -121,8 +126,6 @@ namespace FinanceMAUI.ViewModels
         }
 
         private bool CanSubmitExpense() => !HasErrors;
-
-
 
         public ExpenseAddEditViewModel(IUserService userService, INavigationService navigationService, IDialogService dialogService)
         {

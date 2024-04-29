@@ -1,4 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿// Clayton DeSimone
+// .NET Applications
+// Final Project
+// 4/29/2024
+
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FinanceMAUI.Messages;
@@ -111,7 +116,6 @@ namespace FinanceMAUI.ViewModels
             if (IsAuthenticated)
             {
                 Guid userId = await _userService.GetGuid(UserName);
-                //await _dialogService.Notify("Success", "You are logged in.");
                 await _navigationService.GoToUserDetail(userId);
             }
             else

@@ -1,4 +1,9 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿// Clayton DeSimone
+// .NET Applications
+// Final Project
+// 4/29/2024
+
+using CommunityToolkit.Mvvm.Messaging;
 using FinanceMAUI.Messages;
 using FinanceMAUI.Models;
 using System;
@@ -15,7 +20,6 @@ namespace FinanceMAUI.Services
     public class ClientService : IClientService
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        //private AndroidHttpMessageHandler = private new AndroidHttpMessageHandler
 
         private readonly IDialogService _dialogService;
 
@@ -80,17 +84,5 @@ namespace FinanceMAUI.Services
             }
             Console.WriteLine("Login Unsuccessful");
         }
-
-        //public async Task<WeatherForecast[]> GetWeatherForeCastData()
-        //{
-        //    var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");
-        //    if (serializedLoginResponseInStorage is null) return null;
-
-        //    string token = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.AccessToken!;
-        //    var httpClient = _httpClientFactory.CreateClient("custom-httpclient");
-        //    httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-        //    var result = await httpClient.GetFromJsonAsync<WeatherForecast[]>("/WeatherForecast");
-        //    return result!;
-        //}
     }
 }

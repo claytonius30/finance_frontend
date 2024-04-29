@@ -1,4 +1,9 @@
-﻿using FinanceMAUI.Models;
+﻿// Clayton DeSimone
+// .NET Applications
+// Final Project
+// 4/29/2024
+
+using FinanceMAUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

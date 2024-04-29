@@ -1,4 +1,9 @@
-﻿using FinanceMAUI.Models;
+﻿// Clayton DeSimone
+// .NET Applications
+// Final Project
+// 4/29/2024
+
+using FinanceMAUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,8 +11,6 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-
-//using Windows.System;
 
 namespace FinanceMAUI.Repositories
 {
@@ -42,7 +45,6 @@ namespace FinanceMAUI.Repositories
         public async Task<Guid> GetGuid(string email)
         {
             var serializedLoginResponseInStorage = await SecureStorage.Default.GetAsync("Authentication");
-            //if (serializedLoginResponseInStorage is null) return null;
 
             string token = JsonSerializer.Deserialize<LoginResponseModel>(serializedLoginResponseInStorage)!.AccessToken!;
             var httpClient = _httpClientFactory.CreateClient("custom-httpclient");
@@ -162,7 +164,6 @@ namespace FinanceMAUI.Repositories
 
             try
             {
-                // Construct the URL with query parameters
                 string url = $"api/User/{userId}/GetTransactionsForDateRange" +
                              $"?startDate={startDate:s}&endDate={endDate:s}";
 
@@ -304,9 +305,6 @@ namespace FinanceMAUI.Repositories
             return false;
         }
 
-
-
-
         public async Task<List<ExpenseModel>> GetExpenses(Guid userId)
         {
             using HttpClient client = _httpClientFactory.CreateClient("custom-httpclient");
@@ -423,9 +421,6 @@ namespace FinanceMAUI.Repositories
 
             return false;
         }
-
-
-
 
         public async Task<List<GoalModel>> GetGoals(Guid userId)
         {

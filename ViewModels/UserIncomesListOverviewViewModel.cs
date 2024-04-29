@@ -1,4 +1,9 @@
-﻿using CommunityToolkit.Maui.Core.Extensions;
+﻿// Clayton DeSimone
+// .NET Applications
+// Final Project
+// 4/29/2024
+
+using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -100,7 +105,6 @@ namespace FinanceMAUI.ViewModels
             await Loading(
                 async () =>
                 {
-                    //await GetIncomes(UserId);
                     await GetIncomesForDateRange(UserId, StartDate, EndDate);
                 });
         }
@@ -148,7 +152,6 @@ namespace FinanceMAUI.ViewModels
                 Guid userId = (Guid)query["UserId"];
 
                 UserId = userId;
-                //await GetIncomes(Id);
             }
         }
 

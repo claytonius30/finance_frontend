@@ -1,4 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿// Clayton DeSimone
+// .NET Applications
+// Final Project
+// 4/29/2024
+
+using CommunityToolkit.Mvvm.ComponentModel;
 using FinanceMAUI.ViewModels.Base;
 using System;
 using System.Collections.Generic;
@@ -28,13 +33,11 @@ namespace FinanceMAUI.ViewModels
         public IncomeModel? incomeDetail;
 
         [ObservableProperty]
-        //private string _incomePageTitle = default!;
         private string _incomePageTitle;
 
         [ObservableProperty]
         private int _incomeId;
 
-        //[Required]
         [MinLength(1)]
         [MaxLength(50)]
         [NotifyDataErrorInfo]
@@ -42,7 +45,6 @@ namespace FinanceMAUI.ViewModels
         private string? _source;
         
         [Required]
-        //[Range(0, 1000000000)]
         [CustomValidation(typeof(IncomeAddEditViewModel), nameof(ValidateAmount))]
         [NotifyDataErrorInfo]
         [ObservableProperty]
@@ -67,22 +69,12 @@ namespace FinanceMAUI.ViewModels
         private DateTime _minDate = DateTime.Now.AddYears(-4);
 
         [ObservableProperty]
+        private DateTime _maxDate = DateTime.Now;
+
+        [ObservableProperty]
         private Guid _userId;
 
         public ObservableCollection<ValidationResult> Errors { get; } = new();
-
-        //[ObservableProperty]
-        //[NotifyCanExecuteChangedFor(nameof(AddIncomeCommand))]
-        //private string _addedIncome = default!;
-
-        //[RelayCommand(CanExecute = nameof(CanAddIncome))]
-        //private void AddIncome()
-        //{
-        //    Incomes.Add(AddedIncome);
-        //    AddedIncome = string.Empty;
-        //}
-
-        //private bool CanAddIncome() => !string.IsNullOrWhiteSpace(AddedIncome);
 
         [RelayCommand]
         private async Task Back()
@@ -127,8 +119,6 @@ namespace FinanceMAUI.ViewModels
                 {
                     WeakReferenceMessenger.Default.Send(new IncomeAddedOrChangedMessage());
                     await _dialogService.Notify("Success", "The income is updated.");
-                    //await _navigationService.GoBack();
-                    //await _navigationService.GoToUserIncomes(UserId)
                     await _navigationService.GoToUserIncomes(UserId);
                 }
                 else

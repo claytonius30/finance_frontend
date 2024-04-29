@@ -1,4 +1,9 @@
-﻿using FinanceMAUI.Models;
+﻿// Clayton DeSimone
+// .NET Applications
+// Final Project
+// 4/29/2024
+
+using FinanceMAUI.Models;
 using FinanceMAUI.Repositories;
 using System;
 using System.Collections.Generic;
@@ -70,8 +75,6 @@ namespace FinanceMAUI.Services
 
         public Task<List<ExpenseModel>> GetExpensesForDateRange(Guid userId, DateTime startDate, DateTime endDate)
             => _userRepository.GetExpensesForDateRange(userId, startDate, endDate);
-
-        
 
         public Task<bool> CreateExpense(ExpenseModel model)
             => _userRepository.CreateExpense(model);
