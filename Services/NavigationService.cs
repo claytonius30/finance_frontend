@@ -44,7 +44,7 @@ namespace FinanceMAUI.Services
                 { "Income", detailModel }
             };
 
-            await Shell.Current.GoToAsync("income/edit", navigationParameter);
+            await Shell.Current.GoToAsync("editincome", navigationParameter);
         }
 
         public async Task GoToEditExpense(ExpenseModel detailModel)
@@ -94,7 +94,7 @@ namespace FinanceMAUI.Services
         public async Task GoToAddIncome(Guid userId)
         {
             var parameters = new Dictionary<string, object> { { "UserId", userId } };
-            await Shell.Current.GoToAsync("income/add", parameters);
+            await Shell.Current.GoToAsync("addincome", parameters);
         }
 
         public async Task GoToAddExpense(Guid userId)

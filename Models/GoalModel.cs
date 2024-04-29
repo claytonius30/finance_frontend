@@ -12,6 +12,7 @@ namespace FinanceMAUI.Models
         public DateTime Date { get; set; }
         public decimal Amount { get; set; }
         public string Description { get; set; } = default!;
+        public string Status { get; set; } = default!;
         public Guid Id { get; set; }
     }
 }

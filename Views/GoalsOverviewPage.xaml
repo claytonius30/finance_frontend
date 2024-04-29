@@ -65,6 +65,10 @@
                                     Style="{StaticResource ValueLabelStyle}"
                                     Margin="0"
                                     Text="{Binding Date, StringFormat='{0:D}'}" />
+                                <Label
+                                    FontAttributes="Italic"
+                                    Text="{Binding Status}"
+                                    TextColor="{Binding BalanceColor}"/>
                                 <Label Text="{Binding Amount, StringFormat='{0:C}'}" />
                                 <Label Text="{Binding Description}" />
                             </VerticalStackLayout>

@@ -23,6 +23,7 @@ namespace FinanceMAUI.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<GoalsListItemViewModel> _goals = new();
+
         [ObservableProperty]
         private GoalsListItemViewModel? _selectedGoal;
 
@@ -81,6 +82,7 @@ namespace FinanceMAUI.ViewModels
                 goal.Date,
                 goal.Amount,
                 goal.Description,
+                goal.Status,
                 goal.Id);
         }
 

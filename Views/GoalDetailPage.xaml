@@ -48,47 +48,59 @@
                                 Style="{StaticResource ValueLabelStyle}"
                                 Text="{Binding Date, StringFormat='{0:D}'}" />
 
-                            <!-- Row 2 Amount -->
+                            <!-- Row 2 Status -->
                             <Label
                                 Grid.Row="1"
                                 Grid.Column="0"
-                                Text="Amount"/>
+                                Text="Status" />
                             <Label
                                 Grid.Row="1"
+                                Grid.Column="1"
+                                Style="{StaticResource ValueLabelStyle}"
+                                FontAttributes="Italic"
+                                Text="{Binding Status, Mode=OneWay}" />
+
+                            <!-- Row 3 Amount -->
+                            <Label
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Text="Amount"/>
+                            <Label
+                                Grid.Row="2"
                                 Grid.Column="1"
                                 Style="{StaticResource ValueLabelStyle}"
                                 Text="{Binding Amount, Mode=OneWay, StringFormat='{0:C}', TargetNullValue='No amount provided',
                                     FallbackValue='No amount available'}" />
 
-                            <!-- Row 3 Description -->
+                            <!-- Row 4 Description -->
                             <Label
-                                Grid.Row="2"
+                                Grid.Row="3"
                                 Grid.Column="0"
                                 Text="Description" />
                             <Label
-                                Grid.Row="2"
+                                Grid.Row="3"
                                 Grid.Column="1"
-                                Style="{StaticResource ValueLabelStyle}" 
-                                Text="{Binding Description, Mode=OneWay}"/>
+                                Style="{StaticResource ValueLabelStyle}"
+                                Text="{Binding Description, Mode=OneWay}" />
 
-                            <!-- Row 4 Days Until Goal -->
+                            <!-- Row 5 Days Until Goal -->
                             <Label
-                                 Grid.Row="3"
+                                 Grid.Row="4"
                                  Grid.Column="0"
                                  Text="Days Until Goal" />
                             <Label
-                                 Grid.Row="3"
+                                 Grid.Row="4"
                                  Grid.Column="1"
                                  Style="{StaticResource ValueLabelStyle}"
                                  Text="{Binding DaysUntilGoal, StringFormat='{0:D}'}" />
 
-                            <!-- Row 5 Current Balance Difference -->
+                            <!-- Row 6 Current Balance Difference -->
                             <Label
-                                 Grid.Row="4"
+                                 Grid.Row="5"
                                  Grid.Column="0"
                                  Text="Current Balance Difference"/>
                             <Label
-                                 Grid.Row="4"
+                                 Grid.Row="5"
                                  Grid.Column="1"
                                  TextColor="{Binding BalanceColor}"
                                  Style="{StaticResource ValueLabelStyle}"

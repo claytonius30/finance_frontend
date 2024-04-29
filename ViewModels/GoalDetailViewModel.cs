@@ -25,6 +25,8 @@ namespace FinanceMAUI.ViewModels
         private decimal _amount;
         [ObservableProperty]
         private string _description;
+        [ObservableProperty]
+        private string _status;
 
         [ObservableProperty]
         private Guid _userId;
@@ -54,7 +56,7 @@ namespace FinanceMAUI.ViewModels
             {
                 if (await _userService.DeleteGoal(UserId, GoalId))
                 {
-                    await _navigationService.GoToUserDetail(UserId);
+                    await _navigationService.GoToGoals(UserId);
                     await _dialogService.Notify("Success", $"The goal '{Description}' is deleted.");
                 }
             }
@@ -128,6 +130,7 @@ namespace FinanceMAUI.ViewModels
             Date = goal.Date;
             Amount = goal.Amount;
             Description = goal.Description;
+            Status = goal.Status;
             UserId = goal.Id;
         }
 
@@ -139,6 +142,7 @@ namespace FinanceMAUI.ViewModels
                 Date = goalViewModel.Date,
                 Amount = goalViewModel.Amount,
                 Description = goalViewModel.Description,
+                Status = goalViewModel.Status,
                 Id = goalViewModel.UserId
             };
         }

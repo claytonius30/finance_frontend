@@ -44,6 +44,8 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private decimal _amount;
 
+        public string Status { get; set; }
+
         public static ValidationResult? ValidateAmount(decimal amount, ValidationContext context)
         {
             if (amount < (decimal)0.01 || amount > 999999999)
@@ -60,7 +62,7 @@ namespace FinanceMAUI.ViewModels
         private DateTime _date = DateTime.Now.AddDays(1);
 
         [ObservableProperty]
-        private DateTime _minDate = DateTime.Now;
+        private DateTime _minDate = DateTime.Now.AddDays(-7);
 
         [ObservableProperty]
         private Guid _userId;
@@ -179,6 +181,7 @@ namespace FinanceMAUI.ViewModels
                 Date = model.Date;
                 Amount = model.Amount;
                 Description = model.Description;
+                Status = model.Status;
                 UserId = model.Id;
             }
 
@@ -193,6 +196,7 @@ namespace FinanceMAUI.ViewModels
                 Date = Date,
                 Amount = Amount,
                 Description = Description ?? string.Empty,
+                Status = Status ?? "In progress",
                 Id = UserId
             };
         }

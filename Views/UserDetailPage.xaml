@@ -64,7 +64,7 @@
                     <VerticalStackLayout Grid.Row="1">
                         <Button
                             Margin="0,10,0,0"
-                            Text="View All Transactions"
+                            Text="View Transactions"
                             Command="{Binding ViewTransactionsCommand}" />
                     </VerticalStackLayout>
                     <VerticalStackLayout Grid.Row="1">

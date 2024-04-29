@@ -19,14 +19,17 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private string _description;
         [ObservableProperty]
+        private string _status;
+        [ObservableProperty]
         private Guid _userId;
 
-        public GoalsListItemViewModel(int goalId, DateTime date, decimal amount, string description, Guid userId)
+        public GoalsListItemViewModel(int goalId, DateTime date, decimal amount, string description, string status, Guid userId)
         {
             GoalId = goalId;
             Date = date;
             Amount = amount;
             Description = description;
+            Status = status;
             UserId = userId;
         }
     }
