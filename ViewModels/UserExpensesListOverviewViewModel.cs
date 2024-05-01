@@ -40,7 +40,13 @@ namespace FinanceMAUI.ViewModels
         private DateTime _minDate = DateTime.Now.AddYears(-4);
 
         [ObservableProperty]
+        private DateTime _maxDate = DateTime.Today;
+
+        [ObservableProperty]
         private ObservableCollection<UserExpensesListItemViewModel> _expenses = new();
+
+        public List<ExpenseModel> AllExpenses = new();
+
         [ObservableProperty]
         private UserExpensesListItemViewModel? _selectedExpense;
 
@@ -54,14 +60,18 @@ namespace FinanceMAUI.ViewModels
             }
         }
 
+        private bool viewAllClicked = false;
+
         [RelayCommand]
         private async Task ViewAllExpenses()
         {
             await GetExpenses(UserId);
             if (Expenses.Count != 0)
             {
+                viewAllClicked = true;
                 StartDate = Expenses.LastOrDefault()!.DateIncurred;
                 EndDate = Expenses.FirstOrDefault()!.DateIncurred;
+                viewAllClicked = false;
             }
             else
             {
@@ -97,7 +107,10 @@ namespace FinanceMAUI.ViewModels
         [RelayCommand]
         private async Task ReloadExpenses()
         {
-            await GetExpensesForDateRange(UserId, StartDate, EndDate);
+            if (viewAllClicked == false)
+            {
+                await GetExpensesForDateRange(UserId, StartDate, EndDate);
+            }
         }
 
         public override async Task LoadAsync()
@@ -105,13 +118,18 @@ namespace FinanceMAUI.ViewModels
             await Loading(
                 async () =>
                 {
+                    AllExpenses = await _userService.GetExpenses(UserId);
+                    if (AllExpenses.Any())
+                    {
+                        MinDate = AllExpenses.FirstOrDefault()!.DateIncurred;
+                    }
                     await GetExpensesForDateRange(UserId, StartDate, EndDate);
                 });
         }
 
         private async Task GetExpensesForDateRange(Guid userId, DateTime startDate, DateTime endDate)
         {
-            List<ExpenseModel> expenses = await _userService.GetExpensesForDateRange(userId, startDate, endDate.AddDays(1));
+            List<ExpenseModel> expenses = await _userService.GetExpensesForDateRange(userId, startDate, endDate);
             List<UserExpensesListItemViewModel> listItems = new();
             foreach (var expense in expenses)
             {
@@ -124,9 +142,8 @@ namespace FinanceMAUI.ViewModels
 
         private async Task GetExpenses(Guid id)
         {
-            List<ExpenseModel> expenses = await _userService.GetExpenses(id);
             List<UserExpensesListItemViewModel> listItems = new();
-            foreach (var expense in expenses)
+            foreach (var expense in AllExpenses)
             {
                 listItems.Insert(0, MapExpenseModelToUserExpensesListItemViewModel(expense));
             }

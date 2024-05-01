@@ -101,6 +101,9 @@
 	  <MauiXaml Update="Views\IncomeDetailPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\LogoNoBackButtonView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\LogoView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

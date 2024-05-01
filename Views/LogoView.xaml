@@ -6,9 +6,9 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <!-- Define two columns: one for the image and one for the button -->
-            <ColumnDefinition Width="Auto" />
-            <!-- Auto width for the image -->
             <ColumnDefinition Width="*" />
+            <!-- Auto width for the image -->
+            <ColumnDefinition Width="Auto" />
             <!-- Star width to fill remaining space for the button -->
         </Grid.ColumnDefinitions>
 
@@ -17,6 +17,7 @@
             Grid.Column="0"
             HeightRequest="40"
             Source="financetracker_logo.png"
+            HorizontalOptions="Center"
             VerticalOptions="Center" />
 
         <!-- column 2 Logout -->

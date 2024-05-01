@@ -18,6 +18,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace FinanceMAUI.ViewModels
 {
@@ -37,10 +38,16 @@ namespace FinanceMAUI.ViewModels
         private DateTime _endDate = DateTime.Now;
 
         [ObservableProperty]
-        private DateTime _minDate = DateTime.Now.AddYears(-4);
+        private DateTime _minDate;
+
+        [ObservableProperty]
+        private DateTime _maxDate = DateTime.Today;
 
         [ObservableProperty]
         private ObservableCollection<UserIncomesListItemViewModel> _incomes = new();
+
+        public List<IncomeModel> AllIncomes = new();
+
         [ObservableProperty]
         private UserIncomesListItemViewModel? _selectedIncome;
 
@@ -54,14 +61,18 @@ namespace FinanceMAUI.ViewModels
             }
         }
 
+        private bool viewAllClicked = false;
+
         [RelayCommand]
         private async Task ViewAllIncomes()
         {
             await GetIncomes(UserId);
             if (Incomes.Count != 0)
             {
-                StartDate = Incomes.LastOrDefault()!.DateReceived;
-                EndDate = Incomes.FirstOrDefault()!.DateReceived;
+                viewAllClicked = true;
+                StartDate = AllIncomes.FirstOrDefault()!.DateReceived;
+                EndDate = AllIncomes.LastOrDefault()!.DateReceived;
+                viewAllClicked = false;
             }
             else
             {
@@ -97,7 +108,10 @@ namespace FinanceMAUI.ViewModels
         [RelayCommand]
         private async Task ReloadIncomes()
         {
-            await GetIncomesForDateRange(UserId, StartDate, EndDate);
+            if (viewAllClicked == false)
+            {
+                await GetIncomesForDateRange(UserId, StartDate, EndDate);
+            }
         }
 
         public override async Task LoadAsync()
@@ -105,13 +119,18 @@ namespace FinanceMAUI.ViewModels
             await Loading(
                 async () =>
                 {
+                    AllIncomes = await _userService.GetIncomes(UserId);
+                    if (AllIncomes.Any())
+                    {
+                        MinDate = AllIncomes.FirstOrDefault()!.DateReceived;
+                    }
                     await GetIncomesForDateRange(UserId, StartDate, EndDate);
                 });
         }
 
         private async Task GetIncomesForDateRange(Guid userId, DateTime startDate, DateTime endDate)
         {
-            List<IncomeModel> incomes = await _userService.GetIncomesForDateRange(userId, startDate, endDate.AddDays(1));
+            List<IncomeModel> incomes = await _userService.GetIncomesForDateRange(userId, startDate, endDate);
             List<UserIncomesListItemViewModel> listItems = new();
             foreach (var income in incomes)
             {
@@ -124,9 +143,9 @@ namespace FinanceMAUI.ViewModels
 
         private async Task GetIncomes(Guid id)
         {
-            List<IncomeModel> incomes = await _userService.GetIncomes(id);
+            //List<IncomeModel> incomes = await _userService.GetIncomes(id);
             List<UserIncomesListItemViewModel> listItems = new();
-            foreach (var income in incomes)
+            foreach (var income in AllIncomes)
             {
                 listItems.Insert(0, MapIncomeModelToUserIncomesListItemViewModel(income));
             }

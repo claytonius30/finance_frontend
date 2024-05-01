@@ -7,12 +7,13 @@
              xmlns:views="clr-namespace:FinanceMAUI.Views"
              xmlns:services="clr-namespace:FinanceMAUI.Services"
              Title="UserDetailPage">
-    <ContentPage.Resources>
-        <toolkit:ListToStringConverter x:Key="ListToStringConverter" Separator=", " />
-    </ContentPage.Resources>
+    <Shell.TitleView>
+        <views:LogoNoBackButtonView />
+    </Shell.TitleView>
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsVisible="False" />
     </Shell.BackButtonBehavior>
+    
 
     <Grid>
         <ScrollView>

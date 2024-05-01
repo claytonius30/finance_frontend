@@ -18,6 +18,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace FinanceMAUI.ViewModels
 {
@@ -46,19 +47,30 @@ namespace FinanceMAUI.ViewModels
         private DateTime _endDate = DateTime.Now;
 
         [ObservableProperty]
-        private DateTime _minDate = DateTime.Now.AddYears(-4);
+        private DateTime _minDate;
+
+        [ObservableProperty]
+        private DateTime _maxDate = DateTime.Today;
 
         [ObservableProperty]
         private ObservableCollection<TransactionsListItemViewModel> _transactions = new();
 
+        public List<TransactionModel> AllTransactions = new();
+
+        private bool viewAllClicked = false;
+
         [RelayCommand]
         private async Task ViewAllTransactions()
         {
-            await GetAllTransactions(UserId);
+            GetAllTransactions(UserId);
             if (Transactions.Count != 0)
             {
-                StartDate = Transactions.LastOrDefault()!.Date;
-                EndDate = Transactions.FirstOrDefault()!.Date;
+                viewAllClicked = true;
+                StartDate = AllTransactions.FirstOrDefault()!.Date;
+                EndDate = AllTransactions.LastOrDefault()!.Date;
+
+                BalanceForDateRange = await _userService.GetCurrentBalance(UserId);
+                viewAllClicked = false;
             }
             else
             {
@@ -88,23 +100,23 @@ namespace FinanceMAUI.ViewModels
         {
             if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
             {
-                await ReloadTransactions();
-                BalanceForDateRange = await _userService.GetBalanceForDateRange(UserId, StartDate, EndDate);
-                if (BalanceForDateRange > 0)
-                {
-                    BalanceColor = "Green";
-                }
-                else if (BalanceForDateRange < 0)
-                {
-                    BalanceColor = "Red";
-                }
-                else
-                {
-                    BalanceColor = "Black";
-                }
                 if (count > 0)
                 {
+                    BalanceForDateRange = await _userService.GetBalanceForDateRange(UserId, StartDate, EndDate);
+                    if (BalanceForDateRange > 0)
+                    {
+                        BalanceColor = "Green";
+                    }
+                    else if (BalanceForDateRange < 0)
+                    {
+                        BalanceColor = "Red";
+                    }
+                    else
+                    {
+                        BalanceColor = "Black";
+                    }
                     IsElementVisible = true;
+                    await ReloadTransactions();
                 }
                 count++;
             }
@@ -113,40 +125,46 @@ namespace FinanceMAUI.ViewModels
         [RelayCommand]
         private async Task ReloadTransactions()
         {
-            await GetTransactionsForDateRange(UserId, StartDate, EndDate);
+            if (viewAllClicked == false)
+            {
+                await GetTransactionsForDateRange(UserId, StartDate, EndDate);
+            }
         }
 
         public override async Task LoadAsync()
         {
             await Loading(
-                async () =>
+            async () =>
+            {
+                AllTransactions = await _userService.GetAllTransactions(UserId);
+                if (AllTransactions.Any())
                 {
-                    await GetTransactionsForDateRange(UserId, StartDate, EndDate);
-                });
+                    MinDate = AllTransactions.FirstOrDefault()!.Date;
+                }
+                await GetTransactionsForDateRange(UserId, StartDate, EndDate);
+            });
         }
 
         private async Task GetTransactionsForDateRange(Guid userId, DateTime startDate, DateTime endDate)
         {
-            List<TransactionModel> transactions = await _userService.GetTransactionsForDateRange(userId, startDate, endDate.AddDays(1));
+            List<TransactionModel> transactions = await _userService.GetTransactionsForDateRange(userId, startDate, endDate);
             List<TransactionsListItemViewModel> listItems = new();
             foreach (var transaction in transactions)
             {
                 listItems.Insert(0, MapTransactionModelToTransactionsListItemViewModel(transaction));
             }
-
             Transactions.Clear();
             Transactions = listItems.ToObservableCollection();
         }
 
-        private async Task GetAllTransactions(Guid userId)
+        private void GetAllTransactions(Guid userId)
         {
-            List<TransactionModel> transactions = await _userService.GetAllTransactions(userId);
+            //List<TransactionModel> transactions = await _userService.GetAllTransactions(userId);
             List<TransactionsListItemViewModel> listItems = new();
-            foreach (var transaction in transactions)
+            foreach (var transaction in AllTransactions)
             {
                 listItems.Insert(0, MapTransactionModelToTransactionsListItemViewModel(transaction));
             }
-
             Transactions.Clear();
             Transactions = listItems.ToObservableCollection();
         }

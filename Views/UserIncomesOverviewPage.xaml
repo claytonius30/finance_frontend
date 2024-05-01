@@ -35,6 +35,7 @@
                 <DatePicker
                     Date="{Binding StartDate}"
                     MinimumDate="{Binding MinDate}"
+                    MaximumDate="{Binding MaxDate}"
                     WidthRequest="118" />
                 <Label
                     Style="{StaticResource ValueLabelStyle}"
@@ -42,6 +43,7 @@
                 <DatePicker
                     Date="{Binding EndDate}"
                     MinimumDate="{Binding MinDate}"
+                    MaximumDate="{Binding MaxDate}"
                     WidthRequest="118" />
             </HorizontalStackLayout>
         </VerticalStackLayout>

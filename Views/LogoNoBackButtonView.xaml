@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FinanceMAUI.Views.LogoNoBackButtonView">
+    <ContentView.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <!-- Define two columns: one for the image and one for the button -->
+                <ColumnDefinition Width="Auto" />
+                <!-- Auto width for the image -->
+                <ColumnDefinition Width="*" />
+                <!-- Star width to fill remaining space for the button -->
+            </Grid.ColumnDefinitions>
+
+            <Label 
+                Text=""
+                Grid.Column="0"
+                HorizontalOptions="Start" />
+
+            <!-- Column 1 Logo -->
+            <Image
+                Grid.Column="1"
+                HeightRequest="40"
+                Source="financetracker_logo.png"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+
+            <!-- column 2 Logout -->
+            <Button 
+                Grid.Column="2"
+                Text="Logout"
+                Clicked="OnLogoutClicked"
+                HorizontalOptions="End"
+                VerticalOptions="Center" />
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>
