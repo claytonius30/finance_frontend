@@ -46,7 +46,6 @@ namespace FinanceMAUI
             {
 #if ANDROID
                 return new AndroidHttpMessageHandler();
-
 #elif WINDOWS
                 return new WindowsHttpMessageHandler();
 #else

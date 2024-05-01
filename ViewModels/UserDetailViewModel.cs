@@ -111,6 +111,10 @@ namespace FinanceMAUI.ViewModels
                             BalanceColor = "Black";
                         }
                     }
+                    else
+                    {
+                        Balance = 0;
+                    }
                 });
         }
 
