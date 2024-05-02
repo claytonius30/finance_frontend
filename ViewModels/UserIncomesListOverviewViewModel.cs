@@ -99,19 +99,19 @@ namespace FinanceMAUI.ViewModels
 
         private async void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
+            if (viewAllClicked == false)
             {
-                await ReloadIncomes();
+                if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
+                {
+                    await ReloadIncomes();
+                }
             }
         }
 
         [RelayCommand]
         private async Task ReloadIncomes()
         {
-            if (viewAllClicked == false)
-            {
-                await GetIncomesForDateRange(UserId, StartDate, EndDate);
-            }
+            await GetIncomesForDateRange(UserId, StartDate, EndDate);
         }
 
         public override async Task LoadAsync()
@@ -143,7 +143,6 @@ namespace FinanceMAUI.ViewModels
 
         private async Task GetIncomes(Guid id)
         {
-            //List<IncomeModel> incomes = await _userService.GetIncomes(id);
             List<UserIncomesListItemViewModel> listItems = new();
             foreach (var income in AllIncomes)
             {

@@ -114,12 +114,12 @@ namespace FinanceMAUI.Repositories
                     new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
                 return balance;
-        }
-            catch (Exception)
-            {
-                return null;
             }
-}
+                catch (Exception)
+                {
+                    return null;
+                }
+        }
 
         public async Task<decimal?> GetBalanceForDateRange(Guid id, DateTime startDate, DateTime endDate)
         {

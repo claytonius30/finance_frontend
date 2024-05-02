@@ -98,19 +98,19 @@ namespace FinanceMAUI.ViewModels
 
         private async void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
+            if (viewAllClicked == false)
             {
-                await ReloadExpenses();
+                if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
+                {
+                    await ReloadExpenses();
+                }
             }
         }
 
         [RelayCommand]
         private async Task ReloadExpenses()
         {
-            if (viewAllClicked == false)
-            {
-                await GetExpensesForDateRange(UserId, StartDate, EndDate);
-            }
+            await GetExpensesForDateRange(UserId, StartDate, EndDate);
         }
 
         public override async Task LoadAsync()

@@ -68,8 +68,6 @@ namespace FinanceMAUI.ViewModels
                 viewAllClicked = true;
                 StartDate = AllTransactions.FirstOrDefault()!.Date;
                 EndDate = AllTransactions.LastOrDefault()!.Date;
-
-                BalanceForDateRange = await _userService.GetCurrentBalance(UserId);
                 viewAllClicked = false;
             }
             else
@@ -98,11 +96,24 @@ namespace FinanceMAUI.ViewModels
 
         private async void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
+            if (count > 5)
             {
-                if (count > 0)
+                IsElementVisible = true;
+                if (viewAllClicked == false)
                 {
-                    BalanceForDateRange = await _userService.GetBalanceForDateRange(UserId, StartDate, EndDate);
+                    if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
+                    {
+                        BalanceForDateRange = await _userService.GetBalanceForDateRange(UserId, StartDate, EndDate);
+                        
+                        await ReloadTransactions();
+                    }
+                }
+                else
+                {
+                    BalanceForDateRange = await _userService.GetCurrentBalance(UserId);
+                }
+                if (e.PropertyName == nameof(BalanceForDateRange))
+                {
                     if (BalanceForDateRange > 0)
                     {
                         BalanceColor = "Green";
@@ -115,20 +126,15 @@ namespace FinanceMAUI.ViewModels
                     {
                         BalanceColor = "Black";
                     }
-                    IsElementVisible = true;
-                    await ReloadTransactions();
                 }
-                count++;
             }
+            count++;
         }
 
         [RelayCommand]
         private async Task ReloadTransactions()
         {
-            if (viewAllClicked == false)
-            {
-                await GetTransactionsForDateRange(UserId, StartDate, EndDate);
-            }
+            await GetTransactionsForDateRange(UserId, StartDate, EndDate);
         }
 
         public override async Task LoadAsync()
@@ -159,7 +165,6 @@ namespace FinanceMAUI.ViewModels
 
         private void GetAllTransactions(Guid userId)
         {
-            //List<TransactionModel> transactions = await _userService.GetAllTransactions(userId);
             List<TransactionsListItemViewModel> listItems = new();
             foreach (var transaction in AllTransactions)
             {
