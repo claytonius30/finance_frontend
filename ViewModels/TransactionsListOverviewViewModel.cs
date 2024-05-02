@@ -96,7 +96,7 @@ namespace FinanceMAUI.ViewModels
 
         private async void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (count > 5)
+            if (count > 7)
             {
                 IsElementVisible = true;
                 if (viewAllClicked == false)
@@ -146,8 +146,8 @@ namespace FinanceMAUI.ViewModels
                 if (AllTransactions.Any())
                 {
                     MinDate = AllTransactions.FirstOrDefault()!.Date;
+                    await GetTransactionsForDateRange(UserId, StartDate, EndDate);
                 }
-                await GetTransactionsForDateRange(UserId, StartDate, EndDate);
             });
         }
 

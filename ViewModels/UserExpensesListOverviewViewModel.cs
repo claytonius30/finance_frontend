@@ -96,15 +96,21 @@ namespace FinanceMAUI.ViewModels
             PropertyChanged += OnPropertyChanged!;
         }
 
+        private int count = 0;
+
         private async void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (viewAllClicked == false)
+            if (count > 5)
             {
-                if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
+                if (viewAllClicked == false)
                 {
-                    await ReloadExpenses();
+                    if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
+                    {
+                        await ReloadExpenses();
+                    }
                 }
             }
+            count++;
         }
 
         [RelayCommand]
@@ -122,8 +128,8 @@ namespace FinanceMAUI.ViewModels
                     if (AllExpenses.Any())
                     {
                         MinDate = AllExpenses.FirstOrDefault()!.DateIncurred;
+                        await GetExpensesForDateRange(UserId, StartDate, EndDate);
                     }
-                    await GetExpensesForDateRange(UserId, StartDate, EndDate);
                 });
         }
 
