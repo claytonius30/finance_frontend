@@ -96,7 +96,7 @@ namespace FinanceMAUI.ViewModels
 
         private async void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (count > 7)
+            if (count > 5)
             {
                 IsElementVisible = true;
                 if (viewAllClicked == false)
