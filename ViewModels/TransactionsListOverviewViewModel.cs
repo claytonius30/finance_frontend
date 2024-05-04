@@ -94,41 +94,44 @@ namespace FinanceMAUI.ViewModels
         // Used to keep Range Balance hidden when page first loads
         private int count = 0;
 
+        // This method runs every time a property changes anywhere during program execution..
+        // Define condition statements with nameof(property) matching PropertyName to control specific property change behavior.
         private async void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (count > 5)
+            if (viewAllClicked == false)
             {
-                IsElementVisible = true;
-                if (viewAllClicked == false)
+                if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
                 {
-                    if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
+                    if (count > 0)
                     {
+                        IsElementVisible = true;
+
                         BalanceForDateRange = await _userService.GetBalanceForDateRange(UserId, StartDate, EndDate);
                         
                         await ReloadTransactions();
                     }
+                count++;
+                }
+            }
+            else
+            {
+                BalanceForDateRange = await _userService.GetCurrentBalance(UserId);
+            }
+            if (e.PropertyName == nameof(BalanceForDateRange))
+            {
+                if (BalanceForDateRange > 0)
+                {
+                    BalanceColor = "Green";
+                }
+                else if (BalanceForDateRange < 0)
+                {
+                    BalanceColor = "Red";
                 }
                 else
                 {
-                    BalanceForDateRange = await _userService.GetCurrentBalance(UserId);
-                }
-                if (e.PropertyName == nameof(BalanceForDateRange))
-                {
-                    if (BalanceForDateRange > 0)
-                    {
-                        BalanceColor = "Green";
-                    }
-                    else if (BalanceForDateRange < 0)
-                    {
-                        BalanceColor = "Red";
-                    }
-                    else
-                    {
-                        BalanceColor = "Black";
-                    }
+                    BalanceColor = "Black";
                 }
             }
-            count++;
         }
 
         [RelayCommand]

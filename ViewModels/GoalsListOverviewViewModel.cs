@@ -67,13 +67,41 @@ namespace FinanceMAUI.ViewModels
                 });
         }
 
+        [ObservableProperty]
+        private string _goalColor;
+
         private async Task GetGoals(Guid id)
         {
             List<GoalModel> goals = await _userService.GetGoals(id);
             List<GoalsListItemViewModel> listItems = new();
             foreach (var goal in goals)
             {
-                listItems.Insert(0, MapGoalModelToGoalsListItemViewModel(goal));
+                string goalColor = "Black";
+
+                if (goal.Status.Contains("met"))
+                {
+                    goalColor = "Green";
+                }
+                else if (goal.Status.Contains("Missed"))
+                {
+                    goalColor = "Red";
+                }
+
+                // Create a new GoalsListItemViewModel and set its GoalColor property
+                //var listItemViewModel = MapGoalModelToGoalsListItemViewModel(goal);
+                //listItemViewModel.GoalColor = goalColor;
+
+                // Create a new GoalsListItemViewModel and set its GoalColor property
+                var listItemViewModel = MapGoalModelToGoalsListItemViewModel(goal);
+                if (goalColor != "Black")
+                {
+                    listItemViewModel.GoalColor = goalColor;
+                }
+                
+
+                listItems.Insert(0, listItemViewModel);
+
+                //listItems.Insert(0, MapGoalModelToGoalsListItemViewModel(goal));
             }
 
             Goals.Clear();

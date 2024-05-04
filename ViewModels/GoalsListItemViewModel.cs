@@ -30,6 +30,9 @@ namespace FinanceMAUI.ViewModels
         [ObservableProperty]
         private Guid _userId;
 
+        [ObservableProperty]
+        private string? _goalColor;
+
         public GoalsListItemViewModel(int goalId, DateTime setDate, DateTime goalDate, decimal amount, string description, string status, Guid userId)
         {
             GoalId = goalId;

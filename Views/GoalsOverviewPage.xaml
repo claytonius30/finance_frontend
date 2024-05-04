@@ -61,15 +61,23 @@
                                 Padding="10"
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center">
+                                
+                                <!-- Row 1 Goal Date -->
                                 <Label
                                     Style="{StaticResource ValueLabelStyle}"
                                     Margin="0"
                                     Text="{Binding GoalDate, StringFormat='{0:D}'}" />
+
+                                <!-- Row 2 Status -->
                                 <Label
-                                    
+                                    TextColor="{Binding GoalColor}"
                                     FontAttributes="Italic"
                                     Text="{Binding Status}" />
+
+                                <!-- Row 3 Amount -->
                                 <Label Text="{Binding Amount, StringFormat='{0:C}'}" />
+
+                                <!-- Row 5 Description -->
                                 <Label Text="{Binding Description}" />
                             </VerticalStackLayout>
                         </Grid>
