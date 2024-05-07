@@ -102,21 +102,22 @@ namespace FinanceMAUI.ViewModels
             {
                 if (e.PropertyName == nameof(StartDate) || e.PropertyName == nameof(EndDate))
                 {
-                    if (count > 0)
+                    if (count > 1 || (count == 1 && MinDate < DateTime.Now.AddMonths(-1)))
                     {
                         IsElementVisible = true;
-
                         BalanceForDateRange = await _userService.GetBalanceForDateRange(UserId, StartDate, EndDate);
                         
                         await ReloadTransactions();
                     }
-                count++;
+                    count++;
                 }
             }
             else
             {
+                IsElementVisible = true;
                 BalanceForDateRange = await _userService.GetCurrentBalance(UserId);
             }
+
             if (e.PropertyName == nameof(BalanceForDateRange))
             {
                 if (BalanceForDateRange > 0)
