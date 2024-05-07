@@ -1,0 +1,85 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\gitrepos\\NETfinalMAUI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{164785CF-45BC-4393-B207-358ABF1B0563}|FinanceMAUI.csproj|c:\\gitrepos\\netfinalmaui\\viewmodels\\transactionslistoverviewviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{164785CF-45BC-4393-B207-358ABF1B0563}|FinanceMAUI.csproj|solutionrelative:viewmodels\\transactionslistoverviewviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{164785CF-45BC-4393-B207-358ABF1B0563}|FinanceMAUI.csproj|c:\\gitrepos\\netfinalmaui\\viewmodels\\goalslistoverviewviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{164785CF-45BC-4393-B207-358ABF1B0563}|FinanceMAUI.csproj|solutionrelative:viewmodels\\goalslistoverviewviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{164785CF-45BC-4393-B207-358ABF1B0563}|FinanceMAUI.csproj|c:\\gitrepos\\netfinalmaui\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{164785CF-45BC-4393-B207-358ABF1B0563}|FinanceMAUI.csproj|solutionrelative:mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{164785CF-45BC-4393-B207-358ABF1B0563}|FinanceMAUI.csproj|c:\\gitrepos\\netfinalmaui\\financemaui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{164785CF-45BC-4393-B207-358ABF1B0563}|FinanceMAUI.csproj|solutionrelative:financemaui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 74,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TransactionsListOverviewViewModel.cs",
+              "DocumentMoniker": "C:\\gitrepos\\NETfinalMAUI\\ViewModels\\TransactionsListOverviewViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\TransactionsListOverviewViewModel.cs",
+              "ToolTip": "C:\\gitrepos\\NETfinalMAUI\\ViewModels\\TransactionsListOverviewViewModel.cs",
+              "RelativeToolTip": "ViewModels\\TransactionsListOverviewViewModel.cs",
+              "ViewState": "AQIAAFIAAAAAAAAAAAAewG0AAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-05T18:37:25.276Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GoalsListOverviewViewModel.cs",
+              "DocumentMoniker": "C:\\gitrepos\\NETfinalMAUI\\ViewModels\\GoalsListOverviewViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\GoalsListOverviewViewModel.cs",
+              "ToolTip": "C:\\gitrepos\\NETfinalMAUI\\ViewModels\\GoalsListOverviewViewModel.cs",
+              "RelativeToolTip": "ViewModels\\GoalsListOverviewViewModel.cs",
+              "ViewState": "AQIAADwAAAAAAAAAAAA7wAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-05T18:30:10.645Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MauiProgram.cs",
+              "DocumentMoniker": "C:\\gitrepos\\NETfinalMAUI\\MauiProgram.cs",
+              "RelativeDocumentMoniker": "MauiProgram.cs",
+              "ToolTip": "C:\\gitrepos\\NETfinalMAUI\\MauiProgram.cs",
+              "RelativeToolTip": "MauiProgram.cs",
+              "ViewState": "AQIAABMAAAAAAAAAAAAQwCcAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-04T16:23:47.105Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FinanceMAUI.csproj",
+              "DocumentMoniker": "C:\\gitrepos\\NETfinalMAUI\\FinanceMAUI.csproj",
+              "RelativeDocumentMoniker": "FinanceMAUI.csproj",
+              "ToolTip": "C:\\gitrepos\\NETfinalMAUI\\FinanceMAUI.csproj",
+              "RelativeToolTip": "FinanceMAUI.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAIUAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-05-04T08:48:51.97Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
